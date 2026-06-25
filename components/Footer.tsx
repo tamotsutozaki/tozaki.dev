@@ -8,12 +8,19 @@ import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import { FiMail } from "react-icons/fi";
 
 export function Footer() {
-  const { t } = useApp();
+  const { t, replayIntro } = useApp();
   const lenis = useLenis();
   const email = getEmail();
 
   const go = (id: string) => (e: React.MouseEvent) => {
     e.preventDefault();
+    // "hero" / topo: volta ao início (mesmo comportamento do wordmark da navbar)
+    if (id === "hero") {
+      if (lenis) lenis.scrollTo(0);
+      else window.scrollTo({ top: 0, behavior: "smooth" });
+      replayIntro();
+      return;
+    }
     const el = document.getElementById(id);
     if (!el) return;
     if (lenis) {
@@ -42,7 +49,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="display-name footer-name">PEDRO<br />TOZAKI</div>
+        <a href="#hero" onClick={go("hero")} aria-label="Voltar ao início" className="display-name footer-name inline-block cursor-pointer transition-opacity hover:opacity-70">PEDRO<br />TOZAKI</a>
 
         <div className="flex justify-between flex-wrap items-center gap-3 mt-[30px] pt-6 border-t border-line font-mono text-[11px] tracking-[0.04em] text-fg3">
           <span>{t.footer.rights}</span>

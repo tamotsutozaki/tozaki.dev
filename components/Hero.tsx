@@ -52,23 +52,45 @@ function HeroContent() {
 
   const vis = show ? "is-visible" : "";
 
+  // Cascata por palavra nas taglines: índice contínuo entre as três frases para
+  // o delay encadear (começa logo após as letras do TOZAKI).
+  let wordIndex = 0;
+  const renderWords = (text: string, italic = false) =>
+    text.split(" ").map((word, i) => {
+      const idx = wordIndex++;
+      return (
+        <React.Fragment key={`${text}-${i}`}>
+          <span className="word-mask">
+            <span className="word-inner" style={{ transitionDelay: `${260 + idx * 55}ms` }}>
+              {italic ? <em className="italic font-normal text-fg2">{word}</em> : word}
+            </span>
+          </span>{" "}
+        </React.Fragment>
+      );
+    });
+
   return (
     <>
       <div ref={fxRef} className="w-full flex flex-col items-center will-change-transform">
-        <div className={`reveal-mask w-full text-center ${vis}`}>
-          <div className="reveal-inner">
-            <h1 className="display-name hero-name">TOZAKI</h1>
-          </div>
+        <div className="w-full text-center">
+          <h1 className={`display-name hero-name ${vis}`} aria-label="TOZAKI">
+            {"TOZAKI".split("").map((ch, i) => (
+              <span key={i} className="char-mask" aria-hidden="true">
+                <span className="char-inner" style={{ transitionDelay: `${i * 70}ms` }}>
+                  {ch}
+                </span>
+              </span>
+            ))}
+          </h1>
         </div>
 
-        <div className={`reveal-mask text-center ${vis}`} style={{ marginTop: "clamp(22px,3.5vh,40px)" }}>
-          <div className="reveal-inner" style={{ transitionDelay: "150ms" }}>
-            <div className="font-mono uppercase text-fg3 mb-3" style={{ fontSize: "clamp(10px,1.4vw,12px)", letterSpacing: "0.32em" }}>
-              {t.hero.taglineLead}
-            </div>
-            <div className="text-fg font-medium" style={{ fontSize: "clamp(1.15rem,2.4vw,1.7rem)", lineHeight: 1.35, textWrap: "balance" } as React.CSSProperties}>
-              {t.hero.taglineMain} <em className="italic font-normal text-fg2">{t.hero.taglineEm}</em>
-            </div>
+        <div className={`tagline text-center ${vis}`} style={{ marginTop: "clamp(22px,3.5vh,40px)" }}>
+          <div className="font-mono uppercase text-fg3 mb-3" style={{ fontSize: "clamp(10px,1.4vw,12px)", letterSpacing: "0.32em" }}>
+            {renderWords(t.hero.taglineLead)}
+          </div>
+          <div className="text-fg font-medium" style={{ fontSize: "clamp(1.15rem,2.4vw,1.7rem)", lineHeight: 1.35, textWrap: "balance" } as React.CSSProperties}>
+            {renderWords(t.hero.taglineMain)}
+            {renderWords(t.hero.taglineEm, true)}
           </div>
         </div>
       </div>

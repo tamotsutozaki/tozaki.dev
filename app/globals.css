@@ -28,6 +28,125 @@ html.light {
   --navbg: rgba(247, 246, 242, 0.74);
 }
 
+/* Tema invertido para destaque (cards do Sobre): redefine os tokens locais para
+   o tema OPOSTO ao da página — página escura → card claro; página clara → card escuro. */
+.theme-invert {
+  --bg-elev: #ffffff;
+  --bg-elev2: #f0eee8;
+  --fg: #0a0a0a;
+  --fg2: #585858;
+  --fg3: #9a958c;
+  --line: rgba(10, 10, 10, 0.10);
+  --line2: rgba(10, 10, 10, 0.17);
+}
+html.light .theme-invert {
+  --bg-elev: #121212;
+  --bg-elev2: #1a1a1a;
+  --fg: #f7f6f2;
+  --fg2: #a3a3a3;
+  --fg3: #6a6a6a;
+  --line: rgba(255, 255, 255, 0.10);
+  --line2: rgba(255, 255, 255, 0.20);
+}
+
+/* ============ HOVER DOS CARDS ESTÁTICOS (teste A/B) ============ */
+.card-fx { position: relative; }
+
+/* 1) Card só expande (suave); o texto expande junto e treme ao mesmo tempo */
+.card-grow { transition: transform 0.25s ease, background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease; }
+.card-grow:hover { transform: scale(1.03); z-index: 2; }
+.card-grow:hover > div { animation: card-text-shake 0.35s ease; }
+@keyframes card-text-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-2px); }
+  40% { transform: translateX(2px); }
+  60% { transform: translateX(-1.5px); }
+  80% { transform: translateX(1.5px); }
+}
+
+/* 2) Spotlight — brilho radial seguindo o cursor (--mx/--my via JS) */
+.card-spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(200px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--fg) 14%, transparent), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.card-spotlight:hover::before { opacity: 1; }
+
+/* 3) Pulo — sobe e desce rápido (quique) */
+.card-jump { transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease; }
+.card-jump:hover { animation: card-jump-kf 0.45s cubic-bezier(0.3, 0.7, 0.4, 1); z-index: 2; }
+@keyframes card-jump-kf {
+  0% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
+  55% { transform: translateY(0); }
+  75% { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+
+/* 4) Elevação + sombra */
+.card-lift { transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.3s ease, background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease; }
+.card-lift:hover { transform: translateY(-4px); box-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.4); }
+
+@media (prefers-reduced-motion: reduce) {
+  .card-grow,
+  .card-lift { transition: none; }
+  .card-grow:hover { transform: none; }
+  .card-grow:hover > div,
+  .card-jump:hover { animation: none; }
+  .card-lift:hover { transform: none; }
+}
+
+/* ===== Skills: hover pinta o card com a cor da tecnologia ===== */
+.skill-card {
+  transition: background-color 0.35s ease, border-color 0.35s ease, transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.skill-card .sc-icon,
+.skill-card .sc-name,
+.skill-card .sc-cat,
+.skill-card .sc-wm { transition: color 0.35s ease, opacity 0.35s ease; }
+.skill-card .sc-wm { opacity: 0.05; }
+
+.skill-card:hover {
+  transform: translateY(-4px);
+  background: var(--brand, var(--bg-elev2));
+  border-color: var(--brand, var(--line2));
+}
+.skill-card:hover .sc-icon,
+.skill-card:hover .sc-name { color: var(--brand-fg, var(--fg)); }
+.skill-card:hover .sc-cat { color: var(--brand-fg, var(--fg2)); opacity: 0.78; }
+.skill-card:hover .sc-wm { color: var(--brand-fg, var(--fg)); opacity: 0.18; }
+
+/* Brilho (spotlight) acompanhando o cursor — igual aos cards do Sobre */
+.skill-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(200px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.22), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+.skill-card:hover::before { opacity: 1; }
+
+/* Balão flutuante das "tecnologias que tive pouco contato" */
+.skills-pop { animation: skills-pop-in 0.22s cubic-bezier(0.2, 0.7, 0.2, 1); }
+@keyframes skills-pop-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-card:hover { transform: none; }
+  .skills-pop { animation: none; }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -282,9 +401,42 @@ html.vt-active * {
   transform: none;
 }
 
+/* Nome do hero letra-por-letra: cada glifo emerge de baixo, T → I, em cascata. */
+.hero-name .char-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding: 0.06em 0;
+}
+.hero-name .char-inner {
+  display: inline-block;
+  transform: translateY(120%);
+  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.hero-name.is-visible .char-inner {
+  transform: none;
+}
+
+/* Taglines palavra-por-palavra: cada palavra emerge de baixo, em cascata. */
+.tagline .word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.tagline .word-inner {
+  display: inline-block;
+  transform: translateY(115%);
+  transition: transform 0.75s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.tagline.is-visible .word-inner {
+  transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal,
-  .reveal-mask > .reveal-inner {
+  .reveal-mask > .reveal-inner,
+  .hero-name .char-inner,
+  .tagline .word-inner {
     transition: none;
     transform: none;
     opacity: 1;

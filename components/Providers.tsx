@@ -120,7 +120,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
   );
 
   const value = useMemo<AppCtx>(
-    () => ({ lang, theme, t: CONTENT[lang], toggleLang, toggleTheme, setLang, setTheme, introKey, replayIntro }),
+    // `as Dict`: PT e EN têm a MESMA forma, só mudam os literais das strings.
+    // Sem o cast, o `as const` faz o TS tratar os dois como tipos incompatíveis.
+    () => ({ lang, theme, t: CONTENT[lang] as Dict, toggleLang, toggleTheme, setLang, setTheme, introKey, replayIntro }),
     [lang, theme, toggleLang, toggleTheme, setLang, setTheme, introKey, replayIntro]
   );
 

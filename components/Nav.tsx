@@ -102,8 +102,18 @@ export function Nav() {
         <div className="flex items-center gap-[11px]">
           {/* Links desktop */}
           <div className="hidden md:flex items-center gap-0.5">
+            <NavItem delay={130} mask className="inline-flex">
+              <a
+                href="#hero"
+                onClick={go("hero")}
+                className="tswap-trigger relative inline-flex items-center px-[15px] py-[9px] font-mono text-[13.75px] tracking-[0.16em] uppercase text-fg2 hover:text-fg transition-colors cursor-pointer"
+              >
+                <SwapText>{t.nav.home}</SwapText>
+                {active === "hero" && <span className="absolute left-1/2 bottom-[1px] w-[4px] h-[4px] rounded-full bg-fg -translate-x-1/2" />}
+              </a>
+            </NavItem>
             {SECTIONS.filter((s) => s.id !== "contato").map((s, i) => (
-              <NavItem key={s.id} delay={130 + i * 60} mask className="inline-flex">
+              <NavItem key={s.id} delay={190 + i * 60} mask className="inline-flex">
                 <a
                   href={`#${s.id}`}
                   onClick={go(s.id)}
@@ -156,6 +166,10 @@ export function Nav() {
       {/* Menu mobile */}
       {menuOpen && (
         <div className="fixed inset-0 z-[99] bg-bg flex flex-col animate-rise" style={{ padding: "88px clamp(24px,7vw,56px) 40px" }}>
+          <a href="#hero" onClick={go("hero")} className="flex items-baseline gap-[18px] py-5 border-b border-line font-bold uppercase text-fg cursor-pointer" style={{ fontSize: "clamp(26px,7vw,40px)", letterSpacing: "-0.03em" }}>
+            <span className="font-mono text-[13px] font-medium text-fg3">00</span>
+            {t.nav.home}
+          </a>
           {SECTIONS.filter((s) => s.id !== "contato").map((s) => (
             <a key={s.id} href={`#${s.id}`} onClick={go(s.id)} className="flex items-baseline gap-[18px] py-5 border-b border-line font-bold uppercase text-fg cursor-pointer" style={{ fontSize: "clamp(26px,7vw,40px)", letterSpacing: "-0.03em" }}>
               <span className="font-mono text-[13px] font-medium text-fg3">{s.num}</span>

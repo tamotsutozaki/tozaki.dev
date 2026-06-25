@@ -81,11 +81,12 @@ tozaki-portfolio/
 │   ├── SmoothScroll.tsx  # provider do Lenis (useLenis)
 │   ├── Nav.tsx           # navbar, scroll-spy, hide-on-scroll, intro dos itens
 │   ├── Hero.tsx          # "TOZAKI" + tagline + parallax + intro
-│   ├── About.tsx         # foto + bio + contador + chips
+│   ├── About.tsx         # foto + bio + grid de info cards + contador
 │   ├── Skills.tsx        # grid de tecnologias + marquee
 │   ├── Projects.tsx      # Liriun / ToMore / Eternize
 │   ├── Contact.tsx       # formulário + canais diretos + Cal.com
 │   ├── Footer.tsx        # wordmark gigante + redes
+│   ├── InfoCard.tsx      # card de info (ícone + rótulo + valor) usado no About
 │   ├── Reveal.tsx        # reveal no scroll (IntersectionObserver) — fade e mask
 │   ├── SwapText.tsx      # efeito de troca de texto no hover
 │   └── SectionHeader.tsx # cabeçalho de seção reutilizável

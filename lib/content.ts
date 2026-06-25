@@ -7,7 +7,7 @@ export const LANGS: Lang[] = ["pt", "en"];
 
 export const CONTENT = {
   pt: {
-    nav: { about: "Sobre", skills: "Skills", projects: "Projetos", contact: "Contato", cta: "Vamos conversar" },
+    nav: { home: "Início", about: "Sobre", skills: "Skills", projects: "Projetos", contact: "Contato", cta: "Vamos conversar" },
     hero: {
       taglineLead: "Construo aplicações full-stack",
       taglineMain: "do back ao front,",
@@ -20,23 +20,43 @@ export const CONTENT = {
     },
     about: {
       label: "Sobre",
-      heading: "Construindo coisas que entregam valor",
-      body1:
-        "Construí e migrei sistemas usados por milhares de usuários, do back-end à interface. Hoje toco projetos próprios e trabalhos freelance — desenho a arquitetura, escrevo o código e coloco o produto no ar.",
-      body2:
-        "Inglês profissional (TOEIC), baseado no Brasil e trabalhando de forma remota. Disponível para novos projetos e oportunidades.",
+      heading: "Construindo projetos de valor",
+      // Marque as palavras-chave a destacar com **asteriscos**.
+      intro: [
+        "Sou desenvolvedor **full-stack** há **mais de 5 anos**, focado em construir **aplicações web e mobile** do zero à entrega final do produto. Meu trabalho vai desde a arquitetura de **APIs robustas** em **C#/.NET** até a criação de interfaces modernas e performáticas com **React**, **Next.js** e **Astro**.",
+        "Já construí e migrei sistemas utilizados por **mais de 6.000 usuários**, aplicando **Clean Architecture**, **TypeScript** e bancos de dados como **PostgreSQL** e **SQL Server**. Seja no ambiente corporativo, em projetos próprios ou freelances, gerencio **todo o ciclo de vida do software** para garantir soluções **escaláveis** e de **alta usabilidade**.",
+        "Sou formado em **Administração de Empresas** e curso **Análise e Desenvolvimento de Sistemas** (FATEC) — uma combinação que me proporciona uma forte **visão estratégica**. Acredito que entender a raiz do problema do negócio vem antes de escrever a primeira linha de código.",
+      ],
       statLabel: "projetos entregues",
       statSuffix: "+",
       available: "Disponível agora",
-      chipRole: "Full-Stack Developer",
-      chipLoc: "Brasil · Remoto",
-      chipLang: "Inglês · TOEIC",
+      chips: ["5+ anos na área de tecnologia", "Full stack", "Disponível para projetos e oportunidades"],
+      cards: {
+        locLabel: "Localização",
+        locValue: "Indaiatuba, São Paulo · Brasil",
+        roleLabel: "Cargo atual",
+        // TODO: trocar depois para "Freelancer · Disponível para projetos"
+        roleValue: "Full-Stack Developer",
+        roleSub: "ACSN",
+        eduLabel: "Formação",
+        edu: [
+          { school: "FATEC Indaiatuba", detail: "Análise e Desenvolvimento de Sistemas (último ano)" },
+          { school: "Universidade Anhembi Morumbi", detail: "Administração de Empresas" },
+        ],
+        langLabel: "Idiomas",
+        lang: [
+          { name: "Português", level: "Nativo" },
+          { name: "Inglês", level: "Avançado · TOEIC" },
+        ],
+      },
     },
     skills: {
       label: "Skills",
       heading: "As tecnologias que uso para construir",
       sub: "Do front interativo ao back-end escalável — a stack com que trabalho no dia a dia.",
-      cats: { backend: "Backend", frontend: "Frontend", mobile: "Mobile", database: "Banco de dados", devops: "DevOps", arch: "Arquitetura", lang: "Linguagem" },
+      cats: { backend: "Backend", frontend: "Frontend", mobile: "Mobile", database: "Banco de dados", devops: "DevOps", arch: "Arquitetura", lang: "Linguagem", cloud: "Cloud" },
+      showAll: "Tecnologias que tive pouco contato",
+      showLess: "Ver menos",
     },
     projects: {
       label: "Projetos",
@@ -72,7 +92,7 @@ export const CONTENT = {
     footer: { rights: "© 2026 Pedro Tozaki" },
   },
   en: {
-    nav: { about: "About", skills: "Skills", projects: "Projects", contact: "Contact", cta: "Let's talk" },
+    nav: { home: "Home", about: "About", skills: "Skills", projects: "Projects", contact: "Contact", cta: "Let's talk" },
     hero: {
       taglineLead: "I build full-stack applications",
       taglineMain: "back to front,",
@@ -85,23 +105,43 @@ export const CONTENT = {
     },
     about: {
       label: "About",
-      heading: "Building things that ship value",
-      body1:
-        "I've built and migrated systems used by thousands of users, from back-end to interface. Today I run my own projects and freelance work — I design the architecture, write the code, and ship the product live.",
-      body2:
-        "Professional English (TOEIC), based in Brazil and working remotely. Available for new projects and opportunities.",
+      heading: "Building valuable projects",
+      // Mark the keywords to highlight with **asterisks**.
+      intro: [
+        "I've been a **full-stack** developer for **5+ years**, focused on building **web and mobile applications** from scratch to final delivery. My work ranges from architecting **robust APIs** in **C#/.NET** to crafting modern, high-performance interfaces with **React**, **Next.js** and **Astro**.",
+        "I've built and migrated systems used by **6,000+ users**, applying **Clean Architecture**, **TypeScript** and databases like **PostgreSQL** and **SQL Server**. Whether in a corporate environment, my own projects or freelance work, I manage the **entire software lifecycle** to deliver **scalable** solutions with **high usability**.",
+        "I hold a degree in **Business Administration** and am studying **Systems Analysis and Development** (FATEC) — a combination that gives me strong **strategic vision**. I believe understanding the root of the business problem comes before writing the first line of code.",
+      ],
       statLabel: "projects shipped",
       statSuffix: "+",
       available: "Available now",
-      chipRole: "Full-Stack Developer",
-      chipLoc: "Brazil · Remote",
-      chipLang: "English · TOEIC",
+      chips: ["5+ years in tech", "Full stack", "Available for projects and opportunities"],
+      cards: {
+        locLabel: "Location",
+        locValue: "Indaiatuba, São Paulo · Brazil",
+        roleLabel: "Current role",
+        // TODO: trocar depois para "Freelancer · Disponível para projetos"
+        roleValue: "Full-Stack Developer",
+        roleSub: "ACSN",
+        eduLabel: "Education",
+        edu: [
+          { school: "FATEC Indaiatuba", detail: "Systems Analysis and Development (final year)" },
+          { school: "Universidade Anhembi Morumbi", detail: "Business Administration" },
+        ],
+        langLabel: "Languages",
+        lang: [
+          { name: "Portuguese", level: "Native" },
+          { name: "English", level: "Advanced · TOEIC" },
+        ],
+      },
     },
     skills: {
       label: "Skills",
       heading: "The technologies I build with",
       sub: "From interactive front-ends to scalable back-end services — the stack I work with day to day.",
-      cats: { backend: "Backend", frontend: "Frontend", mobile: "Mobile", database: "Database", devops: "DevOps", arch: "Architecture", lang: "Language" },
+      cats: { backend: "Backend", frontend: "Frontend", mobile: "Mobile", database: "Database", devops: "DevOps", arch: "Architecture", lang: "Language", cloud: "Cloud" },
+      showAll: "Less-used technologies",
+      showLess: "Show less",
     },
     projects: {
       label: "Projects",
