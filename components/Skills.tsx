@@ -6,7 +6,7 @@ import { useApp } from "./Providers";
 import { Reveal } from "./Reveal";
 import { SkillCard } from "./SkillCard";
 import { SKILLS, type SkillSize } from "@/lib/skills";
-import { FiChevronDown, FiX } from "react-icons/fi";
+import { FiChevronDown } from "react-icons/fi";
 
 // Span no grid conforme o tamanho do card.
 const spanClass = (size: SkillSize) =>
@@ -21,8 +21,9 @@ export function Skills() {
   const [mounted, setMounted] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const closeTimer = useRef<number | null>(null);
+  const openRef = useRef(false);
+  const placementRef = useRef<"top" | "bottom">("bottom");
 
-  const marqueeItems = SKILLS.map((s) => s.name);
   const visible = SKILLS.filter((s) => !s.hidden);
   const hiddenSkills = SKILLS.filter((s) => s.hidden);
 
@@ -36,20 +37,24 @@ export function Skills() {
       closeTimer.current = null;
     }
   };
+  // Ancora o balão ao botão. keep=true mantém o lado atual (evita "flip"
+  // cima/baixo ao reancorar durante o scroll/resize).
+  const place = (keep = false) => {
+    const el = triggerRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const left = r.left + r.width / 2;
+    const placement = keep ? placementRef.current : window.innerHeight - r.bottom >= r.top ? "bottom" : "top";
+    placementRef.current = placement;
+    setCoords(
+      placement === "bottom"
+        ? { left, top: r.bottom + 8, placement }
+        : { left, bottom: window.innerHeight - r.top + 8, placement }
+    );
+  };
   const openNow = () => {
     cancelClose();
-    const el = triggerRef.current;
-    if (el) {
-      const r = el.getBoundingClientRect();
-      const below = window.innerHeight - r.bottom;
-      const above = r.top;
-      const left = r.left + r.width / 2;
-      setCoords(
-        below >= above
-          ? { left, top: r.bottom + 8, placement: "bottom" }
-          : { left, bottom: window.innerHeight - r.top + 8, placement: "top" }
-      );
-    }
+    place(false);
     setOpen(true);
   };
   const scheduleClose = () => {
@@ -58,15 +63,33 @@ export function Skills() {
   };
 
   useEffect(() => {
+    openRef.current = open;
+  }, [open]);
+
+  // No scroll/resize, REANCORA o balão ao botão enquanto aberto — em vez de
+  // fechar. (Fechar no scroll causava o bug: a inércia do Lenis dispara ~66
+  // eventos 'scroll'/s por ~1.1s e clobberava o open do hover.) Fechar agora é
+  // só por mouseleave (grace) ou Esc. rAF evita thrash com a enxurrada de eventos.
+  useEffect(() => {
+    let raf = 0;
+    const reanchor = () => {
+      if (!openRef.current || raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        place(true);
+      });
+    };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
-    const onScroll = () => setOpen(false);
     window.addEventListener("keydown", onKey);
-    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("scroll", reanchor, { passive: true });
+    window.addEventListener("resize", reanchor);
     return () => {
       window.removeEventListener("keydown", onKey);
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scroll", reanchor);
+      window.removeEventListener("resize", reanchor);
+      cancelAnimationFrame(raf);
       cancelClose();
     };
   }, []);
@@ -83,7 +106,7 @@ export function Skills() {
               <span className="inline-block font-mono text-[10.5px] font-medium tracking-[0.22em] uppercase text-fg2 border border-line2 rounded-[5px] px-[11px] py-[5px]">{t.skills.label}</span>
             </Reveal>
             <Reveal mask delay={160}>
-              <h2 className="m-0 font-extrabold uppercase text-fg" style={{ fontSize: "clamp(2rem,6vw,4.4rem)", lineHeight: 0.95, letterSpacing: "-0.03em", maxWidth: "18ch" }}>{t.skills.heading}</h2>
+              <h2 className="m-0 font-extrabold uppercase text-fg" style={{ fontSize: "clamp(2rem,6vw,4.4rem)", lineHeight: 0.95, letterSpacing: "-0.03em", maxWidth: "24ch" }}>{t.skills.heading}</h2>
             </Reveal>
           </div>
         </div>
@@ -102,52 +125,45 @@ export function Skills() {
         </div>
 
         {/* Gatilho do balão */}
-        <div className="mt-6 flex justify-center">
+        <div className="mt-6 flex justify-start">
           <button
             ref={triggerRef}
             onMouseEnter={openNow}
             onMouseLeave={scheduleClose}
             onFocus={openNow}
             onBlur={scheduleClose}
-            onClick={() => (open ? setOpen(false) : openNow())}
             aria-expanded={open}
             aria-controls="skills-extra"
-            className="fillbtn tswap-trigger group inline-flex items-center gap-2 rounded-[10px] border border-fg px-5 py-3 font-mono text-[12px] uppercase tracking-[0.12em] text-fg cursor-pointer"
+            className={`loadbtn hswap-trigger group inline-flex items-center gap-2 rounded-[10px] border border-fg px-5 py-3 font-mono text-[12px] uppercase tracking-[0.12em] text-fg cursor-default ${open ? "is-on" : ""}`}
           >
-            <span className="fillbtn-fill" aria-hidden />
-            <span className="tswap relative z-[1]">
-              <span className="tswap-orig">{t.skills.showAll}</span>
-              <span className="tswap-copy text-bg" aria-hidden>{t.skills.showAll}</span>
+            <span className="loadbtn-fill" aria-hidden />
+            <span className="hswap relative z-[1]">
+              <span className="hswap-orig">{t.skills.showAll}</span>
+              <span className="hswap-copy text-bg" aria-hidden>{t.skills.showAll}</span>
             </span>
-            <FiChevronDown size={15} className={`relative z-[1] transition-[color,transform] duration-300 group-hover:text-bg ${open ? "rotate-180" : ""}`} />
+            <FiChevronDown size={15} className={`relative z-[1] transition-[color,transform] duration-300 group-hover:text-bg ${open ? "text-bg" : ""} ${open && coords?.placement === "top" ? "rotate-180" : ""}`} />
           </button>
         </div>
       </div>
 
-      {/* Balão flutuante (portal → flutua sobre QUALQUER conteúdo, cima ou baixo) */}
-      {mounted && open && coords &&
+      {/* Balão flutuante (portal → flutua sobre QUALQUER conteúdo, cima ou baixo).
+          Fica sempre montado; entra/sai via classe is-open (transição). */}
+      {mounted &&
         createPortal(
           <div
-            onMouseEnter={cancelClose}
-            onMouseLeave={scheduleClose}
-            className="fixed z-[120] -translate-x-1/2"
-            style={{ left: coords.left, top: coords.top, bottom: coords.bottom, width: "min(90vw, 820px)" }}
+            className="pointer-events-none fixed z-[120] -translate-x-1/2"
+            style={{ left: coords?.left ?? -9999, top: coords?.top, bottom: coords?.bottom, width: "min(90vw, 820px)" }}
           >
             <div
               id="skills-extra"
               role="region"
               aria-label={t.skills.showAll}
-              className="skills-pop relative rounded-2xl border border-line2 p-5 shadow-2xl sm:p-6"
-              style={{ background: "var(--bg-elev)", transformOrigin: coords.placement === "top" ? "bottom center" : "top center" }}
+              aria-hidden={!open}
+              onMouseEnter={cancelClose}
+              onMouseLeave={scheduleClose}
+              className={`skills-pop relative rounded-2xl border border-line2 p-5 shadow-2xl sm:p-6 ${open ? "is-open" : ""}`}
+              style={{ background: "var(--bg-elev)", transformOrigin: coords?.placement === "top" ? "bottom center" : "top center" }}
             >
-              <button
-                onClick={() => setOpen(false)}
-                aria-label="Fechar"
-                className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-lg border border-line2 text-fg2 transition-colors hover:border-fg hover:text-fg cursor-pointer"
-              >
-                <FiX size={18} />
-              </button>
-
               <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-fg3">{t.skills.showAll}</div>
               <div className="grid grid-cols-3 gap-3 md:grid-cols-4" style={{ gridAutoRows: "140px", gridAutoFlow: "dense" }}>
                 {hiddenSkills.map((s) => (
@@ -168,12 +184,19 @@ export function Skills() {
       >
         <div className="marquee-track">
           {[0, 1].map((dup) => (
-            <div key={dup} className="flex items-center" aria-hidden={dup === 1}>
-              {marqueeItems.map((m, i) => (
-                <span key={`${dup}-${i}`} className="inline-flex items-center gap-[22px] px-6 font-mono text-fg3 whitespace-nowrap" style={{ fontSize: "clamp(15px,2vw,21px)", letterSpacing: "-0.01em" }}>
-                  {m}<span className="opacity-45">/</span>
-                </span>
-              ))}
+            <div key={dup} className="flex items-center font-mono text-fg3" aria-hidden={dup === 1} style={{ fontSize: "clamp(15px,2vw,21px)", letterSpacing: "-0.01em" }}>
+              {visible.map((s, i) => {
+                const Icon = s.Icon;
+                return (
+                  <React.Fragment key={`${dup}-${i}`}>
+                    <span className="inline-flex items-center gap-[10px] whitespace-nowrap">
+                      {Icon ? <Icon size={20} /> : <span className="font-bold">{s.glyph}</span>}
+                      {s.name}
+                    </span>
+                    <span className="opacity-45" style={{ margin: "0 24px" }} aria-hidden>/</span>
+                  </React.Fragment>
+                );
+              })}
             </div>
           ))}
         </div>

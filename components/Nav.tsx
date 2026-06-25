@@ -74,9 +74,11 @@ export function Nav() {
       return;
     }
     if (lenis) {
-      lenis.scrollTo(el, { offset: -76 });
+      // O Lenis já honra o scrollMarginTop:80 das seções — sem offset extra
+      // (passar offset causava deslocamento duplo: -80 -76 = -156px).
+      lenis.scrollTo(el);
     } else {
-      const top = el.getBoundingClientRect().top + window.scrollY - 76;
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top, behavior: "smooth" });
     }
   };
@@ -91,12 +93,14 @@ export function Nav() {
             (clique no logo) — evita colisão de keys entre itens irmãos. */}
         <React.Fragment key={introKey}>
         {/* Wordmark */}
-        <NavItem delay={60} mask className="inline-flex">
-          <a href="#hero" onClick={go("hero")} aria-label="Pedro Tozaki" className="inline-flex items-baseline gap-[0.3em] cursor-pointer" style={{ fontSize: "19.4px", letterSpacing: "-0.015em" }}>
+        <a href="#hero" onClick={go("hero")} aria-label="Pedro Tozaki" className="inline-flex items-baseline gap-[0.3em] cursor-pointer" style={{ fontSize: "19.4px", letterSpacing: "-0.015em" }}>
+          <NavItem delay={60} mask className="inline-flex">
             <span className="font-normal text-fg3 transition-colors duration-500">pedro</span>
+          </NavItem>
+          <NavItem delay={120} mask className="inline-flex">
             <span className="font-bold text-fg transition-colors duration-500">tozaki</span>
-          </a>
-        </NavItem>
+          </NavItem>
+        </a>
 
         {/* Grupo à direita: links + CTA + controles */}
         <div className="flex items-center gap-[11px]">

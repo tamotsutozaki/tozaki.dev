@@ -40,7 +40,7 @@ export function InfoCard({
     <div
       style={style}
       onMouseMove={onMouseMove}
-      className={`theme-invert group flex flex-col gap-3 rounded-xl border-[1.5px] border-line2 bg-bg-elev p-5 transition-colors duration-300 ${fx} ${className}`}
+      className={`theme-invert group flex flex-col gap-3 rounded-xl border-[1.5px] border-line2 bg-bg-elev p-5 transition-[transform,box-shadow,background-color,border-color,color] duration-300 hover:-translate-y-1 hover:shadow-[0_18px_38px_-18px_rgba(0,0,0,0.5)] ${fx} ${className}`}
     >
       <div className="relative z-[1] flex items-center gap-3">
         <span className="grid h-9 w-9 flex-none place-items-center rounded-lg border border-line2 text-fg">

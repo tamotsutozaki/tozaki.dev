@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useApp } from "./Providers";
 import { Reveal } from "./Reveal";
+import { SwapText } from "./SwapText";
 import { SITE, getEmail } from "@/lib/site";
 import { sendMessage } from "@/app/actions";
 import { FiArrowUpRight, FiCalendar, FiCheck, FiCopy, FiDownload } from "react-icons/fi";
@@ -52,7 +53,7 @@ export function Contact() {
               <span className="inline-block font-mono text-[10.5px] font-medium tracking-[0.22em] uppercase text-fg2 border border-line2 rounded-[5px] px-[11px] py-[5px]">{t.contact.label}</span>
             </Reveal>
             <Reveal mask delay={160}>
-              <h2 className="m-0 font-extrabold uppercase text-fg" style={{ fontSize: "clamp(2rem,6.4vw,4.6rem)", lineHeight: 0.95, letterSpacing: "-0.03em", maxWidth: "14ch" }}>{t.contact.heading}</h2>
+              <h2 className="m-0 font-extrabold uppercase text-fg" style={{ fontSize: "clamp(2rem,6.4vw,4.6rem)", lineHeight: 0.95, letterSpacing: "-0.03em", maxWidth: "22ch" }}>{t.contact.heading}</h2>
             </Reveal>
             <Reveal delay={240}>
               <p className="mt-[18px] text-fg2" style={{ fontSize: "15.5px", lineHeight: 1.55 }}>{t.contact.sub}</p>
@@ -60,10 +61,10 @@ export function Contact() {
           </div>
         </div>
 
-        <div className="grid items-start" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,320px),1fr))", gap: "clamp(20px,3vw,40px)" }}>
+        <div className="grid grid-cols-1 items-stretch md:grid-cols-[7fr_3fr]" style={{ gap: "clamp(20px,3vw,40px)" }}>
           {/* Esquerda: formulário */}
           <Reveal className="flex flex-col gap-4">
-            <div className="bg-bg-elev border border-line rounded-2xl" style={{ padding: "clamp(20px,3vw,30px)" }}>
+            <div className="flex flex-1 flex-col bg-bg-elev border border-line rounded-2xl" style={{ padding: "clamp(20px,3vw,30px)" }}>
               {status === "sent" ? (
                 <div className="flex flex-col items-center text-center gap-3 px-1.5 py-[18px]">
                   <span className="grid place-items-center w-[50px] h-[50px] rounded-full border-[1.5px] border-fg text-fg"><FiCheck size={24} /></span>
@@ -72,7 +73,9 @@ export function Contact() {
                   <button onClick={() => { setForm({ name: "", email: "", message: "" }); setStatus("idle"); }} className="mt-1.5 px-[18px] py-2.5 rounded-lg bg-transparent border border-line2 text-fg font-medium text-[13px] cursor-pointer hover:bg-bg transition-colors">{t.contact.fAgain}</button>
                 </div>
               ) : (
-                <form onSubmit={submit} className="flex flex-col gap-[13px]">
+                <>
+                <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-fg3 mb-3.5">{t.contact.formLabel}</div>
+                <form onSubmit={submit} className="flex flex-1 flex-col gap-[13px]">
                   <Input value={form.name} onChange={onChange("name")} placeholder={t.contact.fName} required />
                   <Input type="email" value={form.email} onChange={onChange("email")} placeholder={t.contact.fEmail} required />
                   <textarea
@@ -81,7 +84,7 @@ export function Contact() {
                     rows={4}
                     required
                     placeholder={t.contact.fMessage}
-                    className="w-full px-[15px] py-[13px] bg-bg border border-line2 rounded-[9px] text-fg text-[14.5px] outline-none resize-y focus:border-fg transition-colors font-sans"
+                    className="w-full flex-1 px-[15px] py-[13px] bg-bg border border-line2 rounded-[9px] text-fg text-[14.5px] outline-none resize-y focus:border-fg transition-colors font-sans"
                     style={{ minHeight: 108 }}
                   />
                   {status === "error" && <div className="text-[12.5px] text-fg2">{t.contact.fError}</div>}
@@ -93,16 +96,17 @@ export function Contact() {
                     </span>
                   </button>
                 </form>
+                </>
               )}
             </div>
           </Reveal>
 
           {/* Direita: canais diretos + Cal.com */}
           <Reveal delay={140} className="flex flex-col gap-4">
-            <div className="bg-bg-elev border border-line rounded-2xl" style={{ padding: "clamp(18px,2.4vw,24px) clamp(20px,3vw,28px)" }}>
+            <div className="flex flex-1 flex-col bg-bg-elev border border-line rounded-2xl" style={{ padding: "clamp(18px,2.4vw,24px) clamp(20px,3vw,28px)" }}>
               <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-fg3 mb-1.5">{t.contact.directLabel}</div>
               <div className="flex items-center justify-between gap-3 py-3.5 border-t border-line">
-                <a href={`mailto:${email}`} className="font-mono text-[13.5px] text-fg cursor-pointer">{email}</a>
+                <a href={`mailto:${email}`} className="tswap-trigger font-mono text-[13.5px] text-fg cursor-pointer"><SwapText>{email}</SwapText></a>
                 <button onClick={copyEmail} aria-label={copied ? t.contact.copied : t.contact.copy} className="fillbtn tswap-trigger flex-none grid place-items-center w-[34px] h-[34px] rounded-md border border-line2 text-fg3 cursor-pointer">
                   <span className="fillbtn-fill" aria-hidden />
                   <span className="tswap relative z-[1]">
@@ -115,14 +119,12 @@ export function Contact() {
               <ChannelLink href={SITE.linkedin} label="LinkedIn" symbol="↗" />
               <ChannelLink href={SITE.github} label="GitHub" symbol="↗" />
               {/* LeetCode — descomente quando tiver: <ChannelLink href={SITE.leetcode} label="LeetCode" symbol="↗" /> */}
-              <a href={SITE.cvUrl} download className="flex items-center justify-between py-3.5 border-t border-line text-fg text-[14.5px] cursor-pointer hover:pl-2 transition-all">
-                <span>{t.contact.cv}</span>
+              <a href={SITE.cvUrl} download className="tswap-trigger flex items-center justify-between py-3.5 border-t border-line text-fg text-[14.5px] cursor-pointer">
+                <SwapText>{t.contact.cv}</SwapText>
                 <span className="text-fg3"><FiDownload size={14} /></span>
               </a>
-            </div>
 
-            <div className="bg-bg-elev border border-line rounded-2xl" style={{ padding: "clamp(18px,2.4vw,24px) clamp(20px,3vw,28px)" }}>
-              <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-fg3 mb-3.5">{t.contact.orBook}</div>
+              <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-fg3 mt-6 mb-3.5">{t.contact.orBook}</div>
               {/* TODO: trocar pelo embed oficial do Cal.com (@calcom/embed-react) ou pelo link real */}
               <a href={SITE.calLink} target="_blank" rel="noopener noreferrer" className="fillbtn tswap-trigger flex items-center justify-center w-full p-3.5 rounded-[10px] border border-line2 text-fg font-medium text-sm cursor-pointer">
                 <span className="fillbtn-fill" aria-hidden />
@@ -131,13 +133,6 @@ export function Contact() {
                   <span className="tswap-copy text-bg inline-flex items-center justify-center gap-2.5" aria-hidden><FiCalendar size={16} />{t.contact.book}<span>↗</span></span>
                 </span>
               </a>
-              <div className="flex items-center gap-2.5 mt-4 font-mono text-[11px] text-fg2">
-                <span className="relative inline-grid place-items-center w-[7px] h-[7px]">
-                  <span className="pulse-dot" />
-                  <span className="w-[6px] h-[6px] rounded-full bg-fg" />
-                </span>
-                {t.contact.availLine}
-              </div>
             </div>
           </Reveal>
         </div>
@@ -157,8 +152,8 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
 
 function ChannelLink({ href, label, symbol }: { href: string; label: string; symbol: string }) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between py-3.5 border-t border-line text-fg text-[14.5px] cursor-pointer hover:pl-2 transition-all">
-      <span>{label}</span>
+    <a href={href} target="_blank" rel="noopener noreferrer" className="tswap-trigger flex items-center justify-between py-3.5 border-t border-line text-fg text-[14.5px] cursor-pointer">
+      <SwapText>{label}</SwapText>
       <span className="text-fg3">{symbol}</span>
     </a>
   );

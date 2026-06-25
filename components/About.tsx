@@ -39,7 +39,7 @@ export function About() {
                 </span>
               </Reveal>
               <Reveal mask delay={160}>
-                <h2 className="m-0 font-extrabold uppercase text-fg" style={{ fontSize: "clamp(2rem,6vw,4.4rem)", lineHeight: 0.95, letterSpacing: "-0.03em", maxWidth: "20ch", textWrap: "balance" } as React.CSSProperties}>
+                <h2 className="m-0 font-extrabold uppercase text-fg" style={{ fontSize: "clamp(2rem,6vw,4.4rem)", lineHeight: 0.95, letterSpacing: "-0.03em", maxWidth: "22ch" }}>
                   {t.about.heading}
                 </h2>
               </Reveal>

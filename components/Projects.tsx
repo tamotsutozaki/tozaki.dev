@@ -11,6 +11,13 @@ export function Projects() {
   const { t, lang } = useApp();
   const count = String(PROJECTS.length).padStart(2, "0");
 
+  // Spotlight (reflexo) acompanhando o cursor sobre o card inteiro.
+  const onCardMove = (e: React.MouseEvent<HTMLElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+  };
+
   return (
     <section id="projetos" className="relative overflow-hidden" style={{ scrollMarginTop: 80, padding: "clamp(80px,12vh,150px) clamp(18px,5vw,72px)" }}>
       <span className="watermark" style={{ fontSize: "clamp(4.5rem,9vw,8.5rem)" }}>{t.projects.label}</span>
@@ -46,17 +53,18 @@ export function Projects() {
           {PROJECTS.map((p, i) => (
             <Reveal key={p.id} delay={i * 90}>
               <article
-                className="relative grid items-center bg-bg-elev border border-line rounded-2xl hover:border-line2 transition-colors duration-300"
+                onMouseMove={onCardMove}
+                className="theme-invert card-fx card-spotlight proj-card relative grid items-center bg-bg-elev border border-line rounded-2xl"
                 style={{ gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,330px),1fr))", gap: "clamp(20px,3.5vw,52px)", padding: "clamp(18px,2.4vw,30px)" }}
               >
-                <div className="relative border border-line rounded-[11px] overflow-hidden bg-bg" style={{ aspectRatio: "16 / 10" }}>
+                <div className="relative z-[1] border border-line rounded-[11px] overflow-hidden bg-bg" style={{ aspectRatio: "16 / 10" }}>
                   <Image src={p.img} alt={p.name} fill className="object-cover" style={{ objectPosition: "top center" }} sizes="(max-width: 768px) 100vw, 50vw" />
                   {p.featured && (
                     <span className="absolute left-3 top-3 font-mono text-[9.5px] font-semibold tracking-[0.18em] uppercase text-bg bg-fg px-[9px] py-[5px] rounded-[5px]">{t.projects.featured}</span>
                   )}
                 </div>
 
-                <div className="flex flex-col gap-[15px]">
+                <div className="relative z-[1] flex flex-col gap-[15px]">
                   <div className="flex items-center gap-3">
                     <span className="font-mono text-[13px] text-fg3">{String(i + 1).padStart(2, "0")}</span>
                     <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-fg3">{p.kicker[lang]} · {p.year}</span>

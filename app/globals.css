@@ -31,6 +31,7 @@ html.light {
 /* Tema invertido para destaque (cards do Sobre): redefine os tokens locais para
    o tema OPOSTO ao da página — página escura → card claro; página clara → card escuro. */
 .theme-invert {
+  --bg: #f7f6f2;
   --bg-elev: #ffffff;
   --bg-elev2: #f0eee8;
   --fg: #0a0a0a;
@@ -40,6 +41,7 @@ html.light {
   --line2: rgba(10, 10, 10, 0.17);
 }
 html.light .theme-invert {
+  --bg: #0a0a0a;
   --bg-elev: #121212;
   --bg-elev2: #1a1a1a;
   --fg: #f7f6f2;
@@ -103,7 +105,7 @@ html.light .theme-invert {
 
 /* ===== Skills: hover pinta o card com a cor da tecnologia ===== */
 .skill-card {
-  transition: background-color 0.35s ease, border-color 0.35s ease, transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: background-color 0.35s ease, border-color 0.35s ease, transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.3s ease;
 }
 .skill-card .sc-icon,
 .skill-card .sc-name,
@@ -115,6 +117,7 @@ html.light .theme-invert {
   transform: translateY(-4px);
   background: var(--brand, var(--bg-elev2));
   border-color: var(--brand, var(--line2));
+  box-shadow: 0 16px 34px -16px rgba(0, 0, 0, 0.45);
 }
 .skill-card:hover .sc-icon,
 .skill-card:hover .sc-name { color: var(--brand-fg, var(--fg)); }
@@ -135,16 +138,67 @@ html.light .theme-invert {
 }
 .skill-card:hover::before { opacity: 1; }
 
-/* Balão flutuante das "tecnologias que tive pouco contato" */
-.skills-pop { animation: skills-pop-in 0.22s cubic-bezier(0.2, 0.7, 0.2, 1); }
-@keyframes skills-pop-in {
-  from { opacity: 0; transform: scale(0.96); }
-  to { opacity: 1; transform: scale(1); }
+/* Balão flutuante das "tecnologias que tive pouco contato" — entra e sai */
+.skills-pop {
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.3s ease, transform 0.33s cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: none;
+}
+.skills-pop.is-open {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .skill-card:hover { transform: none; }
-  .skills-pop { animation: none; }
+  .skills-pop { transition: none; }
+}
+
+/* ===== Card de projeto: sempre invertido (.theme-invert) + lift + sombra + reflexo ===== */
+.proj-card {
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.4s ease;
+}
+.proj-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px -18px rgba(0, 0, 0, 0.5);
+}
+@media (prefers-reduced-motion: reduce) {
+  .proj-card:hover { transform: none; }
+}
+
+/* ===== Botão do balão: fill da esquerda→direita + troca de texto lateral ===== */
+.loadbtn { position: relative; overflow: hidden; }
+.loadbtn-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--fg);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: none;
+}
+.loadbtn:hover .loadbtn-fill,
+.loadbtn.is-on .loadbtn-fill { transform: scaleX(1); }
+
+.hswap { position: relative; display: inline-flex; overflow: hidden; vertical-align: bottom; }
+.hswap-orig,
+.hswap-copy {
+  display: inline-flex;
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
+}
+.hswap-copy { position: absolute; inset: 0; transform: translateX(-100%); }
+.hswap-trigger:hover .hswap-orig,
+.hswap-trigger.is-on .hswap-orig { transform: translateX(100%); }
+.hswap-trigger:hover .hswap-copy,
+.hswap-trigger.is-on .hswap-copy { transform: translateX(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .loadbtn-fill { transition: none; }
+  .hswap-trigger:hover .hswap-orig,
+  .hswap-trigger:hover .hswap-copy { transform: none; }
 }
 
 * {
@@ -199,7 +253,7 @@ textarea::placeholder {
 }
 
 .footer-name {
-  font-size: clamp(2.3rem, 13vw, 12rem);
+  font-size: clamp(1.84rem, 10.4vw, 9.6rem);
   line-height: 0.8;
 }
 
