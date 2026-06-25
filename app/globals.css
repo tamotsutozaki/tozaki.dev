@@ -1,0 +1,339 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===================== THEME TOKENS ===================== */
+/* Dark é o padrão. Light sobrescreve em html.light. */
+:root {
+  --bg: #0a0a0a;
+  --bg-elev: #121212;
+  --bg-elev2: #1a1a1a;
+  --fg: #f7f6f2;
+  --fg2: #a3a3a3;
+  --fg3: #6a6a6a;
+  --line: rgba(255, 255, 255, 0.10);
+  --line2: rgba(255, 255, 255, 0.20);
+  --navbg: rgba(10, 10, 10, 0.72);
+}
+
+html.light {
+  --bg: #f7f6f2;
+  --bg-elev: #ffffff;
+  --bg-elev2: #f0eee8;
+  --fg: #0a0a0a;
+  --fg2: #585858;
+  --fg3: #9a958c;
+  --line: rgba(10, 10, 10, 0.10);
+  --line2: rgba(10, 10, 10, 0.17);
+  --navbg: rgba(247, 246, 242, 0.74);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  transition: background 0.5s ease, color 0.5s ease;
+}
+
+::selection {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--fg3);
+  opacity: 1;
+}
+
+/* ===================== DISPLAY TYPE ===================== */
+/* Nome gigante do hero / footer — Archivo Black. */
+.display-name {
+  font-family: var(--font-display), var(--font-inter), sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
+  color: var(--fg);
+  transition: color 0.5s ease;
+}
+
+.hero-name {
+  margin: 0;
+  font-size: clamp(3.795rem, 26.565vw, 24.035rem);
+  line-height: 0.84;
+}
+
+.footer-name {
+  font-size: clamp(2.3rem, 13vw, 12rem);
+  line-height: 0.8;
+}
+
+/* Número gigante de seção (01..04) */
+.section-num {
+  font-weight: 800;
+  font-size: clamp(2.6rem, 8vw, 7rem);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: var(--fg);
+  opacity: 0.11;
+  flex: none;
+}
+
+/* Watermark vertical lateral */
+.watermark {
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--fg);
+  opacity: 0.035;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  z-index: 0;
+}
+
+/* ===================== TROCA DE TEMA — ONDA CIRCULAR ===================== */
+/* View Transitions API: o tema novo é revelado por um círculo que cresce a
+   partir do botão clicado. Navegadores sem suporte caem no gradiente (body). */
+::view-transition-old(root) {
+  animation: none;
+  z-index: 1;
+}
+::view-transition-new(root) {
+  animation: theme-reveal 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  z-index: 9999;
+}
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0px at var(--theme-x, 50%) var(--theme-y, 50%));
+  }
+  to {
+    clip-path: circle(var(--theme-r, 150%) at var(--theme-x, 50%) var(--theme-y, 50%));
+  }
+}
+/* Durante a varredura, congela as transições de cor para o corte ficar nítido. */
+html.vt-active * {
+  transition: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* ===================== INTRO DO HEADER (itens) ===================== */
+/* Estado escondido SEM transição → some instantâneo no replay (sem animação
+   de saída). A transição só existe no .is-visible, então só a entrada anima. */
+/* Botões: sobem (rise) + fade. Transição só no .is-visible → snap no replay. */
+.navi {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.navi.is-visible {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+/* Texto: emerge de baixo DENTRO do próprio espaço (mascarado, igual ao TOZAKI). */
+.navi-mask {
+  overflow: hidden;
+}
+.navi-mask > .navi-inner {
+  display: inline-flex;
+  transform: translateY(110%);
+}
+.navi-mask.is-visible > .navi-inner {
+  transform: none;
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .navi,
+  .navi-mask > .navi-inner {
+    opacity: 1;
+    transform: none;
+  }
+  .navi.is-visible,
+  .navi-mask.is-visible > .navi-inner {
+    transition: none;
+  }
+}
+
+/* ===================== TEXT SWAP HOVER ===================== */
+/* Texto sobe e some; cópia idêntica entra por baixo. Veja components/SwapText.tsx */
+.tswap {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.tswap-orig,
+.tswap-copy {
+  display: inline-flex;
+  transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
+}
+.tswap-copy {
+  position: absolute;
+  inset: 0;
+  transform: translateY(100%);
+}
+.tswap-trigger:hover .tswap-orig {
+  transform: translateY(-100%);
+}
+.tswap-trigger:hover .tswap-copy {
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tswap-trigger:hover .tswap-orig,
+  .tswap-trigger:hover .tswap-copy {
+    transform: none;
+  }
+}
+
+/* ===================== FILL SWEEP (botão outline) ===================== */
+/* O preenchimento sobe de baixo cobrindo o botão; a cópia do texto sobre o
+   preenchimento já vem na cor invertida, dando o efeito de "máscara". */
+.fillbtn {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@keyframes breathe {
+  0% { transform: scale(1); }
+  60% { transform: scale(1.07); }
+  100% { transform: scale(1.03); }
+}
+.fillbtn:hover {
+  transform: scale(1.03);
+  animation: breathe 0.45s ease-in-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fillbtn {
+    transition: none;
+  }
+  .fillbtn:hover {
+    transform: none;
+    animation: none;
+  }
+}
+.fillbtn-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--fg);
+  transform: translateY(101%);
+  transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: none;
+}
+.fillbtn:hover .fillbtn-fill {
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .fillbtn-fill {
+    transition: none;
+  }
+}
+
+/* ===================== SCROLL REVEAL ===================== */
+/* Bloco/card: sobe com fade (lento). */
+.reveal {
+  opacity: 0;
+  transform: translateY(42px);
+  transition: opacity 1s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Título: emerge de baixo DENTRO do próprio espaço (mascarado). */
+.reveal-mask {
+  overflow: hidden;
+}
+.reveal-mask > .reveal-inner {
+  display: block;
+  transform: translateY(100%);
+  transition: transform 1.15s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal-mask.is-visible > .reveal-inner {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-mask > .reveal-inner {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* ===================== KEYFRAMES ===================== */
+@keyframes mq {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.55; }
+  70% { transform: scale(2.6); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.animate-rise {
+  animation: riseIn 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: mq 36s linear infinite;
+}
+
+.pulse-dot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--fg);
+  opacity: 0.55;
+  animation: pulse 2.6s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+  html { scroll-behavior: auto; }
+}

@@ -1,0 +1,141 @@
+// ===================== i18n (PT / EN) =====================
+// Todo o conteúdo textual do site. Editar aqui troca o site inteiro.
+
+export type Lang = "pt" | "en";
+
+export const LANGS: Lang[] = ["pt", "en"];
+
+export const CONTENT = {
+  pt: {
+    nav: { about: "Sobre", skills: "Skills", projects: "Projetos", contact: "Contato", cta: "Vamos conversar" },
+    hero: {
+      taglineLead: "Construo aplicações full-stack",
+      taglineMain: "do back ao front,",
+      taglineEm: "do conceito ao deploy.",
+      loc1: "Indaiatuba",
+      loc2: "Brasil · Disponível",
+      role1: "Full-Stack Dev",
+      role2: "& Engenheiro",
+      available: "Disponível para projetos",
+    },
+    about: {
+      label: "Sobre",
+      heading: "Construindo coisas que entregam valor",
+      body1:
+        "Construí e migrei sistemas usados por milhares de usuários, do back-end à interface. Hoje toco projetos próprios e trabalhos freelance — desenho a arquitetura, escrevo o código e coloco o produto no ar.",
+      body2:
+        "Inglês profissional (TOEIC), baseado no Brasil e trabalhando de forma remota. Disponível para novos projetos e oportunidades.",
+      statLabel: "projetos entregues",
+      statSuffix: "+",
+      available: "Disponível agora",
+      chipRole: "Full-Stack Developer",
+      chipLoc: "Brasil · Remoto",
+      chipLang: "Inglês · TOEIC",
+    },
+    skills: {
+      label: "Skills",
+      heading: "As tecnologias que uso para construir",
+      sub: "Do front interativo ao back-end escalável — a stack com que trabalho no dia a dia.",
+      cats: { backend: "Backend", frontend: "Frontend", mobile: "Mobile", database: "Banco de dados", devops: "DevOps", arch: "Arquitetura", lang: "Linguagem" },
+    },
+    projects: {
+      label: "Projetos",
+      heading: "Trabalho selecionado",
+      sub: "Plataformas e produtos reais, do conceito ao deploy.",
+      featured: "Em destaque",
+      live: "Ver ao vivo",
+      code: "Código",
+      countLabel: "projetos",
+    },
+    contact: {
+      label: "Contato",
+      heading: "Vamos construir algo",
+      sub: "Disponível para projetos freelance e oportunidades. Manda uma mensagem ou agenda uma conversa rápida.",
+      fName: "Nome",
+      fEmail: "E-mail",
+      fMessage: "Conta um pouco sobre o projeto…",
+      fSend: "Enviar mensagem",
+      fSending: "Enviando…",
+      fSent: "Mensagem enviada",
+      fSentSub: "Obrigado! Respondo o mais rápido possível.",
+      fAgain: "Enviar outra",
+      fError: "Algo deu errado. Tenta de novo ou manda um e-mail direto.",
+      directLabel: "Canais diretos",
+      copy: "copiar",
+      copied: "copiado",
+      whatsapp: "WhatsApp",
+      cv: "Baixar CV",
+      orBook: "Prefere conversar?",
+      book: "Agendar no Cal.com",
+      availLine: "Aberto a projetos e oportunidades.",
+    },
+    footer: { rights: "© 2026 Pedro Tozaki" },
+  },
+  en: {
+    nav: { about: "About", skills: "Skills", projects: "Projects", contact: "Contact", cta: "Let's talk" },
+    hero: {
+      taglineLead: "I build full-stack applications",
+      taglineMain: "back to front,",
+      taglineEm: "concept to deploy.",
+      loc1: "Indaiatuba",
+      loc2: "Brazil · Available",
+      role1: "Full-Stack Dev",
+      role2: "& Engineer",
+      available: "Available for work",
+    },
+    about: {
+      label: "About",
+      heading: "Building things that ship value",
+      body1:
+        "I've built and migrated systems used by thousands of users, from back-end to interface. Today I run my own projects and freelance work — I design the architecture, write the code, and ship the product live.",
+      body2:
+        "Professional English (TOEIC), based in Brazil and working remotely. Available for new projects and opportunities.",
+      statLabel: "projects shipped",
+      statSuffix: "+",
+      available: "Available now",
+      chipRole: "Full-Stack Developer",
+      chipLoc: "Brazil · Remote",
+      chipLang: "English · TOEIC",
+    },
+    skills: {
+      label: "Skills",
+      heading: "The technologies I build with",
+      sub: "From interactive front-ends to scalable back-end services — the stack I work with day to day.",
+      cats: { backend: "Backend", frontend: "Frontend", mobile: "Mobile", database: "Database", devops: "DevOps", arch: "Architecture", lang: "Language" },
+    },
+    projects: {
+      label: "Projects",
+      heading: "Selected work",
+      sub: "Real platforms and products, from concept to deploy.",
+      featured: "Featured",
+      live: "Live site",
+      code: "Code",
+      countLabel: "projects",
+    },
+    contact: {
+      label: "Contact",
+      heading: "Let's build something",
+      sub: "Available for freelance projects and opportunities. Send a message or book a quick call.",
+      fName: "Name",
+      fEmail: "Email",
+      fMessage: "Tell me a bit about the project…",
+      fSend: "Send message",
+      fSending: "Sending…",
+      fSent: "Message sent",
+      fSentSub: "Thanks! I'll get back to you as soon as possible.",
+      fAgain: "Send another",
+      fError: "Something went wrong. Try again or email me directly.",
+      directLabel: "Direct channels",
+      copy: "copy",
+      copied: "copied",
+      whatsapp: "WhatsApp",
+      cv: "Download CV",
+      orBook: "Prefer to talk?",
+      book: "Book on Cal.com",
+      availLine: "Open to projects and opportunities.",
+    },
+    footer: { rights: "© 2026 Pedro Tozaki" },
+  },
+} as const;
+
+export type Dict = (typeof CONTENT)["pt"];
