@@ -447,6 +447,22 @@ html.vt-active * {
   }
 }
 
+/* Variante do fill-sweep na cor da marca: o preenchimento sobe na cor --brand,
+   a borda acompanha e o ícone trocado (tswap) entra na cor --brand-fg.
+   Usado nos links sociais do Sobre (ver components/About.tsx). */
+.fillbrand {
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.42s ease;
+}
+.fillbrand .fillbtn-fill {
+  background: var(--brand, var(--fg));
+}
+.fillbrand .tswap-copy {
+  color: var(--brand-fg, var(--bg));
+}
+.fillbrand:hover {
+  border-color: var(--brand, var(--fg));
+}
+
 /* ===================== SCROLL REVEAL ===================== */
 /* Bloco/card: sobe com fade (lento). */
 .reveal {

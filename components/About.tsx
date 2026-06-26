@@ -138,9 +138,13 @@ export function About() {
                   download="Pedro Tozaki - CV.pdf"
                   aria-label={t.contact.cv}
                   style={{ "--brand": "var(--fg)", "--brand-fg": "var(--bg)" } as React.CSSProperties}
-                  className="group inline-flex items-center gap-2 h-[42px] px-4 rounded-[11px] border border-line2 text-fg2 font-medium text-[13px] cursor-pointer transition-[background-color,border-color,color,transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand)] hover:border-[var(--brand)] hover:text-[var(--brand-fg)] hover:shadow-lg"
+                  className="fillbrand fillbtn tswap-trigger inline-flex items-center h-[42px] px-4 rounded-[11px] border border-line2 text-fg2 font-medium text-[13px] cursor-pointer"
                 >
-                  <FiDownload size={15} />{t.contact.cv}
+                  <span className="fillbtn-fill" aria-hidden />
+                  <span className="tswap relative z-[1]">
+                    <span className="tswap-orig inline-flex items-center gap-2"><FiDownload size={15} />{t.contact.cv}</span>
+                    <span className="tswap-copy inline-flex items-center gap-2" aria-hidden><FiDownload size={15} />{t.contact.cv}</span>
+                  </span>
                 </a>
               </div>
             </div>
@@ -151,8 +155,8 @@ export function About() {
   );
 }
 
-/** Botão de ícone que pinta na cor da marca no hover (reusa a ideia dos
- *  skill-cards: vars --brand/--brand-fg + lift). */
+/** Botão de ícone com o fill-sweep subindo na COR DA MARCA + troca do ícone
+ *  (tswap). Vars --brand/--brand-fg colorem o preenchimento e o ícone trocado. */
 function BrandIconBtn({ href, label, brand, brandFg, children }: { href: string; label: string; brand: string; brandFg: string; children: React.ReactNode }) {
   const external = href.startsWith("http");
   return (
@@ -161,9 +165,13 @@ function BrandIconBtn({ href, label, brand, brandFg, children }: { href: string;
       aria-label={label}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       style={{ "--brand": brand, "--brand-fg": brandFg } as React.CSSProperties}
-      className="group grid place-items-center w-[42px] h-[42px] rounded-[11px] border border-line2 text-fg2 cursor-pointer transition-[background-color,border-color,color,transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand)] hover:border-[var(--brand)] hover:text-[var(--brand-fg)] hover:shadow-lg"
+      className="fillbrand fillbtn tswap-trigger grid place-items-center w-[42px] h-[42px] rounded-[11px] border border-line2 text-fg2 cursor-pointer"
     >
-      {children}
+      <span className="fillbtn-fill" aria-hidden />
+      <span className="tswap relative z-[1]">
+        <span className="tswap-orig">{children}</span>
+        <span className="tswap-copy" aria-hidden>{children}</span>
+      </span>
     </a>
   );
 }
