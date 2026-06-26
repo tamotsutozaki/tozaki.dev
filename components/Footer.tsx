@@ -16,8 +16,9 @@ export function Footer() {
     e.preventDefault();
     // "hero" / topo: volta ao início (mesmo comportamento do wordmark da navbar)
     if (id === "hero") {
+      // Fallback sem Lenis (reduced-motion) é instantâneo — ver Nav.tsx (R3).
       if (lenis) lenis.scrollTo(0);
-      else window.scrollTo({ top: 0, behavior: "smooth" });
+      else window.scrollTo({ top: 0 });
       replayIntro();
       return;
     }
@@ -27,7 +28,7 @@ export function Footer() {
       lenis.scrollTo(el);
     } else {
       const top = el.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top, behavior: "smooth" });
+      window.scrollTo({ top });
     }
   };
 

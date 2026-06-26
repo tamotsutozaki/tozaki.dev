@@ -25,27 +25,35 @@ export function Nav() {
   const linksWrap = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const dotEl = useRef<HTMLSpanElement>(null);
-  const dotShown = useRef(false); // bolinha atualmente visível?
-  const suppressDot = useRef(false); // durante o "voltar ao topo" (reset): não anima/mostra
-  const suppressTimer = useRef<number | null>(null);
-  const introInited = useRef(false); // pula o 1º run do efeito de introKey (mount/F5)
+  const dotShown = useRef(false); // bolinha visível agora?
+  const dotReady = useRef(false); // a intro terminou? (gate de visibilidade)
+  const revealTimer = useRef<number | null>(null);
+  const activeRef = useRef(active);
+  activeRef.current = active; // latest-ref: timers leem o active fresco (sem closure velha)
 
-  // Posiciona a bolinha sob o link ativo. Se estava oculta, SALTA pra posição
-  // (sem deslizar) e só faz fade-in; o deslize só acontece entre seções já
-  // visíveis — assim no F5 ela nasce no lugar e nunca escorrega da borda.
-  const updateDot = () => {
+  // Posiciona a bolinha sob o link ativo. Lê tudo de refs (à prova de closure
+  // velha em timers). Se estava oculta, SALTA pro lugar (sem deslizar) + fade-in;
+  // o deslize só acontece entre seções já visíveis.
+  const positionDot = () => {
     const node = dotEl.current;
     if (!node) return;
     const wrap = linksWrap.current;
-    const el = linkRefs.current[active];
-    // Suprimido (reset) ou seção ativa sem link na barra (ex.: Contato) → esconde
-    if (suppressDot.current || !wrap || !el) {
+    const el = linkRefs.current[activeRef.current];
+    // Gate da intro, seção sem link (ex.: Contato), ou container escondido
+    // (display:none abaixo do md / via zoom) → esconde e zera dotShown, pra que
+    // ao voltar pro desktop ela RENASÇA no lugar em vez de deslizar da borda.
+    if (!dotReady.current || !wrap || !el || wrap.offsetParent === null) {
       node.style.opacity = "0";
       dotShown.current = false;
       return;
     }
     const wr = wrap.getBoundingClientRect();
     const er = el.getBoundingClientRect();
+    if (wr.width === 0) {
+      node.style.opacity = "0";
+      dotShown.current = false;
+      return;
+    }
     const tf = `translateX(${er.left - wr.left + er.width / 2}px) translateX(-50%)`;
     if (!dotShown.current) {
       node.style.transition = "none";
@@ -60,39 +68,41 @@ export function Nav() {
     dotShown.current = true;
   };
 
-  // Reposiciona quando muda a seção ativa, o idioma (muda larguras) ou após o
-  // replay da intro. rAF garante layout pronto antes de medir.
+  // Reposiciona ao mudar a seção ativa (scroll-spy/clique) ou o idioma (larguras).
   useEffect(() => {
-    const id = requestAnimationFrame(updateDot);
+    const id = requestAnimationFrame(positionDot);
     return () => cancelAnimationFrame(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active, lang, introKey]);
+  }, [active, lang]);
 
-  // Reset pro topo (logo / Início / troca de idioma / nome no footer → replayIntro):
-  // esconde a bolinha na hora e ignora updates por ~1.5s, pra ela NÃO deslizar
-  // atravessando as seções durante o scroll de volta. Some até o usuário rolar
-  // de novo. Pula o 1º run (mount/F5), onde a bolinha deve nascer no Início.
+  // GATE da intro — roda no mount (F5) e em todo "voltar ao topo" (logo / Início /
+  // troca de idioma / nome no footer → replayIntro muda introKey). Esconde a
+  // bolinha e só a revela DEPOIS que a intro (~1.0s) e o scroll-to-top (~1.1s)
+  // assentam. Assim: (R1) no F5 não aparece antes da animação; (R3) no reset não
+  // desliza atravessando as seções — some e renasce no lugar. Ao revelar, CHAMA
+  // positionDot() (que lê o active fresco) — então ela reaparece mesmo que o
+  // usuário só role a página depois do reset (R4).
   useEffect(() => {
-    if (!introInited.current) {
-      introInited.current = true;
-      return;
-    }
-    suppressDot.current = true;
+    dotReady.current = false;
     dotShown.current = false;
     if (dotEl.current) dotEl.current.style.opacity = "0";
-    if (suppressTimer.current) clearTimeout(suppressTimer.current);
-    suppressTimer.current = window.setTimeout(() => { suppressDot.current = false; }, 1500);
+    if (revealTimer.current) clearTimeout(revealTimer.current);
+    const reduce = typeof window !== "undefined" && window.matchMedia
+      && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    revealTimer.current = window.setTimeout(() => {
+      dotReady.current = true;
+      positionDot();
+    }, reduce ? 150 : 1300);
+    return () => { if (revealTimer.current) clearTimeout(revealTimer.current); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [introKey]);
 
   useEffect(() => {
-    const onResize = () => updateDot();
+    const onResize = () => positionDot();
     window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-      if (suppressTimer.current) clearTimeout(suppressTimer.current);
-    };
+    return () => window.removeEventListener("resize", onResize);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active]);
+  }, []);
 
   // Esconde a navbar ao rolar pra baixo, mostra ao rolar pra cima
   useEffect(() => {
@@ -140,8 +150,11 @@ export function Nav() {
     lockUntil.current = Date.now() + 1400;
     const el = document.getElementById(id);
     if (id === "hero" || !el) {
+      // Fallback (sem Lenis = reduced-motion) é INSTANTÂNEO: scroll animado aqui
+      // não é neutralizado pelo CSS e faria a bolinha atravessar as seções no
+      // reset (R3), além de contrariar o reduced-motion.
       if (lenis) lenis.scrollTo(0);
-      else window.scrollTo({ top: 0, behavior: "smooth" });
+      else window.scrollTo({ top: 0 });
       replayIntro();
       return;
     }
@@ -151,7 +164,7 @@ export function Nav() {
       lenis.scrollTo(el);
     } else {
       const top = el.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top, behavior: "smooth" });
+      window.scrollTo({ top });
     }
   };
 
