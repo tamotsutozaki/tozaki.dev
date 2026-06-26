@@ -97,7 +97,7 @@ function HeroContent() {
       </div>
 
       {/* Meta — canto inferior esquerdo */}
-      <div className={`reveal absolute bottom-[30px] flex items-start gap-[11px] ${vis}`} style={{ left: "clamp(18px,5vw,72px)", transitionDelay: "350ms" }}>
+      <div className={`reveal hero-meta-left absolute bottom-[30px] flex items-start gap-[11px] ${vis}`} style={{ left: "clamp(18px,5vw,72px)", transitionDelay: "350ms" }}>
         <span className="text-fg2 mt-px">
           <FiMapPin size={16} />
         </span>
@@ -108,7 +108,7 @@ function HeroContent() {
       </div>
 
       {/* Meta — canto inferior direito */}
-      <div className={`reveal absolute bottom-[30px] flex items-start gap-[11px] ${vis}`} style={{ right: "clamp(18px,5vw,72px)", transitionDelay: "430ms" }}>
+      <div className={`reveal hero-meta-right absolute bottom-[30px] flex items-start gap-[11px] ${vis}`} style={{ right: "clamp(18px,5vw,72px)", transitionDelay: "430ms" }}>
         <span className="text-fg2 mt-px">
           <FaCode size={16} />
         </span>

@@ -128,10 +128,11 @@ export function Skills() {
         <div className="mt-6 flex justify-start">
           <button
             ref={triggerRef}
-            onMouseEnter={openNow}
-            onMouseLeave={scheduleClose}
-            onFocus={openNow}
-            onBlur={scheduleClose}
+            onMouseEnter={() => { if (!window.matchMedia("(hover:none)").matches) openNow(); }}
+            onMouseLeave={() => { if (!window.matchMedia("(hover:none)").matches) scheduleClose(); }}
+            onFocus={() => { if (!window.matchMedia("(hover:none)").matches) openNow(); }}
+            onBlur={() => { if (!window.matchMedia("(hover:none)").matches) scheduleClose(); }}
+            onClick={() => { if (window.matchMedia("(hover:none)").matches) { open ? setOpen(false) : openNow(); } }}
             aria-expanded={open}
             aria-controls="skills-extra"
             className={`loadbtn hswap-trigger group inline-flex items-center gap-2 rounded-[10px] border border-fg px-5 py-3 font-mono text-[12px] uppercase tracking-[0.12em] text-fg cursor-default ${open ? "is-on" : ""}`}
@@ -151,7 +152,7 @@ export function Skills() {
       {mounted &&
         createPortal(
           <div
-            className="pointer-events-none fixed z-[120]"
+            className="skills-pop-wrap pointer-events-none fixed z-[120]"
             style={{ left: coords?.left ?? -9999, top: coords?.top, bottom: coords?.bottom, width: "min(95vw, 1040px)" }}
           >
             <div

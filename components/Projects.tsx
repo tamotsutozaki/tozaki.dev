@@ -109,7 +109,7 @@ function ProjectLink({ href, label, primary = false }: { href: string; label: st
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`fillbtn tswap-trigger inline-flex items-center justify-center px-[17px] py-[11px] rounded-lg border ${primary ? "border-fg" : "border-line2"} text-fg font-medium text-[13px] cursor-pointer`}
+      className={`fillbtn tswap-trigger inline-flex items-center justify-center px-[17px] py-[11px] max-md:min-h-[44px] rounded-lg border ${primary ? "border-fg" : "border-line2"} text-fg font-medium text-[13px] cursor-pointer`}
     >
       <span className="fillbtn-fill" aria-hidden />
       <span className="tswap relative z-[1]">

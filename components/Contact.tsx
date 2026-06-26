@@ -95,7 +95,7 @@ export function Contact() {
                     rows={4}
                     required
                     placeholder={t.contact.fMessage}
-                    className="w-full flex-1 px-[15px] py-[13px] bg-bg border border-line2 rounded-[9px] text-fg text-[14.5px] outline-none resize-y focus:border-fg transition-colors font-sans"
+                    className="w-full flex-1 px-[15px] py-[13px] bg-bg border border-line2 rounded-[9px] text-fg text-[14.5px] max-md:text-[16px] outline-none resize-y focus:border-fg transition-colors font-sans"
                     style={{ minHeight: 108 }}
                   />
                   {status === "error" && <div className="text-[12.5px] text-fg2">{t.contact.fError}</div>}
@@ -118,7 +118,7 @@ export function Contact() {
               <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-fg3 mb-2.5">{t.contact.directLabel}</div>
 
               {/* Status ao vivo: disponibilidade + horário de São Paulo + tempo de resposta */}
-              <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10.5px] text-fg3">
+              <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10.5px] max-md:text-[12px] text-fg3">
                 <span className="flex items-center gap-1.5 text-fg2">
                   <span className="relative inline-grid place-items-center w-[7px] h-[7px]">
                     <span className="absolute h-full w-full rounded-full animate-ping" style={{ background: "#22c55e" }} />
@@ -137,7 +137,7 @@ export function Contact() {
                   <span className="flex-none text-fg3 transition-colors group-hover:text-fg"><FiMail size={15} /></span>
                   <SwapText className="font-mono text-[13.5px] text-fg">{email}</SwapText>
                 </a>
-                <button type="button" onClick={copyEmail} aria-label={copied ? t.contact.copied : t.contact.copy} className="fillbtn tswap-trigger relative z-[1] ml-auto flex-none grid place-items-center w-[34px] h-[34px] rounded-md border border-line2 text-fg3 cursor-pointer">
+                <button type="button" onClick={copyEmail} aria-label={copied ? t.contact.copied : t.contact.copy} className="fillbtn tswap-trigger relative z-[1] ml-auto flex-none grid place-items-center w-[34px] h-[34px] max-md:w-[42px] max-md:h-[42px] rounded-md border border-line2 text-fg3 cursor-pointer">
                   <span className="fillbtn-fill" aria-hidden />
                   <span className="tswap relative z-[1]">
                     <span className="tswap-orig">{copied ? <FiCheck size={14} /> : <FiCopy size={14} />}</span>
@@ -175,7 +175,7 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
       {...props}
-      className="w-full px-[15px] py-[13px] bg-bg border border-line2 rounded-[9px] text-fg text-[14.5px] outline-none focus:border-fg transition-colors"
+      className="w-full px-[15px] py-[13px] bg-bg border border-line2 rounded-[9px] text-fg text-[14.5px] max-md:text-[16px] outline-none focus:border-fg transition-colors"
     />
   );
 }

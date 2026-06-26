@@ -44,7 +44,7 @@ export function Footer() {
               </span>
               {t.contact.availLine}
             </div>
-            <a href="#contato" onClick={go("contato")} className="group inline-flex items-center gap-2.5 font-bold text-fg cursor-pointer" style={{ fontSize: "clamp(1.4rem,3vw,2.1rem)", letterSpacing: "-0.03em" }}>
+            <a href="#contato" onClick={go("contato")} className="group inline-flex items-center gap-2.5 font-bold text-fg cursor-pointer max-md:py-2 max-md:-my-2" style={{ fontSize: "clamp(1.4rem,3vw,2.1rem)", letterSpacing: "-0.03em" }}>
               {t.contact.heading}
               <span className="transition-transform duration-150 group-hover:translate-x-[4px] group-hover:-translate-y-[7px]" style={{ fontSize: "0.7em" }}>↗</span>
             </a>
@@ -68,7 +68,7 @@ export function Footer() {
 
 function Social({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="fillbtn tswap-trigger grid place-items-center w-10 h-10 rounded-[9px] border border-line2 text-fg2 cursor-pointer">
+    <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="fillbtn tswap-trigger grid place-items-center w-10 h-10 max-md:w-11 max-md:h-11 rounded-[9px] border border-line2 text-fg2 cursor-pointer">
       <span className="fillbtn-fill" aria-hidden />
       <span className="tswap relative z-[1]">
         <span className="tswap-orig">{children}</span>

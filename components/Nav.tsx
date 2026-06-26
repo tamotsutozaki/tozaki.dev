@@ -171,14 +171,14 @@ export function Nav() {
   return (
     <>
       <nav
-        className="fixed top-0 inset-x-0 z-[100] flex items-center justify-between gap-[25px] h-[80px]"
+        className="fixed top-0 inset-x-0 z-[100] flex items-center justify-between gap-3 md:gap-[25px] h-[80px]"
         style={{ background: "var(--bg)", paddingLeft: "clamp(18px,5vw,72px)", paddingRight: "clamp(18px,5vw,72px)", transform: hidden && !menuOpen ? "translateY(-100%)" : "translateY(0)", transition: "transform .35s ease, background .5s ease, border-color .5s ease" }}
       >
         {/* Intro do header: uma única key remonta todo o conteúdo a cada replay
             (clique no logo) — evita colisão de keys entre itens irmãos. */}
         <React.Fragment key={introKey}>
         {/* Wordmark */}
-        <a href="#hero" onClick={go("hero")} aria-label="Pedro Tozaki" className="nav-logo inline-flex items-baseline gap-[0.3em] cursor-pointer" style={{ fontSize: "19.4px", letterSpacing: "-0.015em" }}>
+        <a href="#hero" onClick={go("hero")} aria-label="Pedro Tozaki" className="nav-logo inline-flex items-baseline gap-[0.3em] cursor-pointer max-md:py-2" style={{ fontSize: "19.4px", letterSpacing: "-0.015em" }}>
           <NavItem delay={60} mask className="inline-flex">
             <span className="font-normal text-fg3 transition-colors duration-500">pedro</span>
           </NavItem>
@@ -262,7 +262,7 @@ export function Nav() {
 
       {/* Menu mobile */}
       {menuOpen && (
-        <div className="fixed inset-0 z-[99] bg-bg flex flex-col animate-rise" style={{ padding: "88px clamp(24px,7vw,56px) 40px" }}>
+        <div className="fixed inset-0 z-[99] bg-bg flex flex-col animate-rise md:hidden overflow-y-auto" style={{ padding: "88px clamp(24px,7vw,56px) 40px" }}>
           <a href="#hero" onClick={go("hero")} className="flex items-baseline gap-[18px] py-5 border-b border-line font-bold uppercase text-fg cursor-pointer" style={{ fontSize: "clamp(26px,7vw,40px)", letterSpacing: "-0.03em" }}>
             <span className="font-mono text-[13px] font-medium text-fg3">00</span>
             {t.nav.home}

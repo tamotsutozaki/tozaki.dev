@@ -207,6 +207,7 @@ html.light .theme-invert {
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -260,7 +261,7 @@ textarea::placeholder {
 /* Número gigante de seção (01..04) */
 .section-num {
   font-weight: 800;
-  font-size: clamp(2.6rem, 8vw, 7rem);
+  font-size: clamp(2rem, 8vw, 7rem);
   line-height: 0.8;
   letter-spacing: -0.04em;
   color: var(--fg);
@@ -571,6 +572,58 @@ html.vt-active * {
   background: var(--fg);
   opacity: 0.55;
   animation: pulse 2.6s ease-out infinite;
+}
+
+/* =====================================================================
+   AJUSTES SÓ-MOBILE — nada aqui altera o layout em telas >= 768px.
+   (Exceção sancionada: .hero-name cai em < 1024px; em >= 1024px — o
+   monitor real — o valor computado é idêntico ao original.)
+   ===================================================================== */
+
+/* TOZAKI sempre numa linha só, inteiro, em telas < 1024px */
+@media (max-width: 1023.98px) {
+  .hero-name {
+    font-size: clamp(3.795rem, 20vw, 11rem);
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 767.98px) {
+  /* Watermark vertical (nome faint da seção) — remove o ruído no celular */
+  .watermark { display: none; }
+
+  /* Metas do hero não colidem: empilha "cargo" acima de "localização" */
+  .hero-meta-right {
+    right: auto !important;
+    left: clamp(18px, 5vw, 72px) !important;
+    bottom: 84px !important;
+  }
+
+  /* Balão do Skills: centraliza e ganha rolagem interna (não corta) */
+  .skills-pop-wrap { left: 2.5vw !important; width: 95vw !important; }
+  .skills-pop { max-height: 80vh; overflow-y: auto; overscroll-behavior: contain; }
+
+  /* Label mono da tagline um pouco maior no celular */
+  #hero .tagline .font-mono.uppercase { font-size: 11px !important; }
+}
+
+/* Heading PT longo (CONSTRUINDO) não estoura em telas minúsculas */
+@media (max-width: 360px) {
+  #projetos h2 { font-size: clamp(1.5rem, 7vw, 2rem) !important; }
+}
+
+/* Celular deitado (altura curta): hero compacto, sem sobrepor os metas */
+@media (max-width: 1023.98px) and (max-height: 520px) {
+  #hero { padding-top: 64px !important; padding-bottom: 64px !important; }
+  .hero-name { font-size: clamp(3rem, 14vw, 7rem) !important; }
+}
+
+/* Toque: não deixa o hover "grudar" depois do tap */
+@media (hover: none) {
+  .card-fx { transform: none !important; box-shadow: none !important; }
+  .card-spotlight:hover::before { opacity: 0 !important; }
+  .proj-card:hover,
+  .skill-card:hover { transform: none !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
