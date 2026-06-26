@@ -147,7 +147,7 @@ export function About() {
                   href={SITE.cvUrl}
                   download="Pedro Tozaki - CV.pdf"
                   aria-label={t.contact.cv}
-                  style={{ "--brand": "var(--fg)", "--brand-fg": "var(--bg)" } as React.CSSProperties}
+                  style={{ "--brand": "#2E90E6", "--brand-fg": "#fff" } as React.CSSProperties}
                   className="fillbrand fillbtn tswap-trigger inline-flex items-center h-[42px] px-4 rounded-[11px] border border-line2 text-fg2 font-medium text-[13px] cursor-pointer"
                 >
                   <span className="fillbtn-fill" aria-hidden />
