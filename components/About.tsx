@@ -2,12 +2,13 @@
 
 import React from "react";
 import Image from "next/image";
-import { FiMapPin, FiBriefcase, FiGlobe } from "react-icons/fi";
+import { FiMapPin, FiBriefcase, FiGlobe, FiMail, FiDownload } from "react-icons/fi";
 import { LuGraduationCap } from "react-icons/lu";
+import { FaGithub, FaLinkedinIn, FaWhatsapp } from "react-icons/fa6";
 import { useApp } from "./Providers";
 import { Reveal } from "./Reveal";
 import { InfoCard } from "./InfoCard";
-import { SITE } from "@/lib/site";
+import { SITE, getEmail } from "@/lib/site";
 
 // Destaca as palavras marcadas com **asteriscos** (cor/peso mais fortes).
 function renderRich(text: string) {
@@ -123,9 +124,81 @@ export function About() {
                 </div>
               </div>
             </div>
+
+            {/* === DEMO: dois estilos de links sociais empilhados p/ comparar === */}
+            <div className="flex flex-col gap-7 pt-[26px] border-t border-line">
+              {/* 1) PROFISSIONAL — ícones monocromáticos (estilo do footer) + CV */}
+              <div>
+                <div className="mb-3 flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] uppercase text-fg3">
+                  {t.about.findMe}<span className="opacity-50 normal-case tracking-normal">· profissional</span>
+                </div>
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <IconBtnPro href={SITE.github} label="GitHub"><FaGithub size={17} /></IconBtnPro>
+                  <IconBtnPro href={SITE.linkedin} label="LinkedIn"><FaLinkedinIn size={16} /></IconBtnPro>
+                  <IconBtnPro href={`mailto:${getEmail()}`} label="E-mail"><FiMail size={17} /></IconBtnPro>
+                  <a href={SITE.cvUrl} download="Pedro Tozaki - CV.pdf" className="fillbtn tswap-trigger inline-flex items-center h-[42px] px-4 rounded-[11px] border border-fg text-fg font-medium text-[13px] cursor-pointer">
+                    <span className="fillbtn-fill" aria-hidden />
+                    <span className="tswap relative z-[1]">
+                      <span className="tswap-orig inline-flex items-center gap-2"><FiDownload size={15} />{t.contact.cv}</span>
+                      <span className="tswap-copy text-bg inline-flex items-center gap-2" aria-hidden><FiDownload size={15} />{t.contact.cv}</span>
+                    </span>
+                  </a>
+                </div>
+              </div>
+
+              {/* 2) CRIATIVA — ícones que pintam na cor da marca no hover */}
+              <div>
+                <div className="mb-3 flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] uppercase text-fg3">
+                  {t.about.connect}<span className="opacity-50 normal-case tracking-normal">· criativa</span>
+                </div>
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <BrandIconBtn href={SITE.github} label="GitHub" brand="var(--fg)" brandFg="var(--bg)"><FaGithub size={17} /></BrandIconBtn>
+                  <BrandIconBtn href={SITE.linkedin} label="LinkedIn" brand="#0A66C2" brandFg="#fff"><FaLinkedinIn size={16} /></BrandIconBtn>
+                  <BrandIconBtn href={SITE.whatsapp} label="WhatsApp" brand="#25D366" brandFg="#fff"><FaWhatsapp size={17} /></BrandIconBtn>
+                  <BrandIconBtn href={`mailto:${getEmail()}`} label="E-mail" brand="#EA4335" brandFg="#fff"><FiMail size={17} /></BrandIconBtn>
+                </div>
+              </div>
+            </div>
           </Reveal>
         </div>
       </div>
     </section>
+  );
+}
+
+/** Botão de ícone monocromático (mesmo estilo do footer): preenche com a cor do
+ *  texto no hover e o ícone troca pra cor do fundo. */
+function IconBtnPro({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
+  const external = href.startsWith("http");
+  return (
+    <a
+      href={href}
+      aria-label={label}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className="fillbtn tswap-trigger grid place-items-center w-[42px] h-[42px] rounded-[11px] border border-line2 text-fg2 cursor-pointer"
+    >
+      <span className="fillbtn-fill" aria-hidden />
+      <span className="tswap relative z-[1]">
+        <span className="tswap-orig">{children}</span>
+        <span className="tswap-copy text-bg" aria-hidden>{children}</span>
+      </span>
+    </a>
+  );
+}
+
+/** Botão de ícone que pinta na cor da marca no hover (reusa a ideia dos
+ *  skill-cards: vars --brand/--brand-fg + lift). */
+function BrandIconBtn({ href, label, brand, brandFg, children }: { href: string; label: string; brand: string; brandFg: string; children: React.ReactNode }) {
+  const external = href.startsWith("http");
+  return (
+    <a
+      href={href}
+      aria-label={label}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      style={{ "--brand": brand, "--brand-fg": brandFg } as React.CSSProperties}
+      className="group grid place-items-center w-[42px] h-[42px] rounded-[11px] border border-line2 text-fg2 cursor-pointer transition-[background-color,border-color,color,transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand)] hover:border-[var(--brand)] hover:text-[var(--brand-fg)] hover:shadow-lg"
+    >
+      {children}
+    </a>
   );
 }

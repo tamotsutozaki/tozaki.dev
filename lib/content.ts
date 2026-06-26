@@ -31,6 +31,8 @@ export const CONTENT = {
       statLabel: "projetos entregues",
       statSuffix: "+",
       available: "Disponível agora",
+      findMe: "Encontre-me",
+      connect: "Vamos conectar",
       chips: ["5+ anos na área de tecnologia", "Full stack", "Disponível para projetos e oportunidades"],
       cards: {
         locLabel: "Localização",
@@ -121,6 +123,8 @@ export const CONTENT = {
       statLabel: "projects shipped",
       statSuffix: "+",
       available: "Available now",
+      findMe: "Find me",
+      connect: "Let's connect",
       chips: ["5+ years in tech", "Full stack", "Available for projects and opportunities"],
       cards: {
         locLabel: "Location",
