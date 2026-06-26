@@ -9,8 +9,10 @@ import { SKILLS, type SkillSize } from "@/lib/skills";
 import { FiChevronDown } from "react-icons/fi";
 
 // Span no grid conforme o tamanho do card.
+// Bento só a partir de md (>=768px). No mobile todos os cards ficam 1x1 (mesmo
+// tamanho) numa grade de 2 colunas.
 const spanClass = (size: SkillSize) =>
-  size === 4 ? "col-span-2 row-span-2" : size === 2 ? "col-span-2" : "";
+  size === 4 ? "md:col-span-2 md:row-span-2" : size === 2 ? "md:col-span-2" : "";
 
 type PopCoords = { left: number; top?: number; bottom?: number; placement: "top" | "bottom" };
 
@@ -116,7 +118,7 @@ export function Skills() {
         </Reveal>
 
         {/* Grade bento (visíveis) */}
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6" style={{ gridAutoRows: "160px", gridAutoFlow: "dense" }}>
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6" style={{ gridAutoRows: "160px", gridAutoFlow: "dense" }}>
           {visible.map((s, i) => (
             <Reveal key={s.name} delay={(i % 6) * 40} className={spanClass(s.size)}>
               <SkillCard skill={s} />

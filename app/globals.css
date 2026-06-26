@@ -592,19 +592,15 @@ html.vt-active * {
   /* Watermark vertical (nome faint da seção) — remove o ruído no celular */
   .watermark { display: none; }
 
-  /* Metas do hero não colidem: empilha "cargo" acima de "localização" */
-  .hero-meta-right {
-    right: auto !important;
-    left: clamp(18px, 5vw, 72px) !important;
-    bottom: 84px !important;
-  }
-
   /* Balão do Skills: centraliza e ganha rolagem interna (não corta) */
   .skills-pop-wrap { left: 2.5vw !important; width: 95vw !important; }
   .skills-pop { max-height: 80vh; overflow-y: auto; overscroll-behavior: contain; }
 
   /* Label mono da tagline um pouco maior no celular */
   #hero .tagline .font-mono.uppercase { font-size: 11px !important; }
+
+  /* Nome do footer preenche bem a largura no celular (sem estourar) */
+  .footer-name { font-size: clamp(1.84rem, 21vw, 8rem); }
 }
 
 /* Heading PT longo (CONSTRUINDO) não estoura em telas minúsculas */
@@ -624,6 +620,19 @@ html.vt-active * {
   .card-spotlight:hover::before { opacity: 0 !important; }
   .proj-card:hover,
   .skill-card:hover { transform: none !important; }
+}
+
+/* Menu mobile: cada item sobe do "chão" em cadeia (um de cada vez, até o CTA) */
+@keyframes menu-item-rise {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: none; }
+}
+.menu-item {
+  opacity: 0;
+  animation: menu-item-rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-item { animation: none; opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {

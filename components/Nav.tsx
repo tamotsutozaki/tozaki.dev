@@ -262,18 +262,18 @@ export function Nav() {
 
       {/* Menu mobile */}
       {menuOpen && (
-        <div className="fixed inset-0 z-[99] bg-bg flex flex-col animate-rise md:hidden overflow-y-auto" style={{ padding: "88px clamp(24px,7vw,56px) 40px" }}>
-          <a href="#hero" onClick={go("hero")} className="flex items-baseline gap-[18px] py-5 border-b border-line font-bold uppercase text-fg cursor-pointer" style={{ fontSize: "clamp(26px,7vw,40px)", letterSpacing: "-0.03em" }}>
+        <div className="fixed inset-0 z-[99] bg-bg flex flex-col md:hidden overflow-y-auto" style={{ padding: "88px clamp(24px,7vw,56px) 40px" }}>
+          <a href="#hero" onClick={go("hero")} className="menu-item flex items-baseline gap-[18px] py-5 border-b border-line font-bold uppercase text-fg cursor-pointer" style={{ fontSize: "clamp(26px,7vw,40px)", letterSpacing: "-0.03em", animationDelay: "0ms" }}>
             <span className="font-mono text-[13px] font-medium text-fg3">00</span>
             {t.nav.home}
           </a>
-          {SECTIONS.filter((s) => s.id !== "contato").map((s) => (
-            <a key={s.id} href={`#${s.id}`} onClick={go(s.id)} className="flex items-baseline gap-[18px] py-5 border-b border-line font-bold uppercase text-fg cursor-pointer" style={{ fontSize: "clamp(26px,7vw,40px)", letterSpacing: "-0.03em" }}>
+          {SECTIONS.filter((s) => s.id !== "contato").map((s, i) => (
+            <a key={s.id} href={`#${s.id}`} onClick={go(s.id)} className="menu-item flex items-baseline gap-[18px] py-5 border-b border-line font-bold uppercase text-fg cursor-pointer" style={{ fontSize: "clamp(26px,7vw,40px)", letterSpacing: "-0.03em", animationDelay: `${(i + 1) * 70}ms` }}>
               <span className="font-mono text-[13px] font-medium text-fg3">{s.num}</span>
               {t.nav[s.key]}
             </a>
           ))}
-          <a href="#contato" onClick={go("contato")} className="mt-auto inline-flex items-center justify-center gap-2 p-4 rounded-[10px] bg-fg text-bg font-semibold text-[15px] cursor-pointer">
+          <a href="#contato" onClick={go("contato")} className="menu-item mt-auto inline-flex items-center justify-center gap-2 p-4 rounded-[10px] bg-fg text-bg font-semibold text-[15px] cursor-pointer" style={{ animationDelay: "280ms" }}>
             {t.nav.cta} →
           </a>
         </div>

@@ -101,7 +101,7 @@ function HeroContent() {
         <span className="text-fg2 mt-px">
           <FiMapPin size={16} />
         </span>
-        <div className="font-mono" style={{ fontSize: "13px", letterSpacing: "0.12em", lineHeight: 1.5 }}>
+        <div className="font-mono text-[13px] max-md:text-[11px]" style={{ letterSpacing: "0.12em", lineHeight: 1.5 }}>
           <div className="text-fg font-medium">{t.hero.loc1}</div>
           <div className="text-fg3">{t.hero.loc2}</div>
         </div>
@@ -112,7 +112,7 @@ function HeroContent() {
         <span className="text-fg2 mt-px">
           <FaCode size={16} />
         </span>
-        <div className="font-mono" style={{ fontSize: "13px", letterSpacing: "0.12em", lineHeight: 1.5 }}>
+        <div className="font-mono text-[13px] max-md:text-[11px]" style={{ letterSpacing: "0.12em", lineHeight: 1.5 }}>
           <div className="text-fg font-medium">{t.hero.role1}</div>
           <div className="text-fg3">{t.hero.role2}</div>
         </div>

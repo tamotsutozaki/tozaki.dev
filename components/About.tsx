@@ -53,7 +53,7 @@ export function About() {
 
         <div className="flex flex-col lg:flex-row items-start gap-x-[clamp(28px,5vw,64px)] gap-y-10">
           {/* Cards — coluna à esquerda no desktop (empilhados), abaixo no mobile */}
-          <Reveal className="order-2 flex w-full flex-col gap-4 lg:order-1 lg:w-[390px] lg:flex-none">
+          <Reveal className="order-1 flex w-full flex-col gap-4 lg:order-1 lg:w-[390px] lg:flex-none">
             <InfoCard icon={FiMapPin} label={t.about.cards.locLabel} hover="spotlight">
               <span className="text-[15px] font-semibold leading-snug text-fg">{t.about.cards.locValue}</span>
             </InfoCard>
@@ -88,7 +88,7 @@ export function About() {
           </Reveal>
 
           {/* Apresentação + (foto · 6+) — à direita no desktop, topo no mobile */}
-          <Reveal delay={80} className="order-1 flex w-full flex-col gap-8 lg:order-2 lg:flex-1">
+          <Reveal delay={80} className="order-2 flex w-full flex-col gap-8 lg:order-2 lg:flex-1">
             {/* Parágrafos sozinhos */}
             <div className="flex flex-col gap-5" style={{ maxWidth: "60ch" }}>
               {t.about.intro.map((para, i) => (
@@ -98,30 +98,40 @@ export function About() {
               ))}
             </div>
 
-            {/* Foto ao lado esquerdo do contador "6+" + minis */}
-            <div className="flex flex-wrap items-center gap-x-8 gap-y-6 pt-[26px] border-t border-line">
-              <div className="flex-none" style={{ width: 135 }}>
-                <div className="overflow-hidden rounded-full border border-line2 bg-bg-elev" style={{ aspectRatio: "1 / 1" }}>
-                  <Image src="/assets/pedro.png" alt="Pedro Tozaki" width={860} height={860} className="w-full h-full object-cover" priority />
+            {/* Foto + "6+" lado a lado; tags abaixo no mobile (largura total),
+                na coluna sob o "6+" no desktop */}
+            <div className="pt-[26px] border-t border-line">
+              <div className="flex items-center gap-x-5 md:gap-x-8">
+                <div className="flex-none w-[120px] md:w-[135px]">
+                  <div className="overflow-hidden rounded-full border border-line2 bg-bg-elev" style={{ aspectRatio: "1 / 1" }}>
+                    <Image src="/assets/pedro.png" alt="Pedro Tozaki" width={860} height={860} className="w-full h-full object-cover" priority />
+                  </div>
+                </div>
+
+                <div className="flex min-w-0 flex-col gap-4">
+                  <div className="flex items-end gap-[18px]">
+                    <span className="font-extrabold text-fg" style={{ fontSize: "clamp(3.2rem,6vw,5rem)", lineHeight: 0.85, letterSpacing: "-0.04em" }}>
+                      {SITE.projectsCount}{t.about.statSuffix}
+                    </span>
+                    <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-fg3 pb-2" style={{ lineHeight: 1.5, maxWidth: "14ch" }}>
+                      {t.about.statLabel}
+                    </span>
+                  </div>
+
+                  {/* Tags no desktop: na coluna, sob o "6+" */}
+                  <div className="hidden md:flex flex-wrap gap-2">
+                    {t.about.chips.map((c) => (
+                      <span key={c} className="font-mono text-[11px] px-3 py-[7px] border border-line rounded-[7px] text-fg2">{c}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <div className="flex flex-col gap-4">
-                <div className="flex items-end gap-[18px]">
-                  <span className="font-extrabold text-fg" style={{ fontSize: "clamp(3.2rem,6vw,5rem)", lineHeight: 0.85, letterSpacing: "-0.04em" }}>
-                    {SITE.projectsCount}{t.about.statSuffix}
-                  </span>
-                  <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-fg3 pb-2" style={{ lineHeight: 1.5, maxWidth: "14ch" }}>
-                    {t.about.statLabel}
-                  </span>
-                </div>
-
-                {/* Minis — adicione mais itens em t.about.chips (lib/content.ts) */}
-                <div className="flex flex-wrap gap-2">
-                  {t.about.chips.map((c) => (
-                    <span key={c} className="font-mono text-[11px] px-3 py-[7px] border border-line rounded-[7px] text-fg2">{c}</span>
-                  ))}
-                </div>
+              {/* Tags no mobile: largura total, abaixo da foto + "6+" */}
+              <div className="mt-5 flex flex-wrap gap-2 md:hidden">
+                {t.about.chips.map((c) => (
+                  <span key={c} className="font-mono text-[11px] px-3 py-[7px] border border-line rounded-[7px] text-fg2">{c}</span>
+                ))}
               </div>
             </div>
 
