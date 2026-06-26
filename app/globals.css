@@ -388,7 +388,7 @@ html.vt-active * {
 .tswap-orig,
 .tswap-copy {
   display: inline-flex;
-  transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
   will-change: transform;
 }
 .tswap-copy {
@@ -439,12 +439,15 @@ html.vt-active * {
   position: absolute;
   inset: 0;
   background: var(--fg);
+  /* topo em cúpula elíptica (ponta oval) que sobe e achata ao cobrir o botão */
+  border-radius: 100% 100% 0 0 / 80% 80% 0 0;
   transform: translateY(101%);
-  transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: transform 0.33s cubic-bezier(0.45, 0, 0.25, 1), border-radius 0.33s ease;
   pointer-events: none;
 }
 .fillbtn:hover .fillbtn-fill {
   transform: translateY(0);
+  border-radius: 0;
 }
 @media (prefers-reduced-motion: reduce) {
   .fillbtn-fill {
@@ -466,36 +469,6 @@ html.vt-active * {
 }
 .fillbrand:hover {
   border-color: var(--brand, var(--fg));
-}
-
-/* ===================== BLOB FILL (preenchimento com ponta oval) ===================== */
-/* Em vez de subir reto, o preenchimento sobe com o topo em cúpula (oval) e
-   achata ao cobrir o botão. Protótipo — usado só no CTA "Vamos conversar". */
-.blobbtn {
-  position: relative;
-  overflow: hidden;
-}
-.blobbtn-fill {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--fg);
-  /* topo em cúpula elíptica; o resto reto (preenche por baixo) */
-  border-radius: 100% 100% 0 0 / 80% 80% 0 0;
-  transform: translateY(101%);
-  transition: transform 0.5s cubic-bezier(0.45, 0, 0.25, 1), border-radius 0.5s ease;
-  pointer-events: none;
-  z-index: 0;
-}
-.blobbtn:hover .blobbtn-fill,
-.blobbtn:focus-visible .blobbtn-fill {
-  transform: translateY(0);
-  border-radius: 0; /* achata pra cobrir o botão inteiro */
-}
-@media (prefers-reduced-motion: reduce) {
-  .blobbtn-fill { transition: none; }
 }
 
 /* ===================== SCROLL REVEAL ===================== */
