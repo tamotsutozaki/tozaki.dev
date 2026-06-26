@@ -24,32 +24,73 @@ export function Nav() {
   // Bolinha deslizante: uma só, ancorada sob o link ativo (translateX animado).
   const linksWrap = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
-  const [dot, setDot] = useState({ left: 0, show: false });
+  const dotEl = useRef<HTMLSpanElement>(null);
+  const dotShown = useRef(false); // bolinha atualmente visível?
+  const suppressDot = useRef(false); // durante o "voltar ao topo" (reset): não anima/mostra
+  const suppressTimer = useRef<number | null>(null);
+  const introInited = useRef(false); // pula o 1º run do efeito de introKey (mount/F5)
 
+  // Posiciona a bolinha sob o link ativo. Se estava oculta, SALTA pra posição
+  // (sem deslizar) e só faz fade-in; o deslize só acontece entre seções já
+  // visíveis — assim no F5 ela nasce no lugar e nunca escorrega da borda.
   const updateDot = () => {
+    const node = dotEl.current;
+    if (!node) return;
     const wrap = linksWrap.current;
     const el = linkRefs.current[active];
-    if (!wrap || !el) {
-      setDot((d) => ({ ...d, show: false })); // ativo sem link na barra (ex.: Contato) → esconde
+    // Suprimido (reset) ou seção ativa sem link na barra (ex.: Contato) → esconde
+    if (suppressDot.current || !wrap || !el) {
+      node.style.opacity = "0";
+      dotShown.current = false;
       return;
     }
     const wr = wrap.getBoundingClientRect();
     const er = el.getBoundingClientRect();
-    setDot({ left: er.left - wr.left + er.width / 2, show: true });
+    const tf = `translateX(${er.left - wr.left + er.width / 2}px) translateX(-50%)`;
+    if (!dotShown.current) {
+      node.style.transition = "none";
+      node.style.transform = tf;
+      void node.offsetWidth; // força reflow → o salto não anima
+      node.style.transition = "transform .34s cubic-bezier(.4,0,.2,1), opacity .25s ease";
+      node.style.opacity = "1";
+    } else {
+      node.style.transform = tf;
+      node.style.opacity = "1";
+    }
+    dotShown.current = true;
   };
 
-  // Reposiciona a bolinha quando muda a seção ativa, o idioma (muda larguras)
-  // ou após o replay da intro (introKey remonta os links). rAF garante layout pronto.
+  // Reposiciona quando muda a seção ativa, o idioma (muda larguras) ou após o
+  // replay da intro. rAF garante layout pronto antes de medir.
   useEffect(() => {
     const id = requestAnimationFrame(updateDot);
     return () => cancelAnimationFrame(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, lang, introKey]);
 
+  // Reset pro topo (logo / Início / troca de idioma / nome no footer → replayIntro):
+  // esconde a bolinha na hora e ignora updates por ~1.5s, pra ela NÃO deslizar
+  // atravessando as seções durante o scroll de volta. Some até o usuário rolar
+  // de novo. Pula o 1º run (mount/F5), onde a bolinha deve nascer no Início.
+  useEffect(() => {
+    if (!introInited.current) {
+      introInited.current = true;
+      return;
+    }
+    suppressDot.current = true;
+    dotShown.current = false;
+    if (dotEl.current) dotEl.current.style.opacity = "0";
+    if (suppressTimer.current) clearTimeout(suppressTimer.current);
+    suppressTimer.current = window.setTimeout(() => { suppressDot.current = false; }, 1500);
+  }, [introKey]);
+
   useEffect(() => {
     const onResize = () => updateDot();
     window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      if (suppressTimer.current) clearTimeout(suppressTimer.current);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
 
@@ -159,11 +200,13 @@ export function Nav() {
                 </a>
               </NavItem>
             ))}
-            {/* Bolinha única deslizante (sob o link ativo) */}
+            {/* Bolinha única deslizante (sob o link ativo) — posição/visibilidade
+                controladas via ref em updateDot (nasce oculta, opacity 0). */}
             <span
+              ref={dotEl}
               aria-hidden
               className="pointer-events-none absolute bottom-[1px] left-0 w-[4px] h-[4px] rounded-full bg-fg"
-              style={{ transform: `translateX(${dot.left}px) translateX(-50%)`, opacity: dot.show ? 1 : 0, transition: "transform .34s cubic-bezier(.4,0,.2,1), opacity .2s ease" }}
+              style={{ opacity: 0, transition: "transform .34s cubic-bezier(.4,0,.2,1), opacity .25s ease" }}
             />
           </div>
           {/* CTA desktop */}
