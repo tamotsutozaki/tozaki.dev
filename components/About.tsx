@@ -156,6 +156,15 @@ export function About() {
                   <BrandIconBtn href={SITE.linkedin} label="LinkedIn" brand="#0A66C2" brandFg="#fff"><FaLinkedinIn size={16} /></BrandIconBtn>
                   <BrandIconBtn href={SITE.whatsapp} label="WhatsApp" brand="#25D366" brandFg="#fff"><FaWhatsapp size={17} /></BrandIconBtn>
                   <BrandIconBtn href={`mailto:${getEmail()}`} label="E-mail" brand="#EA4335" brandFg="#fff"><FiMail size={17} /></BrandIconBtn>
+                  <a
+                    href={SITE.cvUrl}
+                    download="Pedro Tozaki - CV.pdf"
+                    aria-label={t.contact.cv}
+                    style={{ "--brand": "var(--fg)", "--brand-fg": "var(--bg)" } as React.CSSProperties}
+                    className="group inline-flex items-center gap-2 h-[42px] px-4 rounded-[11px] border border-line2 text-fg2 font-medium text-[13px] cursor-pointer transition-[background-color,border-color,color,transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand)] hover:border-[var(--brand)] hover:text-[var(--brand-fg)] hover:shadow-lg"
+                  >
+                    <FiDownload size={15} />{t.contact.cv}
+                  </a>
                 </div>
               </div>
             </div>
