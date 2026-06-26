@@ -48,7 +48,7 @@ export const CONTENT = {
         langLabel: "Idiomas",
         lang: [
           { name: "Português", level: "Nativo" },
-          { name: "Inglês", level: "Avançado · TOEIC", proof: "/assets/toeic.png", proofLabel: "TOEIC" },
+          { name: "Inglês", level: "Avançado · TOEIC", proof: "/assets/toeic.jpg", proofLabel: "TOEIC" },
         ],
       },
     },
@@ -139,7 +139,7 @@ export const CONTENT = {
         langLabel: "Languages",
         lang: [
           { name: "Portuguese", level: "Native" },
-          { name: "English", level: "Advanced · TOEIC", proof: "/assets/toeic.png", proofLabel: "TOEIC" },
+          { name: "English", level: "Advanced · TOEIC", proof: "/assets/toeic.jpg", proofLabel: "TOEIC" },
         ],
       },
     },
