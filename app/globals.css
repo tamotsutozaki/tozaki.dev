@@ -354,6 +354,24 @@ html.vt-active * {
   }
 }
 
+/* Logo "pedro tozaki": no hover cada palavra pula (pedro, depois tozaki) —
+   anima a .navi-mask (não o inner) pra não cortar no overflow da máscara. */
+.nav-logo:hover .navi-mask {
+  animation: logo-jump 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.nav-logo:hover .navi-mask:nth-child(2) {
+  animation-delay: 0.18s;
+}
+@keyframes logo-jump {
+  0% { transform: translateY(0); }
+  40% { transform: translateY(-7px); }
+  70% { transform: translateY(2px); }
+  100% { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-logo:hover .navi-mask { animation: none; }
+}
+
 /* ===================== TEXT SWAP HOVER ===================== */
 /* Texto sobe e some; cópia idêntica entra por baixo. Veja components/SwapText.tsx */
 .tswap {

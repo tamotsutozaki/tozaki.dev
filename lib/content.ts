@@ -23,7 +23,7 @@ export const CONTENT = {
       heading: "Construindo projetos de valor",
       // Marque as palavras-chave a destacar com **asteriscos**.
       intro: [
-        "Sou desenvolvedor **full-stack** há **mais de 5 anos**, focado em construir **aplicações web e mobile** do zero à entrega final do produto. Meu trabalho vai desde a arquitetura de **APIs robustas** em **C#/.NET** até a criação de interfaces modernas e performáticas com **React**, **Next.js** e **Astro**.",
+        "Trabalho na área de tecnologia há **mais de 5 anos**, atualmente como **desenvolvedor**, construindo **aplicações web e mobile** do zero à entrega final do produto. Meu trabalho vai desde a arquitetura de **APIs robustas** em **C#/.NET** até a criação de interfaces modernas e performáticas com **React**, **Next.js** e **Astro**.",
         "Já construí e migrei sistemas utilizados por **mais de 6.000 usuários**, aplicando **Clean Architecture**, **TypeScript** e bancos de dados como **PostgreSQL** e **SQL Server**. Seja no ambiente corporativo, em projetos próprios ou freelances, gerencio **todo o ciclo de vida do software** para garantir soluções **escaláveis** e de **alta usabilidade**.",
         "Sou formado em **Administração de Empresas** e curso **Análise e Desenvolvimento de Sistemas** (FATEC) — uma combinação que me proporciona uma forte **visão estratégica**. Acredito que entender a raiz do problema do negócio vem antes de escrever a primeira linha de código.",
       ],
@@ -89,6 +89,9 @@ export const CONTENT = {
       orBook: "Prefere conversar?",
       book: "Ver horários",
       availLine: "Aberto a projetos e oportunidades.",
+      statusAvailable: "Disponível",
+      replyTime: "respondo em ~24h",
+      waGreeting: "Olá, Pedro! Vim pelo seu portfólio.",
     },
     footer: { rights: "© 2026 Pedro Tozaki" },
   },
@@ -109,7 +112,7 @@ export const CONTENT = {
       heading: "Building valuable projects",
       // Mark the keywords to highlight with **asterisks**.
       intro: [
-        "I've been a **full-stack** developer for **5+ years**, focused on building **web and mobile applications** from scratch to final delivery. My work ranges from architecting **robust APIs** in **C#/.NET** to crafting modern, high-performance interfaces with **React**, **Next.js** and **Astro**.",
+        "I've worked in tech for **5+ years**, currently as a **developer**, building **web and mobile applications** from scratch to final delivery. My work ranges from architecting **robust APIs** in **C#/.NET** to crafting modern, high-performance interfaces with **React**, **Next.js** and **Astro**.",
         "I've built and migrated systems used by **6,000+ users**, applying **Clean Architecture**, **TypeScript** and databases like **PostgreSQL** and **SQL Server**. Whether in a corporate environment, my own projects or freelance work, I manage the **entire software lifecycle** to deliver **scalable** solutions with **high usability**.",
         "I hold a degree in **Business Administration** and am studying **Systems Analysis and Development** (FATEC) — a combination that gives me strong **strategic vision**. I believe understanding the root of the business problem comes before writing the first line of code.",
       ],
@@ -175,6 +178,9 @@ export const CONTENT = {
       orBook: "Prefer to talk?",
       book: "View availability",
       availLine: "Open to projects and opportunities.",
+      statusAvailable: "Available",
+      replyTime: "replies in ~24h",
+      waGreeting: "Hi Pedro! I came from your portfolio.",
     },
     footer: { rights: "© 2026 Pedro Tozaki" },
   },

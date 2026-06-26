@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useApp } from "./Providers";
 import { Reveal } from "./Reveal";
 import { SwapText } from "./SwapText";
 import { SITE, getEmail } from "@/lib/site";
-import { sendMessage } from "@/app/actions";
-import { FiArrowUpRight, FiCalendar, FiCheck, FiCopy, FiDownload } from "react-icons/fi";
+import { FiArrowUpRight, FiCalendar, FiCheck, FiCopy, FiDownload, FiMail } from "react-icons/fi";
+import { FaWhatsapp, FaLinkedinIn, FaGithub } from "react-icons/fa6";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -17,6 +17,10 @@ export function Contact() {
   const [copied, setCopied] = useState(false);
   const email = getEmail();
 
+  // WhatsApp já abre com a mensagem digitada no formulário (se houver).
+  const waText = [t.contact.waGreeting, form.message.trim()].filter(Boolean).join("\n\n");
+  const waHref = `${SITE.whatsapp}?text=${encodeURIComponent(waText)}`;
+
   const onChange = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
@@ -24,8 +28,13 @@ export function Contact() {
     e.preventDefault();
     setStatus("sending");
     try {
-      const res = await sendMessage(form);
-      setStatus(res.ok ? "sent" : "error");
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json().catch(() => ({ ok: false }));
+      setStatus(res.ok && data.ok ? "sent" : "error");
     } catch {
       setStatus("error");
     }
@@ -61,7 +70,7 @@ export function Contact() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 items-stretch md:grid-cols-[7fr_3fr]" style={{ gap: "clamp(20px,3vw,40px)" }}>
+        <div className="grid grid-cols-1 items-stretch md:grid-cols-[5fr_3fr]" style={{ gap: "clamp(20px,3vw,40px)" }}>
           {/* Esquerda: formulário */}
           <Reveal className="flex flex-col gap-4">
             <div className="flex flex-1 flex-col bg-bg-elev border border-line rounded-2xl" style={{ padding: "clamp(20px,3vw,30px)" }}>
@@ -104,10 +113,29 @@ export function Contact() {
           {/* Direita: canais diretos + Cal.com */}
           <Reveal delay={140} className="flex flex-col gap-4">
             <div className="flex flex-1 flex-col bg-bg-elev border border-line rounded-2xl" style={{ padding: "clamp(18px,2.4vw,24px) clamp(20px,3vw,28px)" }}>
-              <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-fg3 mb-1.5">{t.contact.directLabel}</div>
-              <div className="flex items-center justify-between gap-3 py-3.5 border-t border-line">
-                <a href={`mailto:${email}`} className="tswap-trigger font-mono text-[13.5px] text-fg cursor-pointer"><SwapText>{email}</SwapText></a>
-                <button onClick={copyEmail} aria-label={copied ? t.contact.copied : t.contact.copy} className="fillbtn tswap-trigger flex-none grid place-items-center w-[34px] h-[34px] rounded-md border border-line2 text-fg3 cursor-pointer">
+              <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-fg3 mb-2.5">{t.contact.directLabel}</div>
+
+              {/* Status ao vivo: disponibilidade + horário de São Paulo + tempo de resposta */}
+              <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10.5px] text-fg3">
+                <span className="flex items-center gap-1.5 text-fg2">
+                  <span className="relative inline-grid place-items-center w-[7px] h-[7px]">
+                    <span className="absolute h-full w-full rounded-full animate-ping" style={{ background: "#22c55e" }} />
+                    <span className="h-[6px] w-[6px] rounded-full" style={{ background: "#22c55e" }} />
+                  </span>
+                  {t.contact.statusAvailable}
+                </span>
+                <span className="opacity-40">·</span>
+                <span><LiveClock /> · UTC-3</span>
+                <span className="opacity-40">·</span>
+                <span>{t.contact.replyTime}</span>
+              </div>
+
+              <div className="relative flex items-center gap-3 py-3.5 border-t border-line">
+                <a href={`mailto:${email}`} className="tswap-trigger group inline-flex items-center gap-3 cursor-pointer before:absolute before:inset-0 before:content-['']">
+                  <span className="flex-none text-fg3 transition-colors group-hover:text-fg"><FiMail size={15} /></span>
+                  <SwapText className="font-mono text-[13.5px] text-fg">{email}</SwapText>
+                </a>
+                <button type="button" onClick={copyEmail} aria-label={copied ? t.contact.copied : t.contact.copy} className="fillbtn tswap-trigger relative z-[1] ml-auto flex-none grid place-items-center w-[34px] h-[34px] rounded-md border border-line2 text-fg3 cursor-pointer">
                   <span className="fillbtn-fill" aria-hidden />
                   <span className="tswap relative z-[1]">
                     <span className="tswap-orig">{copied ? <FiCheck size={14} /> : <FiCopy size={14} />}</span>
@@ -115,13 +143,13 @@ export function Contact() {
                   </span>
                 </button>
               </div>
-              <ChannelLink href={SITE.whatsapp} label={t.contact.whatsapp} symbol="↗" />
-              <ChannelLink href={SITE.linkedin} label="LinkedIn" symbol="↗" />
-              <ChannelLink href={SITE.github} label="GitHub" symbol="↗" />
+              <ChannelLink href={waHref} label={t.contact.whatsapp} icon={<FaWhatsapp size={15} />} />
+              <ChannelLink href={SITE.linkedin} label="LinkedIn" icon={<FaLinkedinIn size={15} />} />
+              <ChannelLink href={SITE.github} label="GitHub" icon={<FaGithub size={15} />} />
               {/* LeetCode — descomente quando tiver: <ChannelLink href={SITE.leetcode} label="LeetCode" symbol="↗" /> */}
-              <a href={SITE.cvUrl} download className="tswap-trigger flex items-center justify-between py-3.5 border-t border-line text-fg text-[14.5px] cursor-pointer">
+              <a href={SITE.cvUrl} download="Pedro Tozaki - CV.pdf" className="tswap-trigger group flex items-center gap-3 py-3.5 border-t border-line text-fg text-[14.5px] cursor-pointer">
+                <span className="flex-none text-fg3 transition-colors group-hover:text-fg"><FiDownload size={15} /></span>
                 <SwapText>{t.contact.cv}</SwapText>
-                <span className="text-fg3"><FiDownload size={14} /></span>
               </a>
 
               <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-fg3 mt-6 mb-3.5">{t.contact.orBook}</div>
@@ -150,11 +178,24 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   );
 }
 
-function ChannelLink({ href, label, symbol }: { href: string; label: string; symbol: string }) {
+function ChannelLink({ href, label, icon }: { href: string; label: string; icon: React.ReactNode }) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="tswap-trigger flex items-center justify-between py-3.5 border-t border-line text-fg text-[14.5px] cursor-pointer">
+    <a href={href} target="_blank" rel="noopener noreferrer" className="tswap-trigger group flex items-center gap-3 py-3.5 border-t border-line text-fg text-[14.5px] cursor-pointer">
+      <span className="flex-none text-fg3 transition-colors group-hover:text-fg">{icon}</span>
       <SwapText>{label}</SwapText>
-      <span className="text-fg3">{symbol}</span>
     </a>
   );
+}
+
+/** Horário atual no fuso de São Paulo (America/Sao_Paulo), ao vivo. */
+function LiveClock() {
+  const [time, setTime] = useState<string | null>(null);
+  useEffect(() => {
+    const fmt = new Intl.DateTimeFormat("pt-BR", { timeZone: "America/Sao_Paulo", hour: "2-digit", minute: "2-digit", hour12: false });
+    const tick = () => setTime(fmt.format(new Date()));
+    tick();
+    const id = setInterval(tick, 30000);
+    return () => clearInterval(id);
+  }, []);
+  return <>{time ?? "--:--"}</>;
 }

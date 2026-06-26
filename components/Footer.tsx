@@ -3,7 +3,6 @@
 import React from "react";
 import { useApp } from "./Providers";
 import { useLenis } from "./SmoothScroll";
-import { SwapText } from "./SwapText";
 import { SITE, getEmail } from "@/lib/site";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import { FiMail } from "react-icons/fi";
@@ -44,10 +43,9 @@ export function Footer() {
               </span>
               {t.contact.availLine}
             </div>
-            <a href="#contato" onClick={go("contato")} className="tswap-trigger inline-flex items-center font-bold text-fg cursor-pointer" style={{ fontSize: "clamp(1.4rem,3vw,2.1rem)", letterSpacing: "-0.03em" }}>
-              <SwapText>
-                <span className="inline-flex items-center gap-2.5">{t.contact.heading}<span style={{ fontSize: "0.7em" }}>↗</span></span>
-              </SwapText>
+            <a href="#contato" onClick={go("contato")} className="group inline-flex items-center gap-2.5 font-bold text-fg cursor-pointer" style={{ fontSize: "clamp(1.4rem,3vw,2.1rem)", letterSpacing: "-0.03em" }}>
+              {t.contact.heading}
+              <span className="transition-transform duration-150 group-hover:translate-x-[4px] group-hover:-translate-y-[7px]" style={{ fontSize: "0.7em" }}>↗</span>
             </a>
           </div>
         </div>

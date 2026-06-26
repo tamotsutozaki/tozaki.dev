@@ -93,7 +93,7 @@ export function Nav() {
             (clique no logo) — evita colisão de keys entre itens irmãos. */}
         <React.Fragment key={introKey}>
         {/* Wordmark */}
-        <a href="#hero" onClick={go("hero")} aria-label="Pedro Tozaki" className="inline-flex items-baseline gap-[0.3em] cursor-pointer" style={{ fontSize: "19.4px", letterSpacing: "-0.015em" }}>
+        <a href="#hero" onClick={go("hero")} aria-label="Pedro Tozaki" className="nav-logo inline-flex items-baseline gap-[0.3em] cursor-pointer" style={{ fontSize: "19.4px", letterSpacing: "-0.015em" }}>
           <NavItem delay={60} mask className="inline-flex">
             <span className="font-normal text-fg3 transition-colors duration-500">pedro</span>
           </NavItem>

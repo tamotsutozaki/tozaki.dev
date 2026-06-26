@@ -9,8 +9,8 @@ export const SITE = {
   emailDomain: "tozaki.dev",
 
   // TODO: trocar pelos links reais
-  calLink: process.env.NEXT_PUBLIC_CAL_LINK || "https://cal.com/seu-usuario",
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP || "https://wa.me/55SEUNUMERO",
+  calLink: process.env.NEXT_PUBLIC_CAL_LINK || "https://cal.com/tozaki",
+  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP || "https://wa.me/5511960859375",
   linkedin: "https://linkedin.com/in/pedro-tozaki",
   github: "https://github.com/tamotsutozaki",
   leetcode: "https://leetcode.com/seu-usuario", // opcional — ver Contact.tsx
