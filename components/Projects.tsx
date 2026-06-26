@@ -39,7 +39,7 @@ export function Projects() {
           {/* sub + contador — começa sob o número (alinhado à esquerda) */}
           <Reveal delay={240}>
             <div className="flex items-baseline justify-between gap-6 flex-wrap" style={{ marginTop: "clamp(14px,2vh,22px)" }}>
-              <p className="m-0 text-fg2" style={{ maxWidth: "40ch", fontSize: 15, lineHeight: 1.5 }}>{t.projects.sub}</p>
+              <p className="m-0 text-fg2" style={{ fontSize: 15, lineHeight: 1.5 }}>{t.projects.sub}</p>
               <div className="flex items-center gap-3 font-mono text-[11px] tracking-[0.14em] uppercase text-fg3 whitespace-nowrap flex-none">
                 <span className="w-[34px] h-px bg-line2" />
                 {count} {t.projects.countLabel}
