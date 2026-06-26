@@ -139,7 +139,7 @@ export function Contact() {
 
               <div className="relative flex items-center gap-3 py-3.5 border-t border-line">
                 <a href={`mailto:${email}`} className="tswap-trigger group inline-flex items-center gap-3 cursor-pointer before:absolute before:inset-0 before:content-['']">
-                  <span className="flex-none text-fg3 transition-colors group-hover:text-fg"><FiMail size={15} /></span>
+                  <span className="flex-none text-fg3 transition-colors group-hover:text-[#EA4335]"><FiMail size={15} /></span>
                   <SwapText className="font-mono text-[13.5px] text-fg">{email}</SwapText>
                 </a>
                 <button type="button" onClick={copyEmail} aria-label={copied ? t.contact.copied : t.contact.copy} className="fillbtn tswap-trigger relative z-[1] ml-auto flex-none grid place-items-center w-[34px] h-[34px] max-md:w-[42px] max-md:h-[42px] rounded-md border border-line2 text-fg3 cursor-pointer">
@@ -150,9 +150,9 @@ export function Contact() {
                   </span>
                 </button>
               </div>
-              <ChannelLink href={waHref} label={t.contact.whatsapp} icon={<FaWhatsapp size={15} />} />
-              <ChannelLink href={SITE.linkedin} label="LinkedIn" icon={<FaLinkedinIn size={15} />} />
-              <ChannelLink href={SITE.github} label="GitHub" icon={<FaGithub size={15} />} />
+              <ChannelLink href={waHref} label={t.contact.whatsapp} icon={<FaWhatsapp size={15} />} brand="#25D366" />
+              <ChannelLink href={SITE.linkedin} label="LinkedIn" icon={<FaLinkedinIn size={15} />} brand="#0A66C2" />
+              <ChannelLink href={SITE.github} label="GitHub" icon={<FaGithub size={15} />} brand="var(--fg)" />
               {/* LeetCode — descomente quando tiver: <ChannelLink href={SITE.leetcode} label="LeetCode" symbol="↗" /> */}
               <a href={SITE.cvUrl} download="Pedro Tozaki - CV.pdf" className="tswap-trigger group flex items-center gap-3 py-3.5 border-t border-line text-fg text-[14.5px] cursor-pointer">
                 <span className="flex-none text-fg3 transition-colors group-hover:text-fg"><FiDownload size={15} /></span>
@@ -185,10 +185,16 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   );
 }
 
-function ChannelLink({ href, label, icon }: { href: string; label: string; icon: React.ReactNode }) {
+function ChannelLink({ href, label, icon, brand }: { href: string; label: string; icon: React.ReactNode; brand: string }) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="tswap-trigger group flex items-center gap-3 py-3.5 border-t border-line text-fg text-[14.5px] cursor-pointer">
-      <span className="flex-none text-fg3 transition-colors group-hover:text-fg">{icon}</span>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ "--brand": brand } as React.CSSProperties}
+      className="tswap-trigger group flex items-center gap-3 py-3.5 border-t border-line text-fg text-[14.5px] cursor-pointer"
+    >
+      <span className="flex-none text-fg3 transition-colors group-hover:text-[var(--brand)]">{icon}</span>
       <SwapText>{label}</SwapText>
     </a>
   );

@@ -56,9 +56,9 @@ export function Footer() {
         <div className="flex justify-between flex-wrap items-center gap-3 mt-[30px] pt-6 border-t border-line font-mono text-[11px] tracking-[0.04em] text-fg3">
           <span>{t.footer.rights}</span>
           <div className="flex gap-2.5">
-            <Social href={SITE.github} label="GitHub"><FaGithub size={17} /></Social>
-            <Social href={SITE.linkedin} label="LinkedIn"><FaLinkedinIn size={16} /></Social>
-            <Social href={`mailto:${email}`} label="Email"><FiMail size={17} /></Social>
+            <Social href={SITE.github} label="GitHub" brand="var(--fg)" brandFg="var(--bg)"><FaGithub size={17} /></Social>
+            <Social href={SITE.linkedin} label="LinkedIn" brand="#0A66C2" brandFg="#fff"><FaLinkedinIn size={16} /></Social>
+            <Social href={`mailto:${email}`} label="Email" brand="#EA4335" brandFg="#fff"><FiMail size={17} /></Social>
           </div>
         </div>
       </div>
@@ -66,13 +66,20 @@ export function Footer() {
   );
 }
 
-function Social({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
+function Social({ href, label, brand, brandFg, children }: { href: string; label: string; brand: string; brandFg: string; children: React.ReactNode }) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="fillbtn tswap-trigger grid place-items-center w-10 h-10 max-md:w-11 max-md:h-11 rounded-[9px] border border-line2 text-fg2 cursor-pointer">
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label}
+      style={{ "--brand": brand, "--brand-fg": brandFg } as React.CSSProperties}
+      className="fillbrand fillbtn tswap-trigger grid place-items-center w-10 h-10 max-md:w-11 max-md:h-11 rounded-[9px] border border-line2 text-fg2 cursor-pointer"
+    >
       <span className="fillbtn-fill" aria-hidden />
       <span className="tswap relative z-[1]">
         <span className="tswap-orig">{children}</span>
-        <span className="tswap-copy text-bg" aria-hidden>{children}</span>
+        <span className="tswap-copy" aria-hidden>{children}</span>
       </span>
     </a>
   );
