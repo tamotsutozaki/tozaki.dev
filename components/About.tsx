@@ -152,8 +152,8 @@ export function About() {
                 >
                   <span className="fillbtn-fill" aria-hidden />
                   <span className="tswap relative z-[1]">
-                    <span className="tswap-orig inline-flex items-center gap-2"><FiDownload size={15} />{t.contact.cv}</span>
-                    <span className="tswap-copy inline-flex items-center gap-2" aria-hidden><FiDownload size={15} />{t.contact.cv}</span>
+                    <span className="tswap-orig inline-flex items-center gap-2"><FiDownload size={15} /><span className="md:hidden">CV</span><span className="hidden md:inline">{t.contact.cv}</span></span>
+                    <span className="tswap-copy inline-flex items-center gap-2" aria-hidden><FiDownload size={15} /><span className="md:hidden">CV</span><span className="hidden md:inline">{t.contact.cv}</span></span>
                   </span>
                 </a>
               </div>
