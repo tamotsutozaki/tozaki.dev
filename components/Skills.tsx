@@ -25,6 +25,7 @@ export function Skills() {
   const closeTimer = useRef<number | null>(null);
   const openRef = useRef(false);
   const placementRef = useRef<"top" | "bottom">("bottom");
+  const popRef = useRef<HTMLDivElement>(null);
 
   const visible = SKILLS.filter((s) => !s.hidden);
   const hiddenSkills = SKILLS.filter((s) => s.hidden);
@@ -96,6 +97,20 @@ export function Skills() {
     };
   }, []);
 
+  // Touch: fecha ao tocar FORA do gatilho e do balão — sempre com animação (via
+  // setOpen(false) → remove .is-open → transição). No desktop o fechamento é por
+  // hover (mouseleave), então isto só vale para ponteiro grosso (hover:none).
+  useEffect(() => {
+    if (!open || !window.matchMedia("(hover:none)").matches) return;
+    const onDown = (e: PointerEvent) => {
+      const target = e.target as Node;
+      if (triggerRef.current?.contains(target) || popRef.current?.contains(target)) return;
+      setOpen(false);
+    };
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, [open]);
+
   return (
     <section id="skills" className="relative overflow-hidden" style={{ scrollMarginTop: 80, padding: "clamp(80px,12vh,150px) clamp(18px,5vw,72px) clamp(40px,6vh,64px)" }}>
       <span className="watermark" style={{ fontSize: "clamp(4.5rem,9vw,8.5rem)" }}>{t.skills.label}</span>
@@ -158,12 +173,13 @@ export function Skills() {
             style={{ left: coords?.left ?? -9999, top: coords?.top, bottom: coords?.bottom, width: "min(95vw, 1040px)" }}
           >
             <div
+              ref={popRef}
               id="skills-extra"
               role="region"
               aria-label={t.skills.showAll}
               aria-hidden={!open}
-              onMouseEnter={cancelClose}
-              onMouseLeave={scheduleClose}
+              onMouseEnter={() => { if (!window.matchMedia("(hover:none)").matches) cancelClose(); }}
+              onMouseLeave={() => { if (!window.matchMedia("(hover:none)").matches) scheduleClose(); }}
               className={`skills-pop relative rounded-2xl border border-line2 p-5 shadow-2xl sm:p-6 ${open ? "is-open" : ""}`}
               style={{ background: "var(--bg-elev)", transformOrigin: coords?.placement === "top" ? "bottom left" : "top left" }}
             >
