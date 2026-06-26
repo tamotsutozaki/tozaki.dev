@@ -155,7 +155,7 @@ export function Contact() {
               <ChannelLink href={SITE.github} label="GitHub" icon={<FaGithub size={15} />} brand="var(--fg)" />
               {/* LeetCode — descomente quando tiver: <ChannelLink href={SITE.leetcode} label="LeetCode" symbol="↗" /> */}
               <a href={SITE.cvUrl} download="Pedro Tozaki - CV.pdf" className="tswap-trigger group flex items-center gap-3 py-3.5 border-t border-line text-fg text-[14.5px] cursor-pointer">
-                <span className="flex-none text-fg3 transition-colors group-hover:text-fg"><FiDownload size={15} /></span>
+                <span className="flex-none text-fg3 transition-colors group-hover:text-[#2E90E6]"><FiDownload size={15} /></span>
                 <SwapText>{t.contact.cv}</SwapText>
               </a>
 
