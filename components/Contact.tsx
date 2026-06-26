@@ -26,6 +26,11 @@ export function Contact() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Checagem própria (sem o tooltip nativo do navegador). O servidor revalida.
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      setStatus("error");
+      return;
+    }
     setStatus("sending");
     try {
       const res = await fetch("/api/contact", {
@@ -86,7 +91,7 @@ export function Contact() {
               ) : (
                 <>
                 <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-fg3 mb-3.5">{t.contact.formLabel}</div>
-                <form onSubmit={submit} className="flex flex-1 flex-col gap-[13px]">
+                <form onSubmit={submit} noValidate className="flex flex-1 flex-col gap-[13px]">
                   <Input value={form.name} onChange={onChange("name")} placeholder={t.contact.fName} required />
                   <Input type="email" value={form.email} onChange={onChange("email")} placeholder={t.contact.fEmail} required />
                   <textarea
