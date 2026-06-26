@@ -224,8 +224,8 @@ export function Nav() {
           </div>
           {/* CTA desktop */}
           <NavItem delay={310} className="hidden md:inline-flex">
-            <a href="#contato" onClick={go("contato")} className="fillbtn tswap-trigger inline-flex items-center justify-center px-[19px] py-[10px] rounded-lg border border-fg text-fg font-medium text-[15.6px] cursor-pointer">
-              <span className="fillbtn-fill" aria-hidden />
+            <a href="#contato" onClick={go("contato")} className="blobbtn tswap-trigger inline-flex items-center justify-center px-[19px] py-[10px] rounded-lg border border-fg text-fg font-medium text-[15.6px] cursor-pointer">
+              <span className="blobbtn-fill" aria-hidden />
               <span className="tswap relative z-[1]">
                 <span className="tswap-orig">{t.nav.cta}</span>
                 <span className="tswap-copy text-bg" aria-hidden>{t.nav.cta}</span>
