@@ -10,12 +10,12 @@ export const CONTENT = {
     nav: { home: "Início", about: "Sobre", skills: "Skills", projects: "Projetos", contact: "Contato", cta: "Vamos conversar" },
     hero: {
       taglineLead: "Oi! Construo aplicações full-stack, aprendendo mais todos os dias",
-      taglineMain: "do back ao front,",
+      taglineMain: "tanto back quanto front,",
       taglineEm: "do conceito ao deploy.",
       loc1: "Indaiatuba",
       loc2: "Brasil · Disponível",
       role1: "Full-Stack Dev",
-      role2: "& Engenheiro",
+      role2: "& Eng. de Software",
       available: "Disponível para projetos",
     },
     about: {
@@ -32,6 +32,7 @@ export const CONTENT = {
       statSuffix: "+",
       available: "Disponível agora",
       findMe: "Encontre-me",
+      viewProof: "Ver no LinkedIn",
       chips: ["5+ anos na área de tecnologia", "Full-Stack", "Disponível para projetos e oportunidades"],
       cards: {
         locLabel: "Localização",
@@ -48,7 +49,7 @@ export const CONTENT = {
         langLabel: "Idiomas",
         lang: [
           { name: "Português", level: "Nativo" },
-          { name: "Inglês", level: "Avançado · TOEIC", proof: "/assets/toeic.jpg", proofLabel: "TOEIC" },
+          { name: "Inglês", level: "Avançado · TOEIC", proof: "/assets/toeic.jpg", proofLabel: "TOEIC", proofLink: "https://www.linkedin.com/feed/update/urn:li:activity:7434754722445819904/" },
         ],
       },
     },
@@ -101,12 +102,12 @@ export const CONTENT = {
     nav: { home: "Home", about: "About", skills: "Skills", projects: "Projects", contact: "Contact", cta: "Let's talk" },
     hero: {
       taglineLead: "Hi! I build full-stack applications, learning more every day",
-      taglineMain: "back to front,",
+      taglineMain: "both back and front,",
       taglineEm: "concept to deploy.",
       loc1: "Indaiatuba",
       loc2: "Brazil · Available",
       role1: "Full-Stack Dev",
-      role2: "& Engineer",
+      role2: "& Software Eng.",
       available: "Available for work",
     },
     about: {
@@ -123,6 +124,7 @@ export const CONTENT = {
       statSuffix: "+",
       available: "Available now",
       findMe: "Find me",
+      viewProof: "View on LinkedIn",
       chips: ["5+ years in tech", "Full-Stack", "Available for projects and opportunities"],
       cards: {
         locLabel: "Location",
@@ -139,7 +141,7 @@ export const CONTENT = {
         langLabel: "Languages",
         lang: [
           { name: "Portuguese", level: "Native" },
-          { name: "English", level: "Advanced · TOEIC", proof: "/assets/toeic.jpg", proofLabel: "TOEIC" },
+          { name: "English", level: "Advanced · TOEIC", proof: "/assets/toeic.jpg", proofLabel: "TOEIC", proofLink: "https://www.linkedin.com/feed/update/urn:li:activity:7434754722445819904/" },
         ],
       },
     },

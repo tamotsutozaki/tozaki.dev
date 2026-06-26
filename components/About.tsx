@@ -79,7 +79,7 @@ export function About() {
             <InfoCard icon={FiGlobe} label={t.about.cards.langLabel} hover="spotlight">
               <div className="flex flex-col gap-3">
                 {t.about.cards.lang.map((l) => {
-                  const item = l as { name: string; level: string; proof?: string; proofLabel?: string };
+                  const item = l as { name: string; level: string; proof?: string; proofLabel?: string; proofLink?: string };
                   return (
                     <div key={item.name}>
                       <div className="text-[15px] font-semibold leading-snug text-fg">{item.name}</div>
@@ -87,7 +87,7 @@ export function About() {
                         {item.proof && item.proofLabel ? (
                           <>
                             {item.level.split(item.proofLabel)[0]}
-                            <ProofBadge label={item.proofLabel} image={item.proof} />
+                            <ProofBadge label={item.proofLabel} image={item.proof} link={item.proofLink} linkLabel={t.about.viewProof} />
                           </>
                         ) : (
                           item.level
@@ -210,12 +210,13 @@ function chipClass(highlight: boolean) {
 
 /** "Selo" com balão: ao passar o mouse (ou tocar no mobile) mostra a imagem do
  *  diploma, igual ao balão das stacks secundárias (portal + hover/tap + esc). */
-function ProofBadge({ label, image }: { label: string; image: string }) {
+function ProofBadge({ label, image, link, linkLabel }: { label: string; image: string; link?: string; linkLabel?: string }) {
   const [open, setOpen] = useState(false);
   const [coords, setCoords] = useState<{ left: number; bottom: number } | null>(null);
   const [mounted, setMounted] = useState(false);
   const ref = useRef<HTMLButtonElement>(null);
   const popRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<number | null>(null);
 
   useEffect(() => setMounted(true), []);
 
@@ -227,7 +228,10 @@ function ProofBadge({ label, image }: { label: string; image: string }) {
     const r = el.getBoundingClientRect();
     setCoords({ left: r.left + r.width / 2, bottom: window.innerHeight - r.top + 10 });
   };
-  const show = () => { place(); setOpen(true); };
+  // Fecha com atraso (graça) pra dar tempo de levar o mouse do TOEIC até o balão.
+  const cancelClose = () => { if (closeTimer.current) { clearTimeout(closeTimer.current); closeTimer.current = null; } };
+  const openNow = () => { cancelClose(); place(); setOpen(true); };
+  const scheduleClose = () => { cancelClose(); closeTimer.current = window.setTimeout(() => setOpen(false), 220); };
 
   useEffect(() => {
     if (!open) return;
@@ -256,11 +260,11 @@ function ProofBadge({ label, image }: { label: string; image: string }) {
       <button
         ref={ref}
         type="button"
-        onMouseEnter={() => { if (!isCoarse()) show(); }}
-        onMouseLeave={() => { if (!isCoarse()) setOpen(false); }}
-        onFocus={() => { if (!isCoarse()) show(); }}
-        onBlur={() => { if (!isCoarse()) setOpen(false); }}
-        onClick={() => { if (isCoarse()) (open ? setOpen(false) : show()); }}
+        onMouseEnter={() => { if (!isCoarse()) openNow(); }}
+        onMouseLeave={() => { if (!isCoarse()) scheduleClose(); }}
+        onFocus={() => { if (!isCoarse()) openNow(); }}
+        onBlur={() => { if (!isCoarse()) scheduleClose(); }}
+        onClick={() => { if (isCoarse()) (open ? setOpen(false) : openNow()); }}
         aria-label={`Ver diploma ${label}`}
         className="font-semibold text-fg underline decoration-dotted decoration-fg3 underline-offset-2 transition-colors hover:decoration-fg cursor-pointer"
       >
@@ -275,13 +279,23 @@ function ProofBadge({ label, image }: { label: string; image: string }) {
             <div
               ref={popRef}
               aria-hidden={!open}
-              onMouseEnter={() => { if (!isCoarse()) setOpen(true); }}
-              onMouseLeave={() => { if (!isCoarse()) setOpen(false); }}
+              onMouseEnter={() => { if (!isCoarse()) cancelClose(); }}
+              onMouseLeave={() => { if (!isCoarse()) scheduleClose(); }}
               className={`proof-pop rounded-xl border border-line2 p-2 shadow-2xl ${open ? "is-open" : ""}`}
               style={{ background: "var(--bg-elev)" }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={image} alt={`Diploma ${label}`} className="block rounded-lg" style={{ width: "min(80vw, 380px)", height: "auto" }} />
+              {link && (
+                <a
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1.5 flex items-center justify-center gap-1.5 rounded-lg py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-fg2 transition-colors hover:text-[#0A66C2]"
+                >
+                  <FaLinkedinIn size={12} /> {linkLabel ?? "LinkedIn"} <span aria-hidden>↗</span>
+                </a>
+              )}
             </div>
           </div>,
           document.body
