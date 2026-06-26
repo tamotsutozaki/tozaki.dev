@@ -45,6 +45,9 @@ export function About() {
               </Reveal>
             </div>
           </div>
+          <Reveal delay={240}>
+            <p className="m-0 text-fg2" style={{ marginTop: "clamp(14px,2vh,22px)", fontSize: 15, lineHeight: 1.55, maxWidth: "60ch" }}>{t.about.sub}</p>
+          </Reveal>
         </div>
 
         <div className="flex flex-col lg:flex-row items-start gap-x-[clamp(28px,5vw,64px)] gap-y-10">

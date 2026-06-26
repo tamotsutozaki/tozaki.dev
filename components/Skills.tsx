@@ -43,7 +43,7 @@ export function Skills() {
     const el = triggerRef.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
-    const left = r.left + r.width / 2;
+    const left = r.left; // ancora pela borda esquerda do botão (balão cresce p/ direita)
     const placement = keep ? placementRef.current : window.innerHeight - r.bottom >= r.top ? "bottom" : "top";
     placementRef.current = placement;
     setCoords(
@@ -112,7 +112,7 @@ export function Skills() {
         </div>
 
         <Reveal delay={120}>
-          <p className="m-0 text-fg2" style={{ marginBottom: "clamp(36px,5vh,56px)", fontSize: 15, lineHeight: 1.55, paddingLeft: "clamp(0px,11vw,118px)" }}>{t.skills.sub}</p>
+          <p className="m-0 text-fg2" style={{ marginBottom: "clamp(36px,5vh,56px)", fontSize: 15, lineHeight: 1.55 }}>{t.skills.sub}</p>
         </Reveal>
 
         {/* Grade bento (visíveis) */}
@@ -151,8 +151,8 @@ export function Skills() {
       {mounted &&
         createPortal(
           <div
-            className="pointer-events-none fixed z-[120] -translate-x-1/2"
-            style={{ left: coords?.left ?? -9999, top: coords?.top, bottom: coords?.bottom, width: "min(90vw, 820px)" }}
+            className="pointer-events-none fixed z-[120]"
+            style={{ left: coords?.left ?? -9999, top: coords?.top, bottom: coords?.bottom, width: "min(95vw, 1040px)" }}
           >
             <div
               id="skills-extra"
@@ -162,10 +162,10 @@ export function Skills() {
               onMouseEnter={cancelClose}
               onMouseLeave={scheduleClose}
               className={`skills-pop relative rounded-2xl border border-line2 p-5 shadow-2xl sm:p-6 ${open ? "is-open" : ""}`}
-              style={{ background: "var(--bg-elev)", transformOrigin: coords?.placement === "top" ? "bottom center" : "top center" }}
+              style={{ background: "var(--bg-elev)", transformOrigin: coords?.placement === "top" ? "bottom left" : "top left" }}
             >
               <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-fg3">{t.skills.showAll}</div>
-              <div className="grid grid-cols-3 gap-3 md:grid-cols-4" style={{ gridAutoRows: "140px", gridAutoFlow: "dense" }}>
+              <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6" style={{ gridAutoRows: "140px", gridAutoFlow: "dense" }}>
                 {hiddenSkills.map((s) => (
                   <div key={s.name} className={spanClass(s.size)}>
                     <SkillCard skill={s} />

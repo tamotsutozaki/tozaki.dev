@@ -492,7 +492,10 @@ html.vt-active * {
 /* Taglines palavra-por-palavra: cada palavra emerge de baixo, em cascata. */
 .tagline .word-mask {
   display: inline-block;
-  overflow: hidden;
+  /* clip + margem: mascara o reveal vertical sem cortar a barriga do itálico
+     (o 'o' final) nem descenders ('p'/'y' de "deploy"). */
+  overflow: clip;
+  overflow-clip-margin: 0.14em;
   vertical-align: bottom;
 }
 .tagline .word-inner {

@@ -20,7 +20,8 @@ export const CONTENT = {
     },
     about: {
       label: "Sobre",
-      heading: "Construindo projetos de valor",
+      heading: "Estratégia e Código",
+      sub: "Unindo visão de negócios e engenharia de software para entregar soluções completas.",
       // Marque as palavras-chave a destacar com **asteriscos**.
       intro: [
         "Trabalho na área de tecnologia há **mais de 5 anos**, atualmente como **desenvolvedor**, construindo **aplicações web e mobile** do zero à entrega final do produto. Meu trabalho vai desde a arquitetura de **APIs robustas** em **C#/.NET** até a criação de interfaces modernas e performáticas com **React**, **Next.js** e **Astro**.",
@@ -52,7 +53,7 @@ export const CONTENT = {
     },
     skills: {
       label: "Skills",
-      heading: "As tecnologias que uso para construir",
+      heading: "Ferramentas do dia a dia",
       sub: "Do front interativo ao back-end escalável — a stack com que trabalho no dia a dia.",
       cats: { backend: "Backend", frontend: "Frontend", mobile: "Mobile", database: "Banco de dados", devops: "DevOps", arch: "Arquitetura", lang: "Linguagem", cloud: "Cloud" },
       showAll: "Tecnologias que tive pouco contato",
@@ -60,7 +61,7 @@ export const CONTENT = {
     },
     projects: {
       label: "Projetos",
-      heading: "Trabalho selecionado",
+      heading: "Construindo projetos de valor",
       sub: "Plataformas e produtos reais, do conceito ao deploy.",
       featured: "Em destaque",
       live: "Ver ao vivo",
@@ -109,7 +110,8 @@ export const CONTENT = {
     },
     about: {
       label: "About",
-      heading: "Building valuable projects",
+      heading: "Strategy & Code",
+      sub: "Bridging business strategy and software engineering to deliver end-to-end solutions.",
       // Mark the keywords to highlight with **asterisks**.
       intro: [
         "I've worked in tech for **5+ years**, currently as a **developer**, building **web and mobile applications** from scratch to final delivery. My work ranges from architecting **robust APIs** in **C#/.NET** to crafting modern, high-performance interfaces with **React**, **Next.js** and **Astro**.",
@@ -141,7 +143,7 @@ export const CONTENT = {
     },
     skills: {
       label: "Skills",
-      heading: "The technologies I build with",
+      heading: "My daily toolkit",
       sub: "From interactive front-ends to scalable back-end services — the stack I work with day to day.",
       cats: { backend: "Backend", frontend: "Frontend", mobile: "Mobile", database: "Database", devops: "DevOps", arch: "Architecture", lang: "Language", cloud: "Cloud" },
       showAll: "Less-used technologies",
@@ -149,7 +151,7 @@ export const CONTENT = {
     },
     projects: {
       label: "Projects",
-      heading: "Selected work",
+      heading: "Building valuable projects",
       sub: "Real platforms and products, from concept to deploy.",
       featured: "Featured",
       live: "Live site",

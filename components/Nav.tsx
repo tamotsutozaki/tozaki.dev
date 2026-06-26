@@ -21,6 +21,37 @@ export function Nav() {
   const [hidden, setHidden] = useState(false);
   // Enquanto > 0, ignora o auto-hide (navegação por clique está rolando a página)
   const lockUntil = useRef(0);
+  // Bolinha deslizante: uma só, ancorada sob o link ativo (translateX animado).
+  const linksWrap = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const [dot, setDot] = useState({ left: 0, show: false });
+
+  const updateDot = () => {
+    const wrap = linksWrap.current;
+    const el = linkRefs.current[active];
+    if (!wrap || !el) {
+      setDot((d) => ({ ...d, show: false })); // ativo sem link na barra (ex.: Contato) → esconde
+      return;
+    }
+    const wr = wrap.getBoundingClientRect();
+    const er = el.getBoundingClientRect();
+    setDot({ left: er.left - wr.left + er.width / 2, show: true });
+  };
+
+  // Reposiciona a bolinha quando muda a seção ativa, o idioma (muda larguras)
+  // ou após o replay da intro (introKey remonta os links). rAF garante layout pronto.
+  useEffect(() => {
+    const id = requestAnimationFrame(updateDot);
+    return () => cancelAnimationFrame(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active, lang, introKey]);
+
+  useEffect(() => {
+    const onResize = () => updateDot();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
 
   // Esconde a navbar ao rolar pra baixo, mostra ao rolar pra cima
   useEffect(() => {
@@ -105,29 +136,35 @@ export function Nav() {
         {/* Grupo à direita: links + CTA + controles */}
         <div className="flex items-center gap-[11px]">
           {/* Links desktop */}
-          <div className="hidden md:flex items-center gap-0.5">
+          <div ref={linksWrap} className="relative hidden md:flex items-center gap-0.5">
             <NavItem delay={130} mask className="inline-flex">
               <a
+                ref={(el) => { linkRefs.current["hero"] = el; }}
                 href="#hero"
                 onClick={go("hero")}
                 className="tswap-trigger relative inline-flex items-center px-[15px] py-[9px] font-mono text-[13.75px] tracking-[0.16em] uppercase text-fg2 hover:text-fg transition-colors cursor-pointer"
               >
                 <SwapText>{t.nav.home}</SwapText>
-                {active === "hero" && <span className="absolute left-1/2 bottom-[1px] w-[4px] h-[4px] rounded-full bg-fg -translate-x-1/2" />}
               </a>
             </NavItem>
             {SECTIONS.filter((s) => s.id !== "contato").map((s, i) => (
               <NavItem key={s.id} delay={190 + i * 60} mask className="inline-flex">
                 <a
+                  ref={(el) => { linkRefs.current[s.id] = el; }}
                   href={`#${s.id}`}
                   onClick={go(s.id)}
                   className="tswap-trigger relative inline-flex items-center px-[15px] py-[9px] font-mono text-[13.75px] tracking-[0.16em] uppercase text-fg2 hover:text-fg transition-colors cursor-pointer"
                 >
                   <SwapText>{t.nav[s.key]}</SwapText>
-                  {active === s.id && <span className="absolute left-1/2 bottom-[1px] w-[4px] h-[4px] rounded-full bg-fg -translate-x-1/2" />}
                 </a>
               </NavItem>
             ))}
+            {/* Bolinha única deslizante (sob o link ativo) */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute bottom-[1px] left-0 w-[4px] h-[4px] rounded-full bg-fg"
+              style={{ transform: `translateX(${dot.left}px) translateX(-50%)`, opacity: dot.show ? 1 : 0, transition: "transform .34s cubic-bezier(.4,0,.2,1), opacity .2s ease" }}
+            />
           </div>
           {/* CTA desktop */}
           <NavItem delay={310} className="hidden md:inline-flex">

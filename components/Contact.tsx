@@ -55,19 +55,21 @@ export function Contact() {
 
       <div className="relative z-[1] mx-auto" style={{ maxWidth: 1240 }}>
         {/* Header */}
-        <div className="flex items-start" style={{ gap: "clamp(12px,3vw,38px)", marginBottom: "clamp(40px,6vh,72px)" }}>
-          <Reveal className="flex-none"><span className="section-num">04</span></Reveal>
-          <div style={{ paddingTop: "clamp(4px,1.2vw,16px)" }}>
-            <Reveal delay={90} className="mb-[18px]">
-              <span className="inline-block font-mono text-[10.5px] font-medium tracking-[0.22em] uppercase text-fg2 border border-line2 rounded-[5px] px-[11px] py-[5px]">{t.contact.label}</span>
-            </Reveal>
-            <Reveal mask delay={160}>
-              <h2 className="m-0 font-extrabold uppercase text-fg" style={{ fontSize: "clamp(2rem,6.4vw,4.6rem)", lineHeight: 0.95, letterSpacing: "-0.03em", maxWidth: "22ch" }}>{t.contact.heading}</h2>
-            </Reveal>
-            <Reveal delay={240}>
-              <p className="mt-[18px] text-fg2" style={{ fontSize: "15.5px", lineHeight: 1.55 }}>{t.contact.sub}</p>
-            </Reveal>
+        <div style={{ marginBottom: "clamp(40px,6vh,72px)" }}>
+          <div className="flex items-start" style={{ gap: "clamp(12px,3vw,38px)" }}>
+            <Reveal className="flex-none"><span className="section-num">04</span></Reveal>
+            <div style={{ paddingTop: "clamp(4px,1.2vw,16px)" }}>
+              <Reveal delay={90} className="mb-[18px]">
+                <span className="inline-block font-mono text-[10.5px] font-medium tracking-[0.22em] uppercase text-fg2 border border-line2 rounded-[5px] px-[11px] py-[5px]">{t.contact.label}</span>
+              </Reveal>
+              <Reveal mask delay={160}>
+                <h2 className="m-0 font-extrabold uppercase text-fg" style={{ fontSize: "clamp(2rem,6.4vw,4.6rem)", lineHeight: 0.95, letterSpacing: "-0.03em", maxWidth: "22ch" }}>{t.contact.heading}</h2>
+              </Reveal>
+            </div>
           </div>
+          <Reveal delay={240}>
+            <p className="m-0 text-fg2" style={{ marginTop: "clamp(14px,2vh,22px)", fontSize: "15.5px", lineHeight: 1.55, maxWidth: "60ch" }}>{t.contact.sub}</p>
+          </Reveal>
         </div>
 
         <div className="grid grid-cols-1 items-stretch md:grid-cols-[5fr_3fr]" style={{ gap: "clamp(20px,3vw,40px)" }}>

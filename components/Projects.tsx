@@ -34,18 +34,18 @@ export function Projects() {
               <Reveal mask delay={160}>
                 <h2 className="m-0 font-extrabold uppercase text-fg" style={{ fontSize: "clamp(2rem,6vw,4.4rem)", lineHeight: 0.95, letterSpacing: "-0.03em" }}>{t.projects.heading}</h2>
               </Reveal>
-              {/* sub + contador na mesma linha */}
-              <Reveal delay={240}>
-                <div className="flex items-baseline justify-between gap-6 flex-wrap mt-3.5">
-                  <p className="m-0 text-fg2" style={{ maxWidth: "40ch", fontSize: 15, lineHeight: 1.5 }}>{t.projects.sub}</p>
-                  <div className="flex items-center gap-3 font-mono text-[11px] tracking-[0.14em] uppercase text-fg3 whitespace-nowrap flex-none">
-                    <span className="w-[34px] h-px bg-line2" />
-                    {count} {t.projects.countLabel}
-                  </div>
-                </div>
-              </Reveal>
             </div>
           </div>
+          {/* sub + contador — começa sob o número (alinhado à esquerda) */}
+          <Reveal delay={240}>
+            <div className="flex items-baseline justify-between gap-6 flex-wrap" style={{ marginTop: "clamp(14px,2vh,22px)" }}>
+              <p className="m-0 text-fg2" style={{ maxWidth: "40ch", fontSize: 15, lineHeight: 1.5 }}>{t.projects.sub}</p>
+              <div className="flex items-center gap-3 font-mono text-[11px] tracking-[0.14em] uppercase text-fg3 whitespace-nowrap flex-none">
+                <span className="w-[34px] h-px bg-line2" />
+                {count} {t.projects.countLabel}
+              </div>
+            </div>
+          </Reveal>
         </div>
 
         {/* Cards */}

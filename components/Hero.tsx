@@ -2,7 +2,8 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useApp } from "./Providers";
-import { FiMapPin, FiCode } from "react-icons/fi";
+import { FiMapPin } from "react-icons/fi";
+import { FaCode } from "react-icons/fa6";
 
 export function Hero() {
   const { introKey } = useApp();
@@ -109,7 +110,7 @@ function HeroContent() {
       {/* Meta — canto inferior direito */}
       <div className={`reveal absolute bottom-[30px] flex items-start gap-[11px] ${vis}`} style={{ right: "clamp(18px,5vw,72px)", transitionDelay: "430ms" }}>
         <span className="text-fg2 mt-px">
-          <FiCode size={18} />
+          <FaCode size={16} />
         </span>
         <div className="font-mono" style={{ fontSize: "13px", letterSpacing: "0.12em", lineHeight: 1.5 }}>
           <div className="text-fg font-medium">{t.hero.role1}</div>
