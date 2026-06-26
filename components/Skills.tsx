@@ -168,7 +168,7 @@ export function Skills() {
               style={{ background: "var(--bg-elev)", transformOrigin: coords?.placement === "top" ? "bottom left" : "top left" }}
             >
               <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-fg3">{t.skills.showAll}</div>
-              <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6" style={{ gridAutoRows: "140px", gridAutoFlow: "dense" }}>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6" style={{ gridAutoRows: "140px", gridAutoFlow: "dense" }}>
                 {hiddenSkills.map((s) => (
                   <div key={s.name} className={spanClass(s.size)}>
                     <SkillCard skill={s} />

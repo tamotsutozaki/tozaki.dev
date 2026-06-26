@@ -249,8 +249,12 @@ textarea::placeholder {
 
 .hero-name {
   margin: 0;
-  font-size: clamp(3.795rem, 26.565vw, 24.035rem);
+  /* white-space:nowrap garante 1 linha em QUALQUER largura (nunca quebra).
+     21vw mantém o texto cabendo sem cortar; em telas cheias (>=1831px, ex.: o
+     monitor 1903) cai no cap 24.035rem — idêntico ao tamanho original. */
+  font-size: clamp(3rem, 21vw, 24.035rem);
   line-height: 0.84;
+  white-space: nowrap;
 }
 
 .footer-name {
@@ -576,17 +580,8 @@ html.vt-active * {
 
 /* =====================================================================
    AJUSTES SÓ-MOBILE — nada aqui altera o layout em telas >= 768px.
-   (Exceção sancionada: .hero-name cai em < 1024px; em >= 1024px — o
-   monitor real — o valor computado é idêntico ao original.)
+   (O TOZAKI é tratado direto na regra .hero-name acima — nowrap + 21vw.)
    ===================================================================== */
-
-/* TOZAKI sempre numa linha só, inteiro, em telas < 1024px */
-@media (max-width: 1023.98px) {
-  .hero-name {
-    font-size: clamp(3.795rem, 20vw, 11rem);
-    white-space: nowrap;
-  }
-}
 
 @media (max-width: 767.98px) {
   /* Watermark vertical (nome faint da seção) — remove o ruído no celular */
