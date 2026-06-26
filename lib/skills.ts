@@ -43,6 +43,8 @@ export type Skill = {
   size: SkillSize;
   /** Quando true, só aparece após clicar em "Ver todas as tecnologias". */
   hidden?: boolean;
+  /** Quando true, fica oculto no mobile (<768px) — evita linha ímpar na grade 2-col. */
+  hideMobile?: boolean;
   /** Ícone react-icons OU glifo de texto (para skills sem logo no set). */
   Icon?: IconType;
   glyph?: string;
@@ -84,7 +86,7 @@ export const SKILLS: Skill[] = [
   { name: "Cloudflare", cat: "cloud", size: 1, Icon: SiCloudflare, color: "#F38020" },
   { name: "Render", cat: "cloud", size: 1, Icon: SiRender, color: "#46E3B7" },
   { name: "Azure", cat: "cloud", size: 1, Icon: SiMicrosoftazure, color: "#0078D4" },
-  { name: "Oracle Cloud", cat: "cloud", size: 1, Icon: SiOracle, color: "#F80000" },
+  { name: "Oracle Cloud", cat: "cloud", size: 1, hideMobile: true, Icon: SiOracle, color: "#F80000" },
 
   // ---- Ocultas (atrás do botão "Ver todas") — agrupadas por categoria
   { name: "Python", cat: "lang", size: 1, hidden: true, Icon: SiPython, color: "#3776AB" },

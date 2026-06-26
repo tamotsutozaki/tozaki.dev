@@ -120,7 +120,7 @@ export function Skills() {
         {/* Grade bento (visíveis) */}
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6" style={{ gridAutoRows: "160px", gridAutoFlow: "dense" }}>
           {visible.map((s, i) => (
-            <Reveal key={s.name} delay={(i % 6) * 40} className={spanClass(s.size)}>
+            <Reveal key={s.name} delay={(i % 6) * 40} className={`${spanClass(s.size)} ${s.hideMobile ? "max-md:hidden" : ""}`}>
               <SkillCard skill={s} />
             </Reveal>
           ))}
