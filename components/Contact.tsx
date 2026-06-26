@@ -68,7 +68,7 @@ export function Contact() {
             </div>
           </div>
           <Reveal delay={240}>
-            <p className="m-0 text-fg2" style={{ marginTop: "clamp(14px,2vh,22px)", fontSize: "15.5px", lineHeight: 1.55, maxWidth: "60ch" }}>{t.contact.sub}</p>
+            <p className="m-0 text-fg2" style={{ marginTop: "clamp(14px,2vh,22px)", fontSize: "15.5px", lineHeight: 1.55 }}>{t.contact.sub}</p>
           </Reveal>
         </div>
 
