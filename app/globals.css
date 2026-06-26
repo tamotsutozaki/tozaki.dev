@@ -620,6 +620,23 @@ html.vt-active * {
   .skill-card:hover { transform: none !important; }
 }
 
+/* Balão do diploma (TOEIC) — entra/sai (igual ideia do balão das stacks) */
+.proof-pop {
+  opacity: 0;
+  transform: scale(0.96) translateY(6px);
+  transform-origin: bottom center;
+  transition: opacity 0.25s ease, transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: none;
+}
+.proof-pop.is-open {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .proof-pop { transition: none; }
+}
+
 /* Menu mobile: cada item sobe do "chão" em cadeia (um de cada vez, até o CTA) */
 @keyframes menu-item-rise {
   from { opacity: 0; transform: translateY(30px); }

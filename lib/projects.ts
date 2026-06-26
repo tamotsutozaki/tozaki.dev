@@ -88,8 +88,8 @@ export const PROJECTS: Project[] = [
     tags: ["Next.js", "TypeScript", "Tailwind", "Cloudflare", "Serverless"],
     kicker: { pt: "Vitrine + e-commerce", en: "Showcase + e-commerce" },
     desc: {
-      pt: "Vitrine de produtos sob encomenda com calculadora de frete serverless integrada à API SuperFrete.",
-      en: "Made-to-order product showcase with a serverless shipping calculator integrated with the SuperFrete API.",
+      pt: "Vitrine de produtos sob encomenda com calculadora e API de cálculo de frete.",
+      en: "Made-to-order product showcase with a shipping-cost calculator and API.",
     },
     bullets: {
       pt: [

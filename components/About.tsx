@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { FiMapPin, FiBriefcase, FiGlobe, FiMail, FiDownload } from "react-icons/fi";
 import { LuGraduationCap } from "react-icons/lu";
@@ -77,12 +78,24 @@ export function About() {
 
             <InfoCard icon={FiGlobe} label={t.about.cards.langLabel} hover="spotlight">
               <div className="flex flex-col gap-3">
-                {t.about.cards.lang.map((l) => (
-                  <div key={l.name}>
-                    <div className="text-[15px] font-semibold leading-snug text-fg">{l.name}</div>
-                    <div className="mt-1 text-[13px] leading-snug text-fg2">{l.level}</div>
-                  </div>
-                ))}
+                {t.about.cards.lang.map((l) => {
+                  const item = l as { name: string; level: string; proof?: string; proofLabel?: string };
+                  return (
+                    <div key={item.name}>
+                      <div className="text-[15px] font-semibold leading-snug text-fg">{item.name}</div>
+                      <div className="mt-1 text-[13px] leading-snug text-fg2">
+                        {item.proof && item.proofLabel ? (
+                          <>
+                            {item.level.split(item.proofLabel)[0]}
+                            <ProofBadge label={item.proofLabel} image={item.proof} />
+                          </>
+                        ) : (
+                          item.level
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </InfoCard>
           </Reveal>
@@ -120,8 +133,8 @@ export function About() {
 
                   {/* Tags no desktop: na coluna, sob o "6+" */}
                   <div className="hidden md:flex flex-wrap gap-2">
-                    {t.about.chips.map((c) => (
-                      <span key={c} className="font-mono text-[11px] px-3 py-[7px] border border-line rounded-[7px] text-fg2">{c}</span>
+                    {t.about.chips.map((c, i) => (
+                      <span key={c} className={chipClass(i === t.about.chips.length - 1)}>{c}</span>
                     ))}
                   </div>
                 </div>
@@ -129,8 +142,8 @@ export function About() {
 
               {/* Tags no mobile: largura total, abaixo da foto + "6+" */}
               <div className="mt-5 flex flex-wrap gap-2 md:hidden">
-                {t.about.chips.map((c) => (
-                  <span key={c} className="font-mono text-[11px] px-3 py-[7px] border border-line rounded-[7px] text-fg2">{c}</span>
+                {t.about.chips.map((c, i) => (
+                  <span key={c} className={chipClass(i === t.about.chips.length - 1)}>{c}</span>
                 ))}
               </div>
             </div>
@@ -183,5 +196,96 @@ function BrandIconBtn({ href, label, brand, brandFg, children }: { href: string;
         <span className="tswap-copy" aria-hidden>{children}</span>
       </span>
     </a>
+  );
+}
+
+/** Classe das tags do "6+". A última (disponibilidade) ganha destaque: preenchida
+ *  com cinza (fg2) e texto invertido — se sobressai das outras (outline). */
+function chipClass(highlight: boolean) {
+  const base = "font-mono text-[11px] px-3 py-[7px] rounded-[7px]";
+  return highlight
+    ? `${base} border border-transparent bg-fg2 text-bg`
+    : `${base} border border-line text-fg2`;
+}
+
+/** "Selo" com balão: ao passar o mouse (ou tocar no mobile) mostra a imagem do
+ *  diploma, igual ao balão das stacks secundárias (portal + hover/tap + esc). */
+function ProofBadge({ label, image }: { label: string; image: string }) {
+  const [open, setOpen] = useState(false);
+  const [coords, setCoords] = useState<{ left: number; bottom: number } | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const ref = useRef<HTMLButtonElement>(null);
+  const popRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => setMounted(true), []);
+
+  const isCoarse = () => typeof window !== "undefined" && window.matchMedia("(hover:none)").matches;
+
+  const place = () => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    setCoords({ left: r.left + r.width / 2, bottom: window.innerHeight - r.top + 10 });
+  };
+  const show = () => { place(); setOpen(true); };
+
+  useEffect(() => {
+    if (!open) return;
+    const reposition = () => place();
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    const onDown = (e: PointerEvent) => {
+      if (!isCoarse()) return;
+      const tgt = e.target as Node;
+      if (ref.current?.contains(tgt) || popRef.current?.contains(tgt)) return;
+      setOpen(false);
+    };
+    window.addEventListener("scroll", reposition, { passive: true });
+    window.addEventListener("resize", reposition);
+    window.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onDown);
+    return () => {
+      window.removeEventListener("scroll", reposition);
+      window.removeEventListener("resize", reposition);
+      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onDown);
+    };
+  }, [open]);
+
+  return (
+    <>
+      <button
+        ref={ref}
+        type="button"
+        onMouseEnter={() => { if (!isCoarse()) show(); }}
+        onMouseLeave={() => { if (!isCoarse()) setOpen(false); }}
+        onFocus={() => { if (!isCoarse()) show(); }}
+        onBlur={() => { if (!isCoarse()) setOpen(false); }}
+        onClick={() => { if (isCoarse()) (open ? setOpen(false) : show()); }}
+        aria-label={`Ver diploma ${label}`}
+        className="font-semibold text-fg underline decoration-dotted decoration-fg3 underline-offset-2 transition-colors hover:decoration-fg cursor-pointer"
+      >
+        {label}
+      </button>
+      {mounted &&
+        createPortal(
+          <div
+            className="pointer-events-none fixed z-[120]"
+            style={{ left: coords?.left ?? -9999, bottom: coords?.bottom, transform: "translateX(-50%)" }}
+          >
+            <div
+              ref={popRef}
+              aria-hidden={!open}
+              onMouseEnter={() => { if (!isCoarse()) setOpen(true); }}
+              onMouseLeave={() => { if (!isCoarse()) setOpen(false); }}
+              className={`proof-pop rounded-xl border border-line2 p-2 shadow-2xl ${open ? "is-open" : ""}`}
+              style={{ background: "var(--bg-elev)" }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={image} alt={`Diploma ${label}`} className="block rounded-lg" style={{ width: "min(80vw, 380px)", height: "auto" }} />
+            </div>
+          </div>,
+          document.body
+        )}
+    </>
   );
 }

@@ -4,8 +4,8 @@ import React from "react";
 import { useApp } from "./Providers";
 import { useLenis } from "./SmoothScroll";
 import { SITE, getEmail } from "@/lib/site";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
-import { FiMail } from "react-icons/fi";
+import { FaGithub, FaLinkedinIn, FaWhatsapp } from "react-icons/fa6";
+import { FiMail, FiDownload } from "react-icons/fi";
 
 export function Footer() {
   const { t, replayIntro } = useApp();
@@ -45,7 +45,7 @@ export function Footer() {
               {t.contact.availLine}
             </div>
             <a href="#contato" onClick={go("contato")} className="group inline-flex items-center gap-2.5 font-bold text-fg cursor-pointer max-md:py-2 max-md:-my-2" style={{ fontSize: "clamp(1.4rem,3vw,2.1rem)", letterSpacing: "-0.03em" }}>
-              {t.contact.heading}
+              {t.footer.cta}
               <span className="transition-transform duration-150 group-hover:translate-x-[4px] group-hover:-translate-y-[7px]" style={{ fontSize: "0.7em" }}>↗</span>
             </a>
           </div>
@@ -58,7 +58,22 @@ export function Footer() {
           <div className="flex gap-2.5">
             <Social href={SITE.github} label="GitHub" brand="var(--fg)" brandFg="var(--bg)"><FaGithub size={17} /></Social>
             <Social href={SITE.linkedin} label="LinkedIn" brand="#0A66C2" brandFg="#fff"><FaLinkedinIn size={16} /></Social>
+            <Social href={SITE.whatsapp} label="WhatsApp" brand="#25D366" brandFg="#fff"><FaWhatsapp size={17} /></Social>
             <Social href={`mailto:${email}`} label="Email" brand="#EA4335" brandFg="#fff"><FiMail size={17} /></Social>
+            {/* CV: mostra "CV"; no hover troca pelo ícone de download */}
+            <a
+              href={SITE.cvUrl}
+              download="Pedro Tozaki - CV.pdf"
+              aria-label="Baixar CV"
+              style={{ "--brand": "#2E90E6", "--brand-fg": "#fff" } as React.CSSProperties}
+              className="fillbrand fillbtn tswap-trigger grid place-items-center w-10 h-10 max-md:w-11 max-md:h-11 rounded-[9px] border border-line2 text-fg2 font-mono text-[12px] font-semibold cursor-pointer"
+            >
+              <span className="fillbtn-fill" aria-hidden />
+              <span className="tswap relative z-[1]">
+                <span className="tswap-orig">CV</span>
+                <span className="tswap-copy" aria-hidden><FiDownload size={16} /></span>
+              </span>
+            </a>
           </div>
         </div>
       </div>
