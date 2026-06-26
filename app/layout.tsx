@@ -16,8 +16,15 @@ export const metadata: Metadata = {
     title: "Pedro Tozaki — Full-Stack Developer",
     description: "Construo aplicações do back ao front, do conceito ao deploy.",
     type: "website",
-    // TODO: adicionar uma OG image em /public e referenciar aqui:
-    // images: ["/og.png"],
+    url: "https://tozaki.dev",
+    siteName: "Pedro Tozaki",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Pedro Tozaki — Full-Stack Developer" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pedro Tozaki — Full-Stack Developer",
+    description: "Construo aplicações do back ao front, do conceito ao deploy.",
+    images: ["/og.png"],
   },
   metadataBase: new URL("https://tozaki.dev"),
 };
