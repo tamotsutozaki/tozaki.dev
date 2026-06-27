@@ -582,9 +582,9 @@ html.vt-active * {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--fg);
+  background: #2E90E6;
   opacity: 0.55;
-  animation: pulse 2.6s ease-out infinite;
+  animation: pulse 1.5s ease-out infinite;
 }
 
 /* =====================================================================

@@ -40,7 +40,7 @@ export function Footer() {
             <div className="flex items-center gap-2.5 font-mono text-[12.5px] text-fg2 mb-3.5">
               <span className="relative inline-grid place-items-center w-[7px] h-[7px]">
                 <span className="pulse-dot" />
-                <span className="w-[6px] h-[6px] rounded-full bg-fg" />
+                <span className="w-[6px] h-[6px] rounded-full bg-[#2E90E6]" />
               </span>
               {t.contact.availLine}
             </div>
