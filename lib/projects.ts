@@ -38,20 +38,20 @@ export const PROJECTS: Project[] = [
         "Backend único em C#/.NET (Clean Architecture + EF Core) servindo web e mobile via REST + JWT",
         "Captura por voz e texto interpretada pela IA do Google Gemini, que estrutura a tarefa automaticamente",
         "App Flutter (iOS/Android) com voz nativa (STT/TTS) e lembretes locais agendados",
-        "Site em Next.js 15 + React 19 com área logada, i18n pt/en e banco PostgreSQL (Supabase)",
+        "Site em Next.js + React com área logada, i18n pt/en e banco PostgreSQL (Supabase)",
       ],
       en: [
         "Single C#/.NET backend (Clean Architecture + EF Core) serving web and mobile over REST + JWT",
         "Voice and text capture interpreted by Google Gemini AI, which structures the task automatically",
         "Flutter app (iOS/Android) with native voice (STT/TTS) and scheduled local reminders",
-        "Next.js 15 + React 19 site with a logged-in app area, pt/en i18n and a PostgreSQL (Supabase) database",
+        "Next.js + React site with a logged-in app area, pt/en i18n and a PostgreSQL (Supabase) database",
       ],
     },
   },
   {
     id: "tomore",
     name: "ToMore",
-    year: "2025",
+    year: "2026",
     img: "/assets/project-tomore.png",
     live: "https://www.tomore.co",
     code: "https://github.com/TozakiMoreira/tomore",
@@ -64,13 +64,13 @@ export const PROJECTS: Project[] = [
     },
     bullets: {
       pt: [
-        "Astro 5 SSR + TypeScript + Tailwind 4, com deploy na Cloudflare Pages",
+        "Astro SSR + TypeScript + Tailwind, com deploy na Cloudflare Pages",
         "Portfólio de casos bilíngue via Content Collections, com imagens otimizadas (astro:assets)",
         "Formulário de contato funcional: validação Zod, honeypot anti-spam e envio via Resend",
         "i18n PT/EN, SEO completo (JSON-LD, hreflang, sitemap) e View Transitions + scroll suave (Lenis)",
       ],
       en: [
-        "Astro 5 SSR + TypeScript + Tailwind 4, deployed on Cloudflare Pages",
+        "Astro SSR + TypeScript + Tailwind, deployed on Cloudflare Pages",
         "Bilingual case-study portfolio via Content Collections, with optimized images (astro:assets)",
         "Working contact form: Zod validation, anti-spam honeypot and delivery via Resend",
         "PT/EN i18n, full SEO (JSON-LD, hreflang, sitemap) and View Transitions + smooth scroll (Lenis)",
@@ -93,13 +93,13 @@ export const PROJECTS: Project[] = [
     },
     bullets: {
       pt: [
-        "Next.js 16 (App Router, export estático) + React 19 + TypeScript + Tailwind v4",
+        "Next.js (App Router, export estático) + React + TypeScript + Tailwind",
         "Calculadora de frete via Cloudflare Pages Function (proxy da API SuperFrete, token no servidor)",
         "Portfólio com filtro por tamanho e lightbox; tabela de preços por tamanho (14/18/25 cm)",
         "Sem carrinho ou checkout: CTAs abrem conversas pré-preenchidas no WhatsApp",
       ],
       en: [
-        "Next.js 16 (App Router, static export) + React 19 + TypeScript + Tailwind v4",
+        "Next.js (App Router, static export) + React + TypeScript + Tailwind",
         "Shipping calculator via a Cloudflare Pages Function (SuperFrete API proxy, token kept server-side)",
         "Portfolio with size filtering and a lightbox; size-based pricing table (14/18/25 cm)",
         "No cart or checkout: CTAs open prefilled WhatsApp conversations",

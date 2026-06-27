@@ -9,7 +9,7 @@ export const CONTENT = {
   pt: {
     nav: { home: "Início", about: "Sobre", skills: "Skills", projects: "Projetos", contact: "Contato", cta: "Vamos conversar" },
     hero: {
-      taglineLead: "Oi! Construo aplicações full-stack, aprendendo mais todos os dias",
+      taglineLead: "Oi! Construo aplicações full-stack que resolvem problemas reais.",
       taglineMain: "tanto back quanto front,",
       taglineEm: "do conceito ao deploy.",
       loc1: "Indaiatuba",
@@ -101,7 +101,7 @@ export const CONTENT = {
   en: {
     nav: { home: "Home", about: "About", skills: "Skills", projects: "Projects", contact: "Contact", cta: "Let's talk" },
     hero: {
-      taglineLead: "Hi! I build full-stack applications, learning more every day",
+      taglineLead: "Hi! I build full-stack applications that solve real problems.",
       taglineMain: "both back and front,",
       taglineEm: "concept to deploy.",
       loc1: "Indaiatuba",
