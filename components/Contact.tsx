@@ -137,7 +137,7 @@ export function Contact() {
                 <span>{t.contact.replyTime}</span>
               </div>
 
-              <div className="relative flex items-center gap-3 py-3.5 border-t border-line">
+              <div className="relative flex items-center gap-3 py-3.5 divline-t">
                 <a href={`mailto:${email}`} className="tswap-trigger group inline-flex items-center gap-3 cursor-pointer before:absolute before:inset-0 before:content-['']">
                   <span className="flex-none text-fg3 transition-colors group-hover:text-[#EA4335]"><FiMail size={15} /></span>
                   <SwapText className="font-mono text-[13.5px] text-fg">{email}</SwapText>
@@ -154,7 +154,7 @@ export function Contact() {
               <ChannelLink href={SITE.linkedin} label="LinkedIn" icon={<FaLinkedinIn size={15} />} brand="#0A66C2" />
               <ChannelLink href={SITE.github} label="GitHub" icon={<FaGithub size={15} />} brand="var(--fg)" />
               {/* LeetCode — descomente quando tiver: <ChannelLink href={SITE.leetcode} label="LeetCode" symbol="↗" /> */}
-              <a href={SITE.cvUrl} download="Pedro Tozaki - CV.pdf" className="tswap-trigger group flex items-center gap-3 py-3.5 border-t border-line text-fg text-[14.5px] cursor-pointer">
+              <a href={SITE.cvUrl} download="Pedro Tozaki - CV.pdf" className="tswap-trigger group flex items-center gap-3 py-3.5 divline-t text-fg text-[14.5px] cursor-pointer">
                 <span className="flex-none text-fg3 transition-colors group-hover:text-[#2E90E6]"><FiDownload size={15} /></span>
                 <SwapText>{t.contact.cv}</SwapText>
               </a>
@@ -192,7 +192,7 @@ function ChannelLink({ href, label, icon, brand }: { href: string; label: string
       target="_blank"
       rel="noopener noreferrer"
       style={{ "--brand": brand } as React.CSSProperties}
-      className="tswap-trigger group flex items-center gap-3 py-3.5 border-t border-line text-fg text-[14.5px] cursor-pointer"
+      className="tswap-trigger group flex items-center gap-3 py-3.5 divline-t text-fg text-[14.5px] cursor-pointer"
     >
       <span className="flex-none text-fg3 transition-colors group-hover:text-[var(--brand)]">{icon}</span>
       <SwapText>{label}</SwapText>

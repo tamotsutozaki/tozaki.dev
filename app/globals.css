@@ -13,6 +13,7 @@
   --fg3: #6a6a6a;
   --line: rgba(255, 255, 255, 0.10);
   --line2: rgba(255, 255, 255, 0.20);
+  --line-strong: rgba(255, 255, 255, 0.75);
   --navbg: rgba(10, 10, 10, 0.72);
 }
 
@@ -25,6 +26,7 @@ html.light {
   --fg3: #9a958c;
   --line: rgba(10, 10, 10, 0.10);
   --line2: rgba(10, 10, 10, 0.17);
+  --line-strong: rgba(10, 10, 10, 0.85);
   --navbg: rgba(247, 246, 242, 0.74);
 }
 
@@ -39,6 +41,7 @@ html.light {
   --fg3: #9a958c;
   --line: rgba(10, 10, 10, 0.10);
   --line2: rgba(10, 10, 10, 0.17);
+  --line-strong: rgba(10, 10, 10, 0.85);
 }
 html.light .theme-invert {
   --bg: #0a0a0a;
@@ -49,7 +52,14 @@ html.light .theme-invert {
   --fg3: #6a6a6a;
   --line: rgba(255, 255, 255, 0.10);
   --line2: rgba(255, 255, 255, 0.20);
+  --line-strong: rgba(255, 255, 255, 0.75);
 }
+
+/* ===================== LINHAS DIVISÓRIAS ===================== */
+/* Separadores de conteúdo — bem visíveis: preto no claro, branco no escuro.
+   Mais grossas (2px) e nítidas que as bordas de card (--line / --line2). */
+.divline-t { border-top: 2px solid var(--line-strong); }
+.divline-y { border-top: 2px solid var(--line-strong); border-bottom: 2px solid var(--line-strong); }
 
 /* ============ HOVER DOS CARDS ESTÁTICOS (teste A/B) ============ */
 .card-fx { position: relative; }

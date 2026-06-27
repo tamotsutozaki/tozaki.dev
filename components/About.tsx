@@ -116,7 +116,7 @@ export function About() {
 
             {/* Foto + "6+" lado a lado; tags abaixo no mobile (largura total),
                 na coluna sob o "6+" no desktop */}
-            <div className="pt-[26px] border-t border-line2 md:border-line">
+            <div className="pt-[26px] divline-t">
               <div className="flex items-center gap-x-5 md:gap-x-8">
                 <div className="flex-none w-[120px] md:w-[135px]">
                   <div className="overflow-hidden rounded-full border border-line2 bg-bg-elev" style={{ aspectRatio: "1 / 1" }}>
@@ -160,7 +160,7 @@ export function About() {
             </div>
 
             {/* Links sociais + CV — hover pinta na cor da marca */}
-            <div className="pt-[26px] border-t border-line2 md:border-line">
+            <div className="pt-[26px] divline-t">
               <div className="mb-3 font-mono text-[10px] tracking-[0.2em] uppercase text-fg3">{t.about.findMe}</div>
               <div className="flex flex-wrap items-center gap-2.5">
                 <BrandIconBtn href={SITE.github} label="GitHub" brand="var(--fg)" brandFg="var(--bg)" isOn={socialOn}><FaGithub size={17} /></BrandIconBtn>
