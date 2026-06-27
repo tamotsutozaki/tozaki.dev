@@ -156,6 +156,18 @@ html.light .theme-invert {
   .skills-pop { transition: none; }
 }
 
+/* Mobile: a grade de skills vira 2-col uniforme (todos os cards 1x1), mas ícone/
+   nome/marca-d'água eram fixos por "size" (até 240px) e estouravam o card pequeno.
+   Aqui forço todos ao tamanho 1x1. (CSS vence os atributos width/height do SVG;
+   só o glyph precisa de !important porque o font-size dele é inline.) */
+@media (max-width: 767.98px) {
+  .skill-card .sc-icon svg { width: 28px; height: 28px; }
+  .skill-card .sc-icon > span { font-size: 19.6px !important; }
+  .skill-card .sc-name { font-size: 15px; }
+  .skill-card .sc-wm svg { width: 120px; height: 120px; }
+  .skill-card .sc-wm > span { font-size: 96px !important; }
+}
+
 /* ===== Card de projeto: sempre invertido (.theme-invert) + lift + sombra + reflexo ===== */
 .proj-card {
   transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.4s ease;
