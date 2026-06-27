@@ -24,6 +24,9 @@ function renderRich(text: string) {
 
 export function About() {
   const { t } = useApp();
+  // Ligado quando o mouse está na tag "Disponível…" — aciona o hover de todos
+  // os botões do "Encontre-me" ao mesmo tempo.
+  const [socialOn, setSocialOn] = useState(false);
 
   return (
     <section id="sobre" className="relative overflow-hidden" style={{ scrollMarginTop: 80, padding: "clamp(80px,12vh,150px) clamp(18px,5vw,72px)" }}>
@@ -133,18 +136,26 @@ export function About() {
 
                   {/* Tags no desktop: na coluna, sob o "6+" */}
                   <div className="hidden md:flex flex-wrap gap-2">
-                    {t.about.chips.map((c, i) => (
-                      <span key={c} className={chipClass(i === t.about.chips.length - 1)}>{c}</span>
-                    ))}
+                    {t.about.chips.map((c, i) =>
+                      i === t.about.chips.length - 1 ? (
+                        <AvailChip key={c} label={c} onHover={setSocialOn} />
+                      ) : (
+                        <span key={c} className={CHIP_CLASS}>{c}</span>
+                      )
+                    )}
                   </div>
                 </div>
               </div>
 
               {/* Tags no mobile: largura total, abaixo da foto + "6+" */}
               <div className="mt-5 flex flex-wrap gap-2 md:hidden">
-                {t.about.chips.map((c, i) => (
-                  <span key={c} className={chipClass(i === t.about.chips.length - 1)}>{c}</span>
-                ))}
+                {t.about.chips.map((c, i) =>
+                  i === t.about.chips.length - 1 ? (
+                    <AvailChip key={c} label={c} onHover={setSocialOn} />
+                  ) : (
+                    <span key={c} className={CHIP_CLASS}>{c}</span>
+                  )
+                )}
               </div>
             </div>
 
@@ -152,16 +163,16 @@ export function About() {
             <div className="pt-[26px] border-t border-line">
               <div className="mb-3 font-mono text-[10px] tracking-[0.2em] uppercase text-fg3">{t.about.findMe}</div>
               <div className="flex flex-wrap items-center gap-2.5">
-                <BrandIconBtn href={SITE.github} label="GitHub" brand="var(--fg)" brandFg="var(--bg)"><FaGithub size={17} /></BrandIconBtn>
-                <BrandIconBtn href={SITE.linkedin} label="LinkedIn" brand="#0A66C2" brandFg="#fff"><FaLinkedinIn size={16} /></BrandIconBtn>
-                <BrandIconBtn href={SITE.whatsapp} label="WhatsApp" brand="#25D366" brandFg="#fff"><FaWhatsapp size={17} /></BrandIconBtn>
-                <BrandIconBtn href={`mailto:${getEmail()}`} label="E-mail" brand="#EA4335" brandFg="#fff"><FiMail size={17} /></BrandIconBtn>
+                <BrandIconBtn href={SITE.github} label="GitHub" brand="var(--fg)" brandFg="var(--bg)" isOn={socialOn}><FaGithub size={17} /></BrandIconBtn>
+                <BrandIconBtn href={SITE.linkedin} label="LinkedIn" brand="#0A66C2" brandFg="#fff" isOn={socialOn}><FaLinkedinIn size={16} /></BrandIconBtn>
+                <BrandIconBtn href={SITE.whatsapp} label="WhatsApp" brand="#25D366" brandFg="#fff" isOn={socialOn}><FaWhatsapp size={17} /></BrandIconBtn>
+                <BrandIconBtn href={`mailto:${getEmail()}`} label="E-mail" brand="#EA4335" brandFg="#fff" isOn={socialOn}><FiMail size={17} /></BrandIconBtn>
                 <a
                   href={SITE.cvUrl}
                   download="Pedro Tozaki - CV.pdf"
                   aria-label={t.contact.cv}
                   style={{ "--brand": "#2E90E6", "--brand-fg": "#fff" } as React.CSSProperties}
-                  className="fillbrand fillbtn tswap-trigger inline-flex items-center h-[42px] px-4 rounded-[11px] border border-line2 text-fg2 font-medium text-[13px] cursor-pointer"
+                  className={`fillbrand fillbtn tswap-trigger inline-flex items-center h-[42px] px-4 rounded-[11px] border border-line2 text-fg2 font-medium text-[13px] cursor-pointer ${socialOn ? "is-on" : ""}`}
                 >
                   <span className="fillbtn-fill" aria-hidden />
                   <span className="tswap relative z-[1]">
@@ -180,7 +191,7 @@ export function About() {
 
 /** Botão de ícone com o fill-sweep subindo na COR DA MARCA + troca do ícone
  *  (tswap). Vars --brand/--brand-fg colorem o preenchimento e o ícone trocado. */
-function BrandIconBtn({ href, label, brand, brandFg, children }: { href: string; label: string; brand: string; brandFg: string; children: React.ReactNode }) {
+function BrandIconBtn({ href, label, brand, brandFg, isOn = false, children }: { href: string; label: string; brand: string; brandFg: string; isOn?: boolean; children: React.ReactNode }) {
   const external = href.startsWith("http");
   return (
     <a
@@ -188,7 +199,7 @@ function BrandIconBtn({ href, label, brand, brandFg, children }: { href: string;
       aria-label={label}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       style={{ "--brand": brand, "--brand-fg": brandFg } as React.CSSProperties}
-      className="fillbrand fillbtn tswap-trigger grid place-items-center w-[42px] h-[42px] rounded-[11px] border border-line2 text-fg2 cursor-pointer"
+      className={`fillbrand fillbtn tswap-trigger grid place-items-center w-[42px] h-[42px] rounded-[11px] border border-line2 text-fg2 cursor-pointer ${isOn ? "is-on" : ""}`}
     >
       <span className="fillbtn-fill" aria-hidden />
       <span className="tswap relative z-[1]">
@@ -199,13 +210,26 @@ function BrandIconBtn({ href, label, brand, brandFg, children }: { href: string;
   );
 }
 
-/** Classe das tags do "6+". A última (disponibilidade) ganha destaque: preenchida
- *  com cinza (fg2) e texto invertido — se sobressai das outras (outline). */
-function chipClass(highlight: boolean) {
-  const base = "font-mono text-[11px] px-3 py-[7px] rounded-[7px]";
-  return highlight
-    ? `${base} border border-transparent bg-fg2 text-bg`
-    : `${base} border border-line text-fg2`;
+/** Estilo padrão das tags do "6+" (outline). */
+const CHIP_CLASS = "font-mono text-[11px] px-3 py-[7px] border border-line rounded-[7px] text-fg2";
+
+/** Tag "Disponível…": igual às outras em repouso; no hover pinta com a cor do
+ *  LinkedIn (blob) e — via onHover — aciona o hover de todos os botões sociais. */
+function AvailChip({ label, onHover }: { label: string; onHover: (v: boolean) => void }) {
+  return (
+    <span
+      onMouseEnter={() => onHover(true)}
+      onMouseLeave={() => onHover(false)}
+      style={{ "--brand": "#0A66C2", "--brand-fg": "#fff" } as React.CSSProperties}
+      className={`fillbrand fillbtn tswap-trigger inline-flex items-center ${CHIP_CLASS} cursor-default`}
+    >
+      <span className="fillbtn-fill" aria-hidden />
+      <span className="tswap relative z-[1]">
+        <span className="tswap-orig">{label}</span>
+        <span className="tswap-copy" aria-hidden>{label}</span>
+      </span>
+    </span>
+  );
 }
 
 /** "Selo" com balão: ao passar o mouse (ou tocar no mobile) mostra a imagem do

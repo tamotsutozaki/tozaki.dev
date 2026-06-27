@@ -449,6 +449,12 @@ html.vt-active * {
   transform: translateY(0);
   border-radius: 0;
 }
+/* Estado "ligado" remoto (ex.: hover na tag de disponibilidade aciona estes):
+   dispara o MESMO efeito do hover — fill sobe + troca de texto/ícone + leve pop. */
+.fillbtn.is-on { transform: scale(1.03); }
+.fillbtn.is-on .fillbtn-fill { transform: translateY(0); border-radius: 0; }
+.tswap-trigger.is-on .tswap-orig { transform: translateY(-100%); }
+.tswap-trigger.is-on .tswap-copy { transform: translateY(0); }
 @media (prefers-reduced-motion: reduce) {
   .fillbtn-fill {
     transition: none;
