@@ -4,7 +4,7 @@ import { SiteContent } from "@/components/SiteContent";
 // Entrada em inglês: o Providers detecta /en e abre o site já em EN.
 // Metadados em inglês para quando o link /en for compartilhado.
 export const metadata: Metadata = {
-  title: "Pedro Tozaki — Full-Stack Developer",
+  title: "Pedro Tozaki — Full-Stack Dev",
   description:
     "Full-Stack Developer based in Brazil. I build applications back to front, concept to deploy. Available for freelance projects and professional opportunities.",
   alternates: { canonical: "/en" },

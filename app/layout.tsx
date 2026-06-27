@@ -9,7 +9,7 @@ const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", displ
 const archivo = Archivo_Black({ subsets: ["latin"], weight: "400", variable: "--font-display", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Pedro Tozaki — Full-Stack Developer",
+  title: "Pedro Tozaki — Full-Stack Dev",
   description:
     "Full-Stack Developer baseado no Brasil. Construo aplicações do back ao front, do conceito ao deploy. Disponível para projetos freelance e oportunidades.",
   openGraph: {
