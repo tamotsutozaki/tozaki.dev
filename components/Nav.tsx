@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useApp } from "./Providers";
 import { useLenis } from "./SmoothScroll";
 import { SwapText } from "./SwapText";
@@ -16,6 +17,7 @@ const SECTIONS = [
 export function Nav() {
   const { t, theme, toggleTheme, lang, toggleLang, replayIntro, introKey } = useApp();
   const lenis = useLenis();
+  const router = useRouter();
   const [active, setActive] = useState("hero");
   const [menuOpen, setMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -234,7 +236,7 @@ export function Nav() {
           </NavItem>
           {/* Idioma */}
           <NavItem delay={350} className="inline-flex">
-            <button onClick={(e) => { toggleLang(); go("hero")(e); }} aria-label="Toggle language" className="fillbtn tswap-trigger grid place-items-center w-[42px] h-[42px] rounded-[11px] border border-line2 text-fg font-mono text-[13px] font-semibold tracking-[0.04em] cursor-pointer">
+            <button onClick={(e) => { const next = lang === "pt" ? "en" : "pt"; toggleLang(); router.push(next === "en" ? "/en" : "/", { scroll: false }); go("hero")(e); }} aria-label="Toggle language" className="fillbtn tswap-trigger grid place-items-center w-[42px] h-[42px] rounded-[11px] border border-line2 text-fg font-mono text-[13px] font-semibold tracking-[0.04em] cursor-pointer">
               <span className="fillbtn-fill" aria-hidden />
               <span className="tswap relative z-[1]">
                 <span className="tswap-orig">{lang === "pt" ? "PT" : "EN"}</span>
