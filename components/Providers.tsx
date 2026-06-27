@@ -53,11 +53,20 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   const setTheme = useCallback((th: Theme) => applyTheme(th, true), [applyTheme]);
 
-  // Lê idioma salvo no mount.
+  // Idioma no mount: a URL tem prioridade (/en ou ?lang=en — link compartilhável
+  // que já abre em inglês), depois o que estiver salvo, senão o padrão (pt).
   useEffect(() => {
     try {
-      const savedLang = localStorage.getItem("tz-lang") as Lang | null;
-      if (savedLang === "pt" || savedLang === "en") setLangState(savedLang);
+      const path = window.location.pathname.toLowerCase();
+      const q = new URLSearchParams(window.location.search).get("lang");
+      let initial: Lang | null = null;
+      if (path.startsWith("/en") || q === "en") initial = "en";
+      else if (path.startsWith("/pt") || q === "pt") initial = "pt";
+      else {
+        const saved = localStorage.getItem("tz-lang") as Lang | null;
+        if (saved === "pt" || saved === "en") initial = saved;
+      }
+      if (initial) setLangState(initial);
     } catch {}
   }, []);
 
