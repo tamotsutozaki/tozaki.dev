@@ -77,13 +77,13 @@ export const SKILLS: Skill[] = [
   { name: "Clean Arch.", cat: "arch", size: 1, glyph: "◇", color: "#64748B" },
   { name: "REST APIs", cat: "arch", size: 1, glyph: "{ }", color: "#64748B" },
 
-  // ---- DevOps
-  { name: "Git", cat: "devops", size: 1, Icon: SiGit, color: "#F05032" },
+  // ---- DevOps  (Cloudflare ocupa o slot do Git — troca posicional por layout)
+  { name: "Cloudflare", cat: "cloud", size: 1, Icon: SiCloudflare, color: "#F38020" },
   { name: "Docker", cat: "devops", size: 1, Icon: SiDocker, color: "#2496ED" },
   { name: "Postman", cat: "devops", size: 1, Icon: SiPostman, color: "#FF6C37" },
 
-  // ---- Cloud / Deploy
-  { name: "Cloudflare", cat: "cloud", size: 1, Icon: SiCloudflare, color: "#F38020" },
+  // ---- Cloud / Deploy  (Git ocupa o slot do Cloudflare)
+  { name: "Git", cat: "devops", size: 1, Icon: SiGit, color: "#F05032" },
   { name: "Render", cat: "cloud", size: 1, Icon: SiRender, color: "#46E3B7" },
   { name: "Azure", cat: "cloud", size: 1, Icon: SiMicrosoftazure, color: "#0078D4" },
   { name: "Oracle Cloud", cat: "cloud", size: 1, hideMobile: true, Icon: SiOracle, color: "#F80000" },
