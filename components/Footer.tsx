@@ -33,7 +33,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative divline-t overflow-hidden" style={{ padding: "clamp(56px,9vh,110px) clamp(18px,5vw,72px) 38px" }}>
+    <footer className="relative border-t border-line overflow-hidden" style={{ padding: "clamp(56px,9vh,110px) clamp(18px,5vw,72px) 38px" }}>
       <div className="mx-auto" style={{ maxWidth: 1240 }}>
         <div className="flex justify-between flex-wrap items-start gap-7" style={{ marginBottom: "clamp(20px,4vh,44px)" }}>
           <div>
@@ -53,7 +53,7 @@ export function Footer() {
 
         <a href="#hero" onClick={go("hero")} aria-label="Voltar ao início" className="display-name footer-name inline-block cursor-pointer">PEDRO<br />TOZAKI</a>
 
-        <div className="flex justify-between flex-wrap items-center gap-3 mt-[30px] pt-6 divline-t font-mono text-[11px] tracking-[0.04em] text-fg3">
+        <div className="flex justify-between flex-wrap items-center gap-3 mt-[30px] pt-6 border-t border-line font-mono text-[11px] tracking-[0.04em] text-fg3">
           <span>{t.footer.rights}</span>
           <div className="flex gap-2.5">
             <Social href={SITE.github} label="GitHub" brand="var(--fg)" brandFg="var(--bg)"><FaGithub size={17} /></Social>

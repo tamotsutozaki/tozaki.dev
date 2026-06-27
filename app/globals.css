@@ -59,7 +59,6 @@ html.light .theme-invert {
 /* Separadores de conteúdo — bem visíveis: preto no claro, branco no escuro.
    Mais grossas (2px) e nítidas que as bordas de card (--line / --line2). */
 .divline-t { border-top: 2px solid var(--line-strong); }
-.divline-y { border-top: 2px solid var(--line-strong); border-bottom: 2px solid var(--line-strong); }
 
 /* ============ HOVER DOS CARDS ESTÁTICOS (teste A/B) ============ */
 .card-fx { position: relative; }

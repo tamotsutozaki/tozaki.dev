@@ -198,7 +198,7 @@ export function Skills() {
 
       {/* Marquee */}
       <div
-        className="relative overflow-hidden divline-y py-[22px]"
+        className="relative overflow-hidden border-t border-b border-line py-[22px]"
         style={{ marginTop: "clamp(20px,4vh,40px)", WebkitMaskImage: "linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)", maskImage: "linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)" }}
       >
         <div className="marquee-track">
