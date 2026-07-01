@@ -198,8 +198,8 @@ export function Skills() {
 
       {/* Marquee */}
       <div
-        className="relative overflow-hidden border-t border-b border-line py-[22px]"
-        style={{ marginTop: "clamp(20px,4vh,40px)", WebkitMaskImage: "linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)", maskImage: "linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)" }}
+        className="relative mx-auto overflow-hidden border-t border-b border-line py-[22px]"
+        style={{ maxWidth: 1240, marginTop: "clamp(20px,4vh,40px)", WebkitMaskImage: "linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)", maskImage: "linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)" }}
       >
         <div className="marquee-track">
           {[0, 1].map((dup) => (
