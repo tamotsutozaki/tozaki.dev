@@ -120,7 +120,7 @@ export function About() {
               <div className="flex items-center gap-x-5 md:gap-x-8">
                 <div className="flex-none w-[120px] md:w-[135px]">
                   <div className="overflow-hidden rounded-full border border-line2 bg-bg-elev" style={{ aspectRatio: "1 / 1" }}>
-                    <Image src="/assets/pedro.png" alt="Pedro Tozaki" width={860} height={860} className="w-full h-full object-cover" priority />
+                    <Image src="/assets/pedro.png" alt="Pedro Tozaki" width={540} height={540} className="w-full h-full object-cover" priority />
                   </div>
                 </div>
 
