@@ -462,7 +462,9 @@ html.vt-active * {
   background: var(--fg);
   /* topo em cúpula elíptica (ponta oval) que sobe e achata ao cobrir o botão */
   border-radius: 100% 100% 0 0 / 80% 80% 0 0;
-  transform: translateY(101%);
+  /* folga fixa em px (não %) pra evitar a "pontinha" que vaza por arredondamento
+     de subpixel em certos zooms/DPR; o overflow:hidden do botão esconde o resto */
+  transform: translateY(calc(100% + 3px));
   transition: transform 0.33s cubic-bezier(0.45, 0, 0.25, 1), border-radius 0.33s ease;
   pointer-events: none;
 }
